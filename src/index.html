@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Texas Hold'em Poker Range Analysis Tool</title>
+  <meta name="description" content="Free and easy to use poker range calculator. Figure out how different ranges hit different board textures and improve your skills." />
+  <meta name="keywords" content="poker range calculator, equity calculator, flop, flop analysis, flop equity, texas holdem, poker, poker analysis, poker calculator, poker equity, poker flop, poker odds, poker range, preflop, preflop equity, preflop range, range, range analysis, range equity, ranges" />
+  <meta name="language" content="english" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/ico" href="static/favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" integrity="sha512-NWCafukXClS6fKch6bSMl/WvPzZrD1OGMf1oMAnFYXSSKZ7hgeswls+r4SdK4bFJauVwmvFf7HlMwji2TsjROA==" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js" integrity="sha512-kZsqvmw94Y8hyhwtWZJvDtobwQ9pLhF1DuIvcqSuracbRn6WJs1Ih+04fpH/8d1CFKysp7XA1tR0Aa2jKLTQUg==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+  <script src="index.js" type="text/javascript" defer></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-168084704-1');
+  </script>
+  <!-- CookiePro CCPA Opt-Out Script Start --><script>var otCcpaScript = document.createElement('script'),script1 = document.getElementsByTagName('script')[0];otCcpaScript.src = 'https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/ccpa-optout.js';otCcpaScript.async = false;otCcpaScript.type = 'text/javascript';script1.parentNode.insertBefore(otCcpaScript, script1); window.otccpaooSettings = {layout: {dialogueLocation:"right",primaryColor: "#6aaae4",secondaryColor: "#ffffff",button:{primary:"#6aaae4", secondary:"#ffffff", } },dialogue: {email: {display:false,title:"",url:"",},lspa: {accepted:false,},phone: {display:false,title:"",url:"",},dsar: {display:false,title:"",url:"",},intro: { title:"Do Not Sell My Personal Information",description:"Exercise your consumer right to opt out.",}, privacyPolicy: {title:"",url:"", }, optOut: {title:"Personalized Advertisements",description:"Turning this off will opt you out of personalized advertisements on this website.",frameworks:["iab","gam"],}, location:"ca",confirmation: {text: "Confirm",}, } };</script><!-- CookiePro CCPA Opt-Out Script End -->
+</head>
+
+<body>
+  <div data-nosnippet>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <span class="navbar-brand ml-sm-4">OpenPokerTools.com</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingnavbar" aria-controls="collapsingnavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsingnavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Range Analyser <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="range-equity.html">Range vs Range Equity</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="poker-odds.html">Odds Calculator</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div style="position: fixed; z-index: 10; bottom: 10px; right: 10px;">
+    <button type="button" data-ot-ccpa-opt-out="button" style="display:none;" class="ot-ccpa-optout__button ot-ccpa-optout__button--light"><img src="https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/assets/icon-do-not-sell.svg"style="width:30px;height:30px;" alt="" role="presentation"><span class="ot-ccpa-optout__button__title">Do Not Sell My Personal Information</span></button>
+  </div>
+
+  <header class="mb-4">
+    <div class="text-center" data-nosnippet>
+      <h1 class="pageheader">Range Analyser</h1>
+    </div>
+  </header>
+
+  <div class="container-xl rounded analysisview my-3 px-xl-4 py-2" data-nosnippet>
+    <div class="row" id="viewer">
+      <div id="player_0" class="col-5 p-3 player mx-auto player-placeholder"></div>
+      <div class='col-auto p-3 mx-auto board_viewer'>
+        <h4 class='mb-2'>Board</h4>
+        <div class="d-flex" id="board" style="height: 55px"></div>
+        <div class="d-flex">
+          <button type="button" id="random_board" class="btn btn-primary ml-auto mr-1 my-2">Random board</button>
+          <button type="button" id="clear_board" class="btn btn-secondary mr-auto ml-1 my-2">Clear board</button>
+        </div>
+        <h4 class="my-2">Hole Cards</h4>
+        <div class="row">
+          <div class="col-6 d-flex" id="hole_cards" style="height: 55px"></div>
+          <div class="col-6 d-flex">
+            <button type="button" id="calc_equity" class="btn btn-primary mx-auto overflow-hidden py-0 px-2">Calculate Win %</button>
+          </div>
+        </div>
+        <div id="simulation_errors"></div>
+        <p class="pl-2 mt-2 mb-0"><strong id="preflop_equity">-</strong> against Pre-flop combos</p>
+        <p class="pl-2 my-0"><strong id="flop_equity">-</strong> against Flop combos</p>
+        <p class="pl-2 my-0"><strong id="turn_equity">-</strong> against Turn combos</p>
+        <p class="pl-2 my-0"><strong id="river_equity">-</strong> against River combos</p>
+        <h4 class='mt-2 mb-1'>Flop</h4>
+        <p class="pl-2 my-0"><strong id="flop_combos">0</strong> combos kept to Turn</p>
+        <p class="pl-2 my-0"><strong id="flop_combos_percent">0.0%</strong> of Flop combos</p>
+        <h4 class='mt-2 mb-1'>Turn</h4>
+        <p class="pl-2 my-0"><strong id="turn_combos">0</strong> combos kept to River</p>
+        <p class="pl-2 my-0"><strong id="turn_combos_percent">0.0%</strong> of Turn combos</p>
+        <h4 class='mt-2 mb-1'>River</h4>
+        <p class="pl-2 my-0"><strong id="river_combos">0</strong> combos kept to Showdown</p>
+        <p class="pl-2 my-0"><strong id="river_combos_percent">0.0%</strong> of River combos</p>
+      </div>
+      <div class='col p-3 mx-auto statistics_viewer'>
+        <h4 class='mb-2'>Statistics</h4>
+        <nav>
+          <div class="nav nav-tabs" role="tablist">
+            <a class="nav-item nav-link active" id="nav-preflop-tab" data-toggle="tab" href="#nav-preflop" role="tab" aria-controls="nav-preflop" aria-selected="true">Pre-flop</a>
+            <a class="nav-item nav-link" id="nav-flop-tab" data-toggle="tab" href="#nav-flop" role="tab" aria-controls="nav-flop" aria-selected="false">Flop</a>
+            <a class="nav-item nav-link" id="nav-turn-tab" data-toggle="tab" href="#nav-turn" role="tab" aria-controls="nav-turn" aria-selected="false">Turn</a>
+            <a class="nav-item nav-link" id="nav-river-tab" data-toggle="tab" href="#nav-river" role="tab" aria-controls="nav-river" aria-selected="false">River</a>
+          </div>
+        </nav>
+        <div class="tab-content" style="min-height: 564px;">
+          <div class="tab-pane fade show active" id="nav-preflop" role="tabpanel" aria-labelledby="nav-preflop-tab">
+            <table class="stats_table mx-auto">
+              <tbody id="preflop_body">
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-flop" role="tabpanel" aria-labelledby="nav-flop-tab">
+            <table class="stats_table mx-auto">
+              <tbody id="flop_body">
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-turn" role="tabpanel" aria-labelledby="nav-turn-tab">
+            <table class="stats_table mx-auto">
+              <tbody id="turn_body">
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-river" role="tabpanel" aria-labelledby="nav-river-tab">
+            <table class="stats_table mx-auto">
+              <tbody id="river_body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12">
+        <h5 class='mb-2'>
+          Combos kept to turn
+          <button type="button" class="btn btn-link collapsed showbutton" data-toggle="collapse" data-target="#flop_combos_all" aria-label="Show combos kept to turn"></button>
+        </h5>
+        <div class="row px-4 collapse" id="flop_combos_all"></div>
+        <h5 class='my-2'>
+          Combos kept to river
+          <button type="button" class="btn btn-link collapsed showbutton" data-toggle="collapse" data-target="#turn_combos_all" aria-label="Show combos kept to river"></button>
+        </h5>
+        <div class="row px-4 collapse" id="turn_combos_all"></div>
+        <h5 class='my-2'>
+          Combos kept to showdown
+          <button type="button" class="btn btn-link collapsed showbutton" data-toggle="collapse" data-target="#river_combos_all" aria-label="Show combos kept to showdown"></button>
+        </h5>
+        <div class="row px-4 collapse" id="river_combos_all"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="info my-5">
+      <h4><span data-nosnippet>Range Analysis Tool</span></h4>
+      <p class="ml-1">
+        This tool allows the user to explore the dynamics of different ranges and board textures. Users can create custom ranges and explore the viability and exploitability of these ranges based on various strategies. Filter your opponent's combos through the flop, turn, and river, and figure out the most vulnerable spot to strike.
+      </p>
+      <p class="ml-1">
+        The following sections describe the various features of the tools and how to use them.
+      </p>
+      <h5>Range</h5>
+      <p class="ml-1">
+        The range panel allows the creation of an opening range. The range can then be examined using the tools on this page. The range can be created in three ways.
+      </p>
+      <h6>Text input</h6>
+      <p class="ml-1">
+        The text input uses shorthand text descriptors to define the range. Hands can be entered individually in a comma separated list (e.g. AA, AJo, 32s). Or as a sequence of hands using the + and - symbols. For example, "T5o+" will add the hands T9o, T8o, T7o, T6o, T5o to the range. "96s-" will add the hands 96s, 95s, 94s, 93s, 92s to the range. And "66-99" will add the hands "66", "77", "88", "99". Note that hands should be defined with the highest rank first, and unpaired hands should be specified as suited (s) or offsuit (o).
+      </p>
+      <h6>Slider</h6>
+      <p class="ml-1">
+        The slider defines a range based on a specific proportion of all possible hands. The hands are added in an order which favors hands with good preflop equity, however this does not necessarily correspond the hands which you or your opponents are opening, and it is recommend you make adjustments based on your experience.
+      </p>
+      <h6>Grid</h6>
+      <p class="ml-1">
+        The grid allows the addition and removal of individual hands from the defined range. Add and remove hands by clicking on them.
+      </p>
+      <h5>Board</h5>
+      <p class="ml-1">
+        The board allows you to define a specific runout to examine. Click on the cards and select the cards you want from the popup. Alternatively, use the random board button to generate and random runout.
+      </p>
+      <h5>Statistics</h5>
+      <p class="ml-1">
+        The statistics panel reports how different combos in the defined range will interact with the board.
+      </p>
+      <h6>Pre-flop</h6>
+      <p class="ml-1">
+        The pre-flop tab displays how often the defined range is expected to hit the flop in different ways (e.g. hitting a pair, or a flush draw).
+      </p>
+      <h6>Flop, Turn, River</h6>
+      <p class="ml-1">
+        The flop, turn, and river tabs display how the preflop range interacts with the defined board. Additionally, each descriptor has a checkbox which can be used to indicate whether the combos described should be kept to the next phase of play. For example, if you have reason to believe that someone would never keep weak pairs to a flop bet, you should uncheck the corresponding box, and the analysis will proceed  with all weak pairs being dropped on the flop. The turn analysis will then only include combos which were not dropped on the flop.
+      </p>
+      <p class="ml-1">
+        The number of combos kept at each phase of play is also displayed. And the exact list of combos can be displayed by clicking the <i>show</i> button at the bottom of the panel.
+      </p>
+    </div>
+    <footer class="text-muted my-5 border-top">
+      <div class="text-center my-4">
+        <a class="text-muted" href="contact.html">Contact Us</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Report a Bug</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Suggest a Feature</a>
+      </div>
+    </footer>
+  </div>
+  <script type="text/javascript">
+    var infolinks_pid = 3333243;
+    var infolinks_wsid = 0;
+  </script>
+  <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
+</body>
+</html>

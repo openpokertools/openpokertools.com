@@ -1,0 +1,26 @@
+{
+  "name": "openpokertools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --config webpack.config.js && copyfiles -u 1 src/*.html src/static/* src/sitemap.xml src/CNAME src/ads.txt dist && node-minify -c clean-css -i dist/static/styles.css -o dist/static/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpokertools/openpokertools.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.6.3",
+    "node-minify": "^3.6.0",
+    "webpack": "^5.31.2",
+    "webpack-cli": "^4.6.0"
+  }
+}

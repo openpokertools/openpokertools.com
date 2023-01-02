@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <title>OpenPokerTools.com - Contact Information</title>
+  <meta name="description" content="Contact us, report a bug, suggest a feature." />
+  <meta name="keywords" content="contact" />
+  <meta name="language" content="english" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/ico" href="static/favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-168084704-1');
+  </script>
+</head>
+
+<body>
+  <div data-nosnippet>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <span class="navbar-brand ml-sm-4">OpenPokerTools.com</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingnavbar" aria-controls="collapsingnavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsingnavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Range Analyser</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="range-equity.html">Range vs Range Equity</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="poker-odds.html">Odds Calculator</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container" data-nosnippet>
+
+    <header class="py-3">
+      <div class="text-center">
+        <h1 class="pageheader">Contact Us</h1>
+      </div>
+    </header>
+
+    <div class="row" id="display">
+      <div class="col-sm-auto mx-auto my-2 py-4 px-5 rounded analysisview" id="sheet">
+        <script>
+          function doSomething() {
+            var radioValue = $("input[name='pokertest']:checked").val();
+            var alpha = {1: "y", 2: "v", 3: "u", 4: "d", 5: "g", 6: "b", 7: "j", 8: "k", 9: "m", 10: "s", 11: "o", 12: "t", 13: "l", 14: "f", 15: "p", 16: "c", 17: "@", 18: "i", 19: "e", 20: "z", 21: "n", 22: "r", 23: "h", 24: "w", 25: ".", 26: "q", 27: "a", 28: "x"};
+            var code = [11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9];
+            if (radioValue === "flush") {
+              var msg = "";
+              for (var i = 0; i < code.length; i++) {
+                msg += alpha[code[i]];
+              }
+              $("#sheet").empty();
+              $("#sheet").addClass("text-center");
+              $("#sheet").append("<a class='mx-auto' href=mailto:" + msg + ">" + msg + "</a>")
+            } else {
+              $("#sheet").append("<div class='my-2 alert alert-danger' role='alert'>Incorrect. Please try again.</div>");
+            }
+            return false;
+          }
+        </script>
+        <form id="test" onsubmit="return doSomething();">
+          Which of the following is the best hand?<br/>
+          <input type="radio" id="pair" name="pokertest" value="pair">
+          <label for="pair" style="margin-bottom: 0px;">Pair</label><br/>
+          <input type="radio" id="straight" name="pokertest" value="straight">
+          <label for="straight" style="margin-bottom: 0px;">Straight</label><br/>
+          <input type="radio" id="flush" name="pokertest" value="flush">
+          <label for="flush" style="margin-bottom: 0px;">Flush</label><br/>
+          <input type="radio" id="trips" name="pokertest" value="trips">
+          <label for="trips">Three of a kind</label><br/>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+    <footer class="text-muted my-5">
+      <div class="text-center my-4">
+        <a class="text-muted" href="contact.html">Contact Us</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Report a Bug</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Suggest a Feature</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

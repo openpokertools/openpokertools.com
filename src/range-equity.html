@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Range vs Range Equity Calculator</title>
+  <meta name="description" content="Free and easy to use Poker calculator to estimate range vs range equity. Simulate different scenarios and perfect your game." />
+  <meta name="keywords" content="poker range calculator, equity calculator, flop, flop analysis, flop equity, texas holdem, poker, poker analysis, poker calculator, poker equity, poker flop, poker odds, poker range, preflop, preflop equity, preflop range, range, range analysis, range equity, ranges" />
+  <meta name="language" content="english" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/ico" href="static/favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" integrity="sha512-NWCafukXClS6fKch6bSMl/WvPzZrD1OGMf1oMAnFYXSSKZ7hgeswls+r4SdK4bFJauVwmvFf7HlMwji2TsjROA==" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js" integrity="sha512-kZsqvmw94Y8hyhwtWZJvDtobwQ9pLhF1DuIvcqSuracbRn6WJs1Ih+04fpH/8d1CFKysp7XA1tR0Aa2jKLTQUg==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+  <script src="range-equity.js" type="text/javascript" defer></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-168084704-1');
+  </script>
+  <!-- CookiePro CCPA Opt-Out Script Start --><script>var otCcpaScript = document.createElement('script'),script1 = document.getElementsByTagName('script')[0];otCcpaScript.src = 'https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/ccpa-optout.js';otCcpaScript.async = false;otCcpaScript.type = 'text/javascript';script1.parentNode.insertBefore(otCcpaScript, script1); window.otccpaooSettings = {layout: {dialogueLocation:"right",primaryColor: "#6aaae4",secondaryColor: "#ffffff",button:{primary:"#6aaae4", secondary:"#ffffff", } },dialogue: {email: {display:false,title:"",url:"",},lspa: {accepted:false,},phone: {display:false,title:"",url:"",},dsar: {display:false,title:"",url:"",},intro: { title:"Do Not Sell My Personal Information",description:"Exercise your consumer right to opt out.",}, privacyPolicy: {title:"",url:"", }, optOut: {title:"Personalized Advertisements",description:"Turning this off will opt you out of personalized advertisements on this website.",frameworks:["iab","gam"],}, location:"ca",confirmation: {text: "Confirm",}, } };</script><!-- CookiePro CCPA Opt-Out Script End -->
+</head>
+
+<body>
+  <div data-nosnippet>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <span class="navbar-brand ml-sm-4">OpenPokerTools.com</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingnavbar" aria-controls="collapsingnavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsingnavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Range Analyser</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="range-equity.html">Range vs Range Equity <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="poker-odds.html">Odds Calculator</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div style="position: fixed; z-index: 10; bottom: 10px; right: 10px;">
+    <button type="button" data-ot-ccpa-opt-out="button" style="display:none;" class="ot-ccpa-optout__button ot-ccpa-optout__button--light"><img src="https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/assets/icon-do-not-sell.svg"style="width:30px;height:30px;" alt="" role="presentation"><span class="ot-ccpa-optout__button__title">Do Not Sell My Personal Information</span></button>
+  </div>
+
+  <div class="container">
+
+    <header class="py-3">
+      <div class="text-center" data-nosnippet>
+        <h1 class="pageheader">Range vs Range Equity Calculator</h1>
+      </div>
+    </header>
+
+    <div class="row" id="display" data-nosnippet>
+      <div class="col-lg-11 mx-auto my-3 py-4 px-md-5 rounded analysisview">
+        <div class="table-responsive">
+          <table class="table table-hover" style="margin-bottom: 0;">
+            <thead>
+              <tr>
+                <th style="width: 37px"></th>
+                <th>Player</th>
+                <th style="text-align: center; min-width: 80px">Cards</th>
+                <th style="text-align: center;">Range</th>
+                <th style="text-align: center;">Win %</th>
+                <th style="text-align: center;">Tie %</th>
+                <th style="text-align: center;">Pot Odds</th>
+                <th style="width: 40px">
+                  <svg class="bi bi-trash" width="1.2em" height="1.2em" viewBox="0 0 16 16" fill="black" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+                  </svg>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="display_body">
+              <tr id="0_display_row">
+                <td style="vertical-align: middle;"><input type="checkbox" id="0_box" aria-label="Select player 0 for simulation" checked=""></td>
+                <td style="vertical-align: middle;" id="0_name"><a href="#0_player" style="color: black;">Hero</a></td>
+                <td id="0_cards" style="height: 75px"></td>
+                <td style="vertical-align: middle; text-align: center;" id="0_percent_display">0.0%</td>
+                <td style="vertical-align: middle; text-align: center;" id="0_equity">-</td>
+                <td style="vertical-align: middle; text-align: center;" id="0_tie">-</td>
+                <td style="vertical-align: middle; text-align: center;" id="0_potodds">-</td>
+                <td id="0_delete" style="cursor: pointer; vertical-align: middle; font-size: 1.5rem; font-weight: 700; color: firebrick;">×</td>
+              </tr>
+              <tr id="1_display_row">
+                <td style="vertical-align: middle;"><input type="checkbox" id="1_box" aria-label="Select player 1 for simulation" checked=""></td>
+                <td style="vertical-align: middle;" id="1_name"><a href="#1_player" style="color: black;">Villain 1</a></td>
+                <td id="1_cards" style="height: 75px"></td>
+                <td style="vertical-align: middle; text-align: center;" id="1_percent_display">0.0%</td>
+                <td style="vertical-align: middle; text-align: center;" id="1_equity">-</td>
+                <td style="vertical-align: middle; text-align: center;" id="1_tie">-</td>
+                <td style="vertical-align: middle; text-align: center;" id="1_potodds">-</td>
+                <td id="1_delete" style="cursor: pointer; vertical-align: middle; font-size: 1.5rem; font-weight: 700; color: firebrick;">×</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr style="margin: 0;" />
+        <div id="board" class="d-flex flex-wrap m-3" style="height: 60px;"></div>
+        <hr/>
+
+        <div class="d-flex my-3">
+          <button type="button" id="add_player" class="btn btn-secondary ml-auto">Add player</button>
+          <button type="button" id="simulate" class="btn btn-primary ml-2">Simulate</button>
+
+        </div>
+        <div id="simulation_errors"></div>
+      </div>
+    </div>
+    <div class="row my-3 justify-content-center" id="players" data-nosnippet>
+      <div id="0_player" class="col-5 player rounded my-2 mx-xl-4 mx-2" style="height: 629px"></div>
+      <div id="1_player" class="col-5 player rounded my-2 mx-xl-4 mx-2" style="height: 629px"></div>
+    </div>
+    <div class="info my-5">
+      <h4><span data-nosnippet>Range Equity Calculator</span></h4>
+      <p class="ml-1">
+        This calculator allows the user to calculate range vs range equity in texas hold'em poker. Simulate different board runouts and hole cards, and learn how different ranges are affected.
+      </p>
+      <h5>Range</h5>
+      <p class="ml-1">
+        The range panel allows the creation of an opening range. The range can then be examined using the tools on this page. The range can be created in three ways.
+      </p>
+      <h6>Text input</h6>
+      <p class="ml-1">
+        The text input uses shorthand text descriptors to define the range. Hands can be entered individually in a comma separated list (e.g. AA, AJo, 32s). Or as a sequence of hands using the + and - symbols. For example, "T5o+" will add the hands T9o, T8o, T7o, T6o, T5o to the range. "96s-" will add the hands 96s, 95s, 94s, 93s, 92s to the range. And "66-99" will add the hands "66", "77", "88", "99". Note that hands should be defined with the highest rank first, and unpaired hands should be specified as suited (s) or offsuit (o).
+      </p>
+      <h6>Slider</h6>
+      <p class="ml-1">
+        The slider defines a range based on a specific proportion of all possible hands. The hands are added in an order which favors hands with good preflop equity, however this does not necessarily correspond the hands which you or your opponents are opening, and it is recommend you make adjustments based on your experience.
+      </p>
+      <h6>Grid</h6>
+      <p class="ml-1">
+        The grid allows the addition and removal of individual hands from the defined range. Add and remove hands by clicking on them.
+      </p>
+      <h5>Simulation</h5>
+      <p class="ml-1">
+        When the <i>simulate</i> button is clicked, the program will take in the range of all the defined players and randomly simulate matchups between combos from their ranges. This will allow the estimation of the equity of each player, as well as the probability of tying (splitting the pot) and the pot odds.
+      </p>
+      <p class="ml-1">
+        If both hole cards are specified for any player, then the simulation will use the hole cards instead of the range.
+      </p>
+      <p class="ml-1">
+        If any part of the board is specified, then the simulation will only randomize the unspecified cards.
+      </p>
+      <p class="ml-1">
+        If any player is unchecked, then that player will not be considered in the simulation.
+      </p>
+    </div>
+    <footer class="text-muted my-5 border-top">
+      <div class="text-center my-4">
+        <a class="text-muted" href="contact.html">Contact Us</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Report a Bug</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Suggest a Feature</a>
+      </div>
+    </footer>
+  </div>
+  <script type="text/javascript">
+    var infolinks_pid = 3333243;
+    var infolinks_wsid = 0;
+  </script>
+  <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
+</body>
+</html>

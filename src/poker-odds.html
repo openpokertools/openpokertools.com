@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Texas Hold'em Poker Odds Calculator</title>
+  <meta name="description" content="Simple Texas hold'em poker odds calculator. Simply enter your cards and board texture, and the calculator will find your odds of winning." />
+  <meta name="keywords" content="poker equity calculator, poker odds calculator, poker odds, poker equity, poker calculator, equity calculator, texas hold'em odds calcualtor" />
+  <meta name="language" content="english" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/ico" href="static/favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+  <script src="poker-odds.js" type="text/javascript" defer></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-168084704-1');
+  </script>
+  <!-- CookiePro CCPA Opt-Out Script Start --><script>var otCcpaScript = document.createElement('script'),script1 = document.getElementsByTagName('script')[0];otCcpaScript.src = 'https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/ccpa-optout.js';otCcpaScript.async = false;otCcpaScript.type = 'text/javascript';script1.parentNode.insertBefore(otCcpaScript, script1); window.otccpaooSettings = {layout: {dialogueLocation:"right",primaryColor: "#6aaae4",secondaryColor: "#ffffff",button:{primary:"#6aaae4", secondary:"#ffffff", } },dialogue: {email: {display:false,title:"",url:"",},lspa: {accepted:false,},phone: {display:false,title:"",url:"",},dsar: {display:false,title:"",url:"",},intro: { title:"Do Not Sell My Personal Information",description:"Exercise your consumer right to opt out.",}, privacyPolicy: {title:"",url:"", }, optOut: {title:"Personalized Advertisements",description:"Turning this off will opt you out of personalized advertisements on this website.",frameworks:["iab","gam"],}, location:"ca",confirmation: {text: "Confirm",}, } };</script><!-- CookiePro CCPA Opt-Out Script End -->
+</head>
+
+<body>
+  <div data-nosnippet>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <span class="navbar-brand ml-sm-4">OpenPokerTools.com</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingnavbar" aria-controls="collapsingnavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsingnavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Range Analyser</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="range-equity.html">Range vs Range Equity</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="poker-odds.html">Odds Calculator <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div style="position: fixed; z-index: 10; bottom: 10px; right: 10px;">
+    <button type="button" data-ot-ccpa-opt-out="button" style="display:none;" class="ot-ccpa-optout__button ot-ccpa-optout__button--light"><img src="https://cookie-cdn.cookiepro.com/ccpa-optout-solution/v1/assets/icon-do-not-sell.svg"style="width:30px;height:30px;" alt="" role="presentation"><span class="ot-ccpa-optout__button__title">Do Not Sell My Personal Information</span></button>
+  </div>
+
+  <div class="container">
+
+    <header class="py-3">
+      <div class="text-center" data-nosnippet>
+        <h1 class="pageheader">Poker Odds</h1>
+      </div>
+    </header>
+
+    <div class="row" id="display" data-nosnippet>
+      <div class="mx-auto rounded analysisview p-3" style="width: 500px">
+        <div id="board" class="d-flex flex-wrap m-3" style="height: 60px;"></div>
+        <hr class="m-0" />
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th class="text-center" style="min-width: 80px">Cards</th>
+                <th class="text-center">Win %</th>
+                <th class="text-center">Tie %</th>
+                <th class="text-center">Pot Odds</th>
+              </tr>
+            </thead>
+            <tbody id="display_body">
+              <tr id="0_display_row">
+                <td id="0_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="0_equity">-</td>
+                <td class="text-center align-middle" id="0_tie">-</td>
+                <td class="text-center align-middle" id="0_potodds">-</td>
+              </tr>
+              <tr id="1_display_row">
+                <td id="1_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="1_equity">-</td>
+                <td class="text-center align-middle" id="1_tie">-</td>
+                <td class="text-center align-middle" id="1_potodds">-</td>
+              </tr>
+              <tr id="2_display_row">
+                <td id="2_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="2_equity">-</td>
+                <td class="text-center align-middle" id="2_tie">-</td>
+                <td class="text-center align-middle" id="2_potodds">-</td>
+              </tr>
+              <tr id="3_display_row">
+                <td id="3_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="3_equity">-</td>
+                <td class="text-center align-middle" id="3_tie">-</td>
+                <td class="text-center align-middle" id="3_potodds">-</td>
+              </tr>
+              <tr id="4_display_row">
+                <td id="4_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="4_equity">-</td>
+                <td class="text-center align-middle" id="4_tie">-</td>
+                <td class="text-center align-middle" id="4_potodds">-</td>
+              </tr>
+              <tr id="5_display_row">
+                <td id="5_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="5_equity">-</td>
+                <td class="text-center align-middle" id="5_tie">-</td>
+                <td class="text-center align-middle" id="5_potodds">-</td>
+              </tr>
+              <tr id="6_display_row">
+                <td id="6_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="6_equity">-</td>
+                <td class="text-center align-middle" id="6_tie">-</td>
+                <td class="text-center align-middle" id="6_potodds">-</td>
+              </tr>
+              <tr id="7_display_row">
+                <td id="7_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="7_equity">-</td>
+                <td class="text-center align-middle" id="7_tie">-</td>
+                <td class="text-center align-middle" id="7_potodds">-</td>
+              </tr>
+              <tr id="8_display_row">
+                <td id="8_cards" style="height: 75px"></td>
+                <td class="text-center align-middle" id="8_equity">-</td>
+                <td class="text-center align-middle" id="8_tie">-</td>
+                <td class="text-center align-middle" id="8_potodds">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="info my-5" style="column-count: 1">
+      <h4><span data-nosnippet>Odds calculator</span></h4>
+      <p class="ml-1">
+        Simple poker odds calculator. Simply enter your cards and optionally the board texture, and the calculator will give the winning odds for each hand. The odds are calculated dynamically as the cards are added, but the calculator will not take into account invalid hands or boards. For example, it will not take into account the board if there are less than three cards, or a hand with only one card.
+      </p>
+    </div>
+    <footer class="text-muted my-5 border-top">
+      <div class="text-center my-4">
+        <a class="text-muted" href="contact.html">Contact Us</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Report a Bug</a>
+        &bull;
+        <a class="text-muted" href="contact.html">Suggest a Feature</a>
+      </div>
+    </footer>
+  </div>
+  <script type="text/javascript">
+    var infolinks_pid = 3333243;
+    var infolinks_wsid = 0;
+  </script>
+  <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
+</body>
+</html>
