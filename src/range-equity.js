@@ -135,6 +135,15 @@ const getBoard = function() {
 };
 
 
+const clearBoard = function() {
+  cardutils.resetCard('board1');
+  cardutils.resetCard('board2');
+  cardutils.resetCard('board3');
+  cardutils.resetCard('board4');
+  cardutils.resetCard('board5');
+}
+
+
 const simulate = function() {
   const activePlayers = [];
   $('#display_body > tr').each((i, tr) => {
@@ -324,5 +333,6 @@ const c5 = cardutils.makeHiddenCard(60).attr({
 cardutils.addCardSelect(c5);
 
 $('#board').append(c1, c2, c3, c4, c5);
+$('#clear_board').click(clearBoard);
 $('#add_player').click(addPlayer);
 $('#simulate').click(containSimulation);
