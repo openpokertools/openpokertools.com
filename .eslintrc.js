@@ -15,5 +15,6 @@ module.exports = {
     'guard-for-in': 'off',
     'no-throw-literal': 'off',
     'no-implicit-globals': 'error',
+    'max-len': ['error', {'code': 100}],
   },
 };

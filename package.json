@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --config webpack.config.js && copyfiles -u 1 src/*.html src/static/* src/sitemap.xml src/CNAME src/ads.txt dist && node-minify -c clean-css -i dist/static/styles.css -o dist/static/styles.css"
+    "build": "webpack --config webpack.config.js && copyfiles -u 1 src/*.html src/static/* src/sitemap.xml src/CNAME dist && node-minify -c clean-css -i dist/static/styles.css -o dist/static/styles.css"
   },
   "repository": {
     "type": "git",

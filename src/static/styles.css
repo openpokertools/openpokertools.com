@@ -8,6 +8,12 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+input[type="radio"] {
+  margin-top: -3.5px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 td {
     vertical-align: middle;
 }
@@ -82,7 +88,6 @@ td {
     color: white;
     font-family: serif;
     font-variant: small-caps;
-    font-style: oblique;
 }
 
 .analysisview {
