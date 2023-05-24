@@ -71,7 +71,7 @@ const addPlayer = function() {
   const title = `Villain ${id}`;
   addDisplayRow(id, title);
   const player = rangeutils.buildRange(title, id);
-  player.addClass('rounded my-2 mx-xl-4 mx-2');
+  player.addClass('rounded my-3 mx-xl-4 mx-lg-2 mx-md-1');
   $('#players').append(player);
   n += 1;
 };
@@ -90,7 +90,7 @@ const addPlayerInitial = function() {
   const cards = addCards(id);
   $(`#${id}_cards`).append(cards);
   const player = rangeutils.buildRange(title, id);
-  player.addClass('rounded my-2 mx-xl-4 mx-2');
+  player.addClass('rounded my-3 mx-xl-4 mx-lg-2 mx-md-1');
   $(`#${id}_player`).replaceWith(player);
   $(`#${id}_box`).change(resetResults);
   n += 1;
