@@ -7,10 +7,10 @@ const SUITS = ['s', 'h', 'd', 'c'];
 let USER_RANGE_INDICES = [];
 const USER_RANGE_NAMES = [];
 const USER_RANGES = [];
+const ACTIVE_HANDS = {};
 
 const SIX_MAX_OPEN = {
   'UTG': '44+, A2s+, K9s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, ATo+, KJo+',
-  // eslint-disable-next-line max-len
   'UTG+1': '22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo',
   // eslint-disable-next-line max-len
   'Cutoff': '22+, A2s+, K6s+, Q8s+, J8s+, T8s+, 97s+, 86s+, 75s+, 65s, 54s, 43s, 32s, A8o+, A5o, KTo+, QTo+, JTo, T9o, 98o',
@@ -25,7 +25,6 @@ const NINE_MAX_OPEN = {
   'UTG+1': '77+, ATs+, A5s, KTs+, QTs+, J9s+, T9s, 98s, AQo+',
   'UTG+2': '77+, A8s+, A4s-A5s, K9s+, Q9s+, J9s+, T9s, 98s, AJo+',
   'Lojack': '44+, A2s+, K9s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, ATo+, KJo+',
-  // eslint-disable-next-line max-len
   'Hijack': '22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo',
   // eslint-disable-next-line max-len
   'Cutoff': '22+, A2s+, K6s+, Q8s+, J8s+, T8s+, 97s+, 86s+, 75s+, 65s, 54s, 43s, 32s, A8o+, A5o, KTo+, QTo+, JTo, T9o, 98o',
@@ -125,7 +124,6 @@ const createRangeLoader = function(id) {
   // eslint-disable-next-line max-len
   const selector = $(`<select name='saved_range' id='${id}_rangeloaderselector' class='form-select ml-auto' style='width: 100%; height: 100%' aria-label='User range selector'></select>`)
       .change(loadRange);
-  // eslint-disable-next-line max-len
   selector.append($('<option id="empty_user_range" value="">&lt;empty&gt;</option>'));
   // eslint-disable-next-line max-len
   const custom = $('<optgroup label="Custom Ranges" id="customrangesgroup" class="customrangesgroup"></optgroup>');
@@ -136,13 +134,11 @@ const createRangeLoader = function(id) {
   selector.append(custom);
   const sixmax = $('<optgroup label="6-Max Opening Ranges"></optgroup>');
   for (const k in SIX_MAX_OPEN) {
-    // eslint-disable-next-line max-len
     sixmax.append(`<option id='sixmax_${k}' value='${SIX_MAX_OPEN[k]}'>${k}</option>`);
   }
   selector.append(sixmax);
   const ninemax = $('<optgroup label="9-Max Opening Ranges"></optgroup>');
   for (const k in NINE_MAX_OPEN) {
-    // eslint-disable-next-line max-len
     ninemax.append(`<option id='ninemax_${k}' value='${NINE_MAX_OPEN[k]}'>${k}</option>`);
   }
   selector.append(ninemax);
@@ -150,27 +146,112 @@ const createRangeLoader = function(id) {
       .append(saveBTN, delBTN);
   const selectorDiv = $('<div class="col-5" style="padding: 0"></div>')
       .append(selector);
-  const row = $('<div class="range_loader row mt-2 mx-0"></div>');
+  const row = $('<div class="range_loader row mx-0"></div>');
   row.append(buttons, selectorDiv);
   return row;
 };
 
 
+const createSuitSelector = function(id) {
+  const row = $('<div class="row mt-1" style="font-size: 1.2rem"></div>');
+  const all = $(`
+    <div class="ml-auto mr-1">
+      <input type="radio" id="${id}_all" name="${id}_suit" value="all" checked>
+      <label for="${id}_all">××</label>
+    </div>
+  `);
+  const spade = $(`
+    <div class="mx-1">
+      <input type="radio" id="${id}_spade" name="${id}_suit" value="spade">
+      <label for="${id}_spade">♠×</label>
+    </div>
+  `);
+  const heart = $(`
+    <div class="mx-1">
+      <input type="radio" id="${id}_heart" name="${id}_suit" value="heart">
+      <label for="${id}_heart"><span style="color: red">♥</span>×</label>
+    </div>
+  `);
+  const club = $(`
+    <div class="mx-1">
+      <input type="radio" id="${id}_club" name="${id}_suit" value="club">
+      <label for="${id}_club">♣×</label>
+    </div>
+  `);
+  const diamond = $(`
+    <div class="ml-1 mr-auto">
+      <input type="radio" id="${id}_diamond" name="${id}_suit" value="diamond">
+      <label for="${id}_diamond"><span style="color: red">♦</span>×</label>
+    </div>
+  `);
+  row.append(all)
+      .append(spade)
+      .append(heart)
+      .append(club)
+      .append(diamond);
+  return row;
+};
+
 // Build table selector
 
 const selectCell = function() {
-  $(this).toggleClass('selected');
   const id = getID($(this));
-  updateDescriptor(id);
-  updatePercent(id, true);
-  window.rangeUpdate(id);
+  const combo = $(this).attr('id').split('_')[1];
+  const suitSelect = $(`input[name="${id}_suit"]:checked`).val();
+  $(this).css('background', '');
+
+  if (suitSelect === 'all') {
+    $(this).removeClass('spade heart club diamond');
+    if ($(this).hasClass('selected')) {
+      $(this).removeClass('selected');
+      removeHands(id, combo);
+    } else {
+      $(this).addClass('selected');
+      addHands(id, combo);
+    }
+  } else {
+    removeHands(id, combo);
+    if ($(this).hasClass('selected') && $(this).hasClass(suitSelect)) {
+      $(this).removeClass('selected spade heart club diamond');
+    } else {
+      $(this).removeClass('spade heart club diamond');
+      $(this).addClass(`selected ${suitSelect}`);
+      const suitShort = suitSelect[0];
+      if (combo.length === 2) {
+        addHands(id, combo[0] + suitShort + combo[1] + 'x');
+      } else if (combo[2] == 's') {
+        addHands(id, combo[0] + suitShort + combo[1] + suitShort);
+      } else {
+        addHands(id, combo[0] + suitShort + combo[1] + 'x');
+        addHands(id, combo[0] + 'x' + combo[1] + suitShort);
+      }
+    }
+  }
+
+  console.log(ACTIVE_HANDS);
+  // updateDescriptor(id);
+  // updatePercent(id, true);
+  // window.rangeUpdate(id);
+};
+
+
+const removeHands = function(id, combo) {
+  for (const hand of expandCombo(combo)) {
+    ACTIVE_HANDS[id].delete(hand);
+  }
+};
+
+const addHands = function(id, combo) {
+  for (const hand of expandCombo(combo)) {
+    ACTIVE_HANDS[id].add(hand);
+  }
 };
 
 
 const createCell = function(cellID, cellText, comboType) {
   const cell = $('<td></td>').attr({
     id: cellID,
-    class: 'range_cell ' + comboType,
+    class: 'range_cell position-relative ' + comboType,
   }).mousedown(selectCell).append(cellText);
   return cell;
 };
@@ -197,133 +278,314 @@ const createTableSelector = function(id) {
     }
     body.append(row);
   }
-  // eslint-disable-next-line max-len
   const table = $(`<table id='${id}_table' class='mx-auto range_table'></table>`).append(body);
   return table;
 };
 
-
 // Update range
 
-const descriptorUpdate = function(e) {
+const comboColor = function(combo) {
+  if (combo[0] === combo[1]) {
+    return '#9A9A9A';
+  } else if (combo[2] === 's') {
+    return 'silver';
+  } else {
+    return 'gainsboro';
+  }
+};
+
+
+const descriptorUpdateEvent = function(e) {
   const id = getID($(this));
   const descriptor = $(this).val();
-  const combos = expandRange(descriptor);
-  for (const c of COMBOS_ORDERED) {
-    $(`#${id}_${c}`).removeClass('selected');
-  }
-  combos.forEach((c) => {
-    return $(`#${id}_${c}`).addClass('selected');
-  });
-  updatePercent(id, true);
-  window.rangeUpdate(id);
+  descriptorUpdate(id, descriptor);
 };
 
 
 const descriptorUpdateManual = function(id, descriptor) {
   $(`#${id}_range`).val(descriptor);
-  const combos = expandRange(descriptor);
+  descriptorUpdate(id, descriptor);
+};
+
+
+const descriptorUpdate = function(id, descriptor) {
+  const hands = expandRange(descriptor);
+  ACTIVE_HANDS[id] = hands;
+  const percents = handsToPercent(hands);
+
   for (const c of COMBOS_ORDERED) {
-    $(`#${id}_${c}`).removeClass('selected');
+    $(`#${id}_${c}`).removeClass('selected spade heart club diamond');
+    $(`#${id}_${c}`).css('background', '');
   }
-  combos.forEach((c) => {
-    return $(`#${id}_${c}`).addClass('selected');
-  });
-  updatePercent(id, true);
-  window.rangeUpdate(id);
+
+  for (const c of COMBOS_ORDERED) {
+    const percent = percents.get(c) / 12 * 100;
+    if (percent === 100) {
+      $(`#${id}_${c}`).addClass('selected');
+    } else if (percent > 0) {
+      $(`#${id}_${c}`).css(
+          'background',
+          `linear-gradient(to right, lightgreen ${percent}%, ${comboColor(c)} ${percent}%)`,
+      );
+      $(`#${id}_${c}`).addClass('selected subset');
+    }
+  }
+
+  // updatePercent(id, true);
+  // window.rangeUpdate(id);
+};
+
+
+const handsToPercent = function(hands) {
+  const percents = new Map();
+  for (const c of COMBOS_ORDERED) {
+    percents.set(c, 0);
+  }
+  for (const hand of hands) {
+    const h = hand.split(':');
+    if (h[0][0] === h[1][0]) {
+      const ind = h[0][0] + h[1][0];
+      percents.set(ind, percents.get(ind) + 2);
+    } else if (h[0][1] === h[1][1]) {
+      const ind = h[0][0] + h[1][0] + 's';
+      percents.set(ind, percents.get(ind) + 3);
+    } else {
+      const ind = h[0][0] + h[1][0] + 'o';
+      percents.set(ind, percents.get(ind) + 1);
+    }
+  }
+  return percents;
 };
 
 
 const expandRange = function(rangeString) {
-  const combos = new Set();
-  const comboRanges = rangeString.toUpperCase().split(/[\s,]+/);
-  for (let i = 0; i < comboRanges.length; i++) {
-    const combs = expandComboRange(comboRanges[i]);
-    for (let j = 0; j < combs.length; j++) {
-      combos.add(combs[j]);
+  const hands = new Set();
+  const handRanges = rangeString.toUpperCase().split(/[\s,]+/);
+  for (let i = 0; i < handRanges.length; i++) {
+    const subHands = expandHandRange(handRanges[i]);
+    for (let j = 0; j < subHands.length; j++) {
+      hands.add(subHands[j]);
     }
   }
-  return combos;
+  return hands;
 };
 
 
-const expandComboRange = function(comboRangeString) {
-  const c = comboRangeString;
-  if (c[c.length - 1] === '+') {
-    return expandPlus(c);
-  } else if (c[c.length - 1] === '-') {
-    return expandMinus(c);
-  } else if (c.indexOf('-') >= 0) {
-    return expandDash(c);
+const expandHandRange = function(handRangeString) {
+  const h = handRangeString;
+  if (h[h.length - 1] === '+') {
+    return expandPlus(h);
+  } else if (h[h.length - 1] === '-') {
+    return expandMinus(h);
+  } else if (h.indexOf('-') >= 0) {
+    return expandDash(h);
   } else {
-    if (c.length < 2) {
+    if (h.length < 2) {
       return [];
-    } else if (c.length === 2) {
-      return [c];
+    } else if (h.length === 2) {
+      return expandCombo(h);
+    } else if (h.length === 3 && (h[2] === 'S' || h[2] === 'O')) {
+      return expandCombo(h[0] + h[1] + h[2].toLowerCase());
+    } else if (h.length === 4) {
+      return expandCombo(h[0] + h[1].toLowerCase() + h[2] + h[3].toLowerCase());
+    }
+  }
+};
+
+
+const expandPlus = function(h) {
+  const hands = [];
+  if (h.length === 3) {
+    const ind = RANKS.indexOf(h[1]);
+    if (h[0] === h[1]) {
+      for (let i = 0; i <= ind; i++) {
+        hands.push(...expandCombo(RANKS[i] + RANKS[i]));
+      }
     } else {
-      return [c[0] + c[1] + c[2].toLowerCase()];
+      const j = RANKS.indexOf(h[0]);
+      for (let k = j + 1; k <= ind; k++) {
+        hands.push(...expandCombo(h[0] + RANKS[k] + h[2].toLowerCase()));
+      }
+    }
+  } else if (h.length === 4) {
+    const ind = RANKS.indexOf(h[2]);
+    if (h[0] === h[2]) {
+      for (let i = 0; i <= ind; i++) {
+        hands.push(...expandCombo(RANKS[i] + h[1].toLowerCase() + RANKS[i] + h[3].toLowerCase()));
+      }
+    } else {
+      const j = RANKS.indexOf(h[0]);
+      for (let k = j + 1; k <= ind; k++) {
+        hands.push(...expandCombo(h[0] + h[1].toLowerCase() + RANKS[i] + h[3].toLowerCase()));
+      }
     }
   }
+  return hands;
 };
 
 
-const expandPlus = function(c) {
-  const combos = [];
-  const ind = RANKS.indexOf(c[1]);
-  if (c[0] === c[1]) {
-    for (let i = 0; i <= ind; i++) {
-      combos.push(RANKS[i] + RANKS[i]);
+const expandMinus = function(h) {
+  const hands = [];
+  if (h.length === 3) {
+    const ind = RANKS.indexOf(h[1]);
+    if (h[0] === h[1]) {
+      for (let j = ind; j <= 12; j++) {
+        hands.push(...expandCombo(RANKS[j] + RANKS[j]));
+      }
+    } else {
+      for (let j = ind; j <= 12; j++) {
+        hands.push(...expandCombo(h[0] + RANKS[j] + h[2].toLowerCase()));
+      }
     }
-  } else {
-    const j = RANKS.indexOf(c[0]);
-    for (let k = j + 1; k <= ind; k++) {
-      combos.push(c[0] + RANKS[k] + c[2].toLowerCase());
+  } else if (h.length === 4) {
+    const ind = RANKS.indexOf(h[2]);
+    if (h[0] === h[2]) {
+      for (let j = ind; j <= 12; j++) {
+        hands.push(...expandCombo(RANKS[j] + h[1].toLowerCase() + RANKS[j] + h[2].toLowerCase()));
+      }
+    } else {
+      for (let j = ind; j <= 12; j++) {
+        hands.push(...expandCombo(h[0] + h[1].toLowerCase() + RANKS[j] + h[3].toLowerCase()));
+      }
     }
   }
-  return combos;
+  return hands;
 };
 
 
-const expandMinus = function(c) {
-  const combos = [];
-  const ind = RANKS.indexOf(c[1]);
-  if (c[0] === c[1]) {
-    for (let j = ind; j <= 12; j++) {
-      combos.push(RANKS[j] + RANKS[j]);
-    }
-  } else {
-    for (let j = ind; j <= 12; j++) {
-      combos.push(c[0] + RANKS[j] + c[2].toLowerCase());
-    }
-  }
-  return combos;
-};
-
-
-const expandDash = function(c) {
-  const combos = [];
-  const x = c.split('-');
+const expandDash = function(h) {
+  const hands = [];
+  const x = h.split('-');
   const start = x[0];
   const end = x[1];
-  let i = RANKS.indexOf(start[1]);
-  let j = RANKS.indexOf(end[1]);
 
-  if (j > i) {
-    const tmp = j;
-    j = i;
-    i = tmp;
-  }
+  if (start.length <= 3 && end.length <= 3) {
+    let i = RANKS.indexOf(start[1]);
+    let j = RANKS.indexOf(end[1]);
 
-  if (start[0] === start[1]) {
-    for (let k = j; k <= i; k++) {
-      combos.push(RANKS[k] + RANKS[k]);
+    if (j > i) {
+      const tmp = j;
+      j = i;
+      i = tmp;
     }
-  } else {
-    for (let k = j; k <= i; k++) {
-      combos.push(start[0] + RANKS[k] + start[2].toLowerCase());
+
+    if (start[0] === start[1]) {
+      for (let k = j; k <= i; k++) {
+        hands.push(...expandCombo(RANKS[k] + RANKS[k]));
+      }
+    } else {
+      for (let k = j; k <= i; k++) {
+        hands.push(...expandCombo(start[0] + RANKS[k] + start[2].toLowerCase()));
+      }
+    }
+  } else if (start.length === 4 && end.length === 4) {
+    let i = RANKS.indexOf(start[2]);
+    let j = RANKS.indexOf(end[2]);
+
+    if (j > i) {
+      const tmp = j;
+      j = i;
+      i = tmp;
+    }
+
+    if (start[0] === start[2]) {
+      for (let k = j; k <= i; k++) {
+        hands.push(...expandCombo(
+            RANKS[k] + start[1].toLowerCase() + RANKS[k] + start[3].toLowerCase()));
+      }
+    } else {
+      for (let k = j; k <= i; k++) {
+        hands.push(...expandCombo(
+            start[0] + start[1].toLowerCase() + RANKS[k] + start[3].toLowerCase()));
+      }
     }
   }
-  return combos;
+  return hands;
+};
+
+
+const expandCombos = function(combos) {
+  const hands = [];
+  for (const c of combos) {
+    const expansion = expandCombo(c);
+    for (const h of expansion) {
+      hands.push(h);
+    }
+  }
+  return hands;
+};
+
+
+const expandCombo = function(combo) {
+  const hands = [];
+  if (combo.length === 2) {
+    for (let i = 0; i <= 2; i++) {
+      for (let j = i + 1; j <= 3; j++) {
+        hands.push([combo[0] + SUITS[i], combo[1] + SUITS[j]].sort().join(':'));
+      }
+    }
+  } else if (combo.length === 3) {
+    if (combo[2] === 's') {
+      for (const s of SUITS) {
+        hands.push([combo[0] + s, combo[1] + s].sort().join(':'));
+      }
+    } else {
+      for (const s1 of SUITS) {
+        for (const s2 of SUITS) {
+          if (s1 !== s2) {
+            hands.push([combo[0] + s1, combo[1] + s2].sort().join(':'));
+          }
+        }
+      }
+    }
+  } else if (combo.length === 4) {
+    if (combo[0] === combo[2]) {
+      if (combo[1] === 'x' && combo[3] === 'x') {
+        for (const s1 of SUITS) {
+          for (const s2 of SUITS) {
+            if (s1 !== s2) {
+              hands.push([combo[0] + s1, combo[1] + s2].sort().join(':'));
+            }
+          }
+        }
+      } else if (combo[1] === 'x') {
+        for (const s1 of SUITS) {
+          if (s1 !== combo[3]) {
+            hands.push([combo[0] + s1, combo[2] + combo[3]].sort().join(':'));
+          }
+        }
+      } else if (combo[3] === 'x') {
+        for (const s1 of SUITS) {
+          if (s1 !== combo[1]) {
+            hands.push([combo[0] + combo[1], combo[2] + s1].sort().join(':'));
+          }
+        }
+      } else {
+        if (combo[1] !== combo[3]) {
+          hands.push([combo[0] + combo[1], combo[2] + combo[3]].sort().join(':'));
+        }
+      }
+    } else {
+      if (combo[1] === 'x' && combo[3] === 'x') {
+        for (const s1 of SUITS) {
+          for (const s2 of SUITS) {
+            hands.push([combo[0] + s1, combo[1] + s2].sort().join(':'));
+          }
+        }
+      } else if (combo[1] === 'x') {
+        for (const s1 of SUITS) {
+          hands.push([combo[0] + s1, combo[2] + combo[3]].sort().join(':'));
+        }
+      } else if (combo[3] === 'x') {
+        for (const s1 of SUITS) {
+          hands.push([combo[0] + combo[1], combo[2] + s1].sort().join(':'));
+        }
+      } else {
+        hands.push([combo[0] + combo[1], combo[2] + combo[3]].sort().join(':'));
+      }
+    }
+  }
+  return hands;
 };
 
 
@@ -519,6 +781,7 @@ const updatePercent = function(id, setSlider) {
 
 
 exports.buildRange = function(title, id) {
+  ACTIVE_HANDS[id] = new Set();
   const header = $(`<h4 class='mb-2'>${title}</h4>`);
   // eslint-disable-next-line max-len
   const rangePercent = $(`<div id='${id}_percent' style='float: right;' data-toggle='tooltip' data-html='true' title='<strong>Raising</strong> and <strong>Calling</strong> percentages'>R: 0.0%, C: 0.0%</div>`);
@@ -527,7 +790,6 @@ exports.buildRange = function(title, id) {
   // eslint-disable-next-line max-len
   const rangeString = $(`<input type='text' style='width: 100%; font-size: small;' id='${id}_range' aria-label='Range text input'>`);
   const rangeSlider = $('<div class="my-1"></div>');
-  // eslint-disable-next-line max-len
   const dummy = $(`<input id='${id}_slider' type='text' class='js-range-slider' value='' />`);
   rangeSlider.append(dummy);
   dummy.ionRangeSlider({
@@ -543,53 +805,17 @@ exports.buildRange = function(title, id) {
     onChange: sliderUpdate,
   });
   const rangeTable = createTableSelector(id);
+  const suitSelect = createSuitSelector(id);
   const rangeLoader = createRangeLoader(id);
-  rangeString.on('keyup', descriptorUpdate);
-  // eslint-disable-next-line max-len
+  rangeString.on('keyup', descriptorUpdateEvent);
   const rangeSelector = $(`<div id='${id}_player' class='col-5 player p-3'></div>`)
       .append(header)
       .append(rangeString)
       .append(rangeSlider)
       .append(rangeTable)
+      .append(suitSelect)
       .append(rangeLoader);
   return rangeSelector;
-};
-
-
-const expandCombos = function(combos) {
-  const hands = [];
-  for (const c of combos) {
-    const expansion = expandCombo(c);
-    for (const h of expansion) {
-      hands.push(h);
-    }
-  }
-  return hands;
-};
-
-
-const expandCombo = function(combo) {
-  const hands = [];
-  if (combo.length === 2) {
-    for (let i = 0; i <= 2; i++) {
-      for (let j = i + 1; j <= 3; j++) {
-        hands.push([combo[0] + SUITS[i], combo[1] + SUITS[j]]);
-      }
-    }
-  } else if (combo[2] === 's') {
-    for (const s of SUITS) {
-      hands.push([combo[0] + s, combo[1] + s]);
-    }
-  } else {
-    for (const s1 of SUITS) {
-      for (const s2 of SUITS) {
-        if (s1 !== s2) {
-          hands.push([combo[0] + s1, combo[1] + s2]);
-        }
-      }
-    }
-  }
-  return hands;
 };
 
 
