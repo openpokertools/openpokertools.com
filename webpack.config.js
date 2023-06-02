@@ -5,6 +5,7 @@ module.exports = {
     'index': './src/index.js',
     'range-equity': './src/range-equity.js',
     'poker-odds': './src/poker-odds.js',
+    'info': './src/info.js',
   },
   output: {
     filename: '[name].js',

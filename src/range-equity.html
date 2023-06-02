@@ -17,6 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js" integrity="sha512-kZsqvmw94Y8hyhwtWZJvDtobwQ9pLhF1DuIvcqSuracbRn6WJs1Ih+04fpH/8d1CFKysp7XA1tR0Aa2jKLTQUg==" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="static/styles.css">
   <script src="range-equity.js" type="text/javascript" defer></script>
+  <script src="info.js" type="text/javascript" defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
   <script>
@@ -59,7 +60,6 @@
   </header>
 
   <div class="container-lg">
-
     <div class="row" id="display" data-nosnippet>
       <div class="col-lg-11 mx-auto py-4 px-md-5 rounded analysisview" style="max-width: 998px">
         <div class="table-responsive">
@@ -116,46 +116,49 @@
           <button type="button" id="simulate" class="btn btn-primary ml-2">Simulate</button>
         </div>
         <div id="simulation_errors"></div>
+        <div id="right-gutter"></div>
       </div>
     </div>
     <div class="row my-3 justify-content-center" id="players" data-nosnippet>
       <div id="0_player" class="col-5 player rounded my-2 mx-xl-4 mx-2" style="height: 629px"></div>
       <div id="1_player" class="col-5 player rounded my-2 mx-xl-4 mx-2" style="height: 629px"></div>
     </div>
-    <div class="info my-5">
-      <h4><span data-nosnippet>Range Equity Calculator</span></h4>
-      <p class="ml-1">
-        This calculator allows the user to calculate range vs range equity in texas hold'em poker. Simulate different board runouts and hole cards, and learn how different ranges are affected.
-      </p>
-      <h5>Range</h5>
-      <p class="ml-1">
-        The range panel allows the creation of an opening range. The range can then be examined using the tools on this page. The range can be created in three ways.
-      </p>
-      <h6>Text input</h6>
-      <p class="ml-1">
-        The text input uses shorthand text descriptors to define the range. Hands can be entered individually in a comma separated list (e.g. AA, AJo, 32s). Or as a sequence of hands using the + and - symbols. For example, "T5o+" will add the hands T9o, T8o, T7o, T6o, T5o to the range. "96s-" will add the hands 96s, 95s, 94s, 93s, 92s to the range. And "66-99" will add the hands "66", "77", "88", "99". Note that hands should be defined with the highest rank first, and unpaired hands should be specified as suited (s) or offsuit (o).
-      </p>
-      <h6>Slider</h6>
-      <p class="ml-1">
-        The slider defines a range based on a specific proportion of all possible hands. The hands are added in an order which favors hands with good preflop equity, however this does not necessarily correspond the hands which you or your opponents are opening, and it is recommend you make adjustments based on your experience.
-      </p>
-      <h6>Grid</h6>
-      <p class="ml-1">
-        The grid allows the addition and removal of individual hands from the defined range. Add and remove hands by clicking on them.
-      </p>
-      <h5>Simulation</h5>
-      <p class="ml-1">
-        When the <i>simulate</i> button is clicked, the program will take in the range of all the defined players and randomly simulate matchups between combos from their ranges. This will allow the estimation of the equity of each player, as well as the probability of tying (splitting the pot) and the pot odds.
-      </p>
-      <p class="ml-1">
-        If both hole cards are specified for any player, then the simulation will use the hole cards instead of the range.
-      </p>
-      <p class="ml-1">
-        If any part of the board is specified, then the simulation will only randomize the unspecified cards.
-      </p>
-      <p class="ml-1">
-        If any player is unchecked, then that player will not be considered in the simulation.
-      </p>
+    <div class="row">
+      <div class="info my-3 mx-auto" style="max-width: 998px">
+        <h4><span data-nosnippet>Range Equity Calculator</span></h4>
+        <p class="ml-1">
+          This calculator allows the user to calculate range vs range equity in texas hold'em poker. Simulate different board runouts and hole cards, and learn how different ranges are affected.
+        </p>
+        <h5>Range</h5>
+        <p class="ml-1">
+          The range panel allows the creation of an opening range. The range can then be examined using the tools on this page. The range can be created in three ways.
+        </p>
+        <h6>Text input</h6>
+        <p class="ml-1">
+          The text input uses shorthand text descriptors to define the range. Hands can be entered individually in a comma separated list (e.g. AA, AJo, 32s). Or as a sequence of hands using the + and - symbols. For example, "T5o+" will add the hands T9o, T8o, T7o, T6o, T5o to the range. "96s-" will add the hands 96s, 95s, 94s, 93s, 92s to the range. And "66-99" will add the hands "66", "77", "88", "99". Note that hands should be defined with the highest rank first, and unpaired hands should be specified as suited (s) or offsuit (o).
+        </p>
+        <h6>Slider</h6>
+        <p class="ml-1">
+          The slider defines a range based on a specific proportion of all possible hands. The hands are added in an order which favors hands with good preflop equity, however this does not necessarily correspond the hands which you or your opponents are opening, and it is recommend you make adjustments based on your experience.
+        </p>
+        <h6>Grid</h6>
+        <p class="ml-1">
+          The grid allows the addition and removal of individual hands from the defined range. Add and remove hands by clicking on them.
+        </p>
+        <h5>Simulation</h5>
+        <p class="ml-1">
+          When the <i>simulate</i> button is clicked, the program will take in the range of all the defined players and randomly simulate matchups between combos from their ranges. This will allow the estimation of the equity of each player, as well as the probability of tying (splitting the pot) and the pot odds.
+        </p>
+        <p class="ml-1">
+          If both hole cards are specified for any player, then the simulation will use the hole cards instead of the range.
+        </p>
+        <p class="ml-1">
+          If any part of the board is specified, then the simulation will only randomize the unspecified cards.
+        </p>
+        <p class="ml-1">
+          If any player is unchecked, then that player will not be considered in the simulation.
+        </p>
+      </div>
     </div>
     <footer class="text-muted my-5 border-top">
       <div class="text-center my-4">

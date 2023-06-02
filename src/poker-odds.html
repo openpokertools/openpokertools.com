@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Texas Hold'em Poker Odds Calculator</title>
-  <meta name="description" content="Simple Texas hold'em poker odds calculator. Simply enter your cards and board texture, and the calculator will find your odds of winning." />
+  <meta name="description" content="Easily calculate your winning odds in poker with our simple and dynamic odds calculator. Enter your cards and optionally the board texture, and get real-time winning probabilities for each hand. Try it now!" />
   <meta name="keywords" content="poker equity calculator, poker odds calculator, poker odds, poker equity, poker calculator, equity calculator, texas hold'em odds calcualtor" />
   <meta name="language" content="english" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,6 +16,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="static/styles.css">
   <script src="poker-odds.js" type="text/javascript" defer></script>
+  <script src="info.js" type="text/javascript" defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168084704-1"></script>
   <script>
@@ -131,13 +132,16 @@
             </tbody>
           </table>
         </div>
+        <div id="right-gutter"></div>
       </div>
     </div>
-    <div class="info my-5" style="column-count: 1">
-      <h4><span data-nosnippet>Odds calculator</span></h4>
-      <p class="ml-1">
-        Simple poker odds calculator. Simply enter your cards and optionally the board texture, and the calculator will give the winning odds for each hand. The odds are calculated dynamically as the cards are added, but the calculator will not take into account invalid hands or boards. For example, it will not take into account the board if there are less than three cards, or a hand with only one card.
-      </p>
+    <div class="row">
+      <div class="info my-5 mx-auto" style="width: 500px; column-count: 1">
+        <h4><span data-nosnippet>Odds calculator</span></h4>
+        <p class="ml-1">
+          Simple poker odds calculator. Simply enter your cards and optionally the board texture, and the calculator will give the winning odds for each hand. The odds are calculated dynamically as the cards are added, but the calculator will not take into account invalid hands or boards. For example, it will not take into account the board if there are less than three cards, or a hand with only one card.
+        </p>
+      </div>
     </div>
     <footer class="text-muted my-5 border-top">
       <div class="text-center my-4">

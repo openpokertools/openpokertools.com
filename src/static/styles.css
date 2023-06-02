@@ -18,6 +18,12 @@ td {
     vertical-align: middle;
 }
 
+#right-gutter {
+    position: absolute;
+    top: 0px;
+    right:-190px;
+}
+
 .navigation {
     color: #FCFCFC;
 }
@@ -92,6 +98,7 @@ td {
 
 .analysisview {
     background-color: #FCFCFC;
+    position: relative;
 }
 
 .board_viewer {
@@ -163,6 +170,65 @@ td {
     background-color: lightgreen;
     border-color: #acf2ac;
     border-style: inset;
+}
+
+.suited.selected.spade,
+.suited.selected.heart,
+.suited.selected.club,
+.suited.selected.diamond {
+    background: linear-gradient(to right, lightgreen 25%, silver 25%);
+    border-color: #eeeeee !important;
+}
+
+.offsuit.selected.spade,
+.offsuit.selected.heart,
+.offsuit.selected.club,
+.offsuit.selected.diamond {
+    background: linear-gradient(to right, lightgreen 50%, gainsboro 50%);
+    border-color: #eeeeee !important;
+}
+
+.pocketpair.selected.spade,
+.pocketpair.selected.heart,
+.pocketpair.selected.club,
+.pocketpair.selected.diamond {
+    background: linear-gradient(to right, lightgreen 50%, #9A9A9A 50%);
+    border-color: #eeeeee !important;
+}
+
+.subset.selected {
+    border-color: #eeeeee !important;
+}
+
+.selected.spade:before,
+.selected.heart:before,
+.selected.club:before,
+.selected.diamond:before {
+    position: absolute;
+    top: -4px;
+    left: 22px;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.selected.spade:before {
+    color: black;
+    content: '♠';
+}
+
+.selected.heart:before {
+    color: red;
+    content: '♥';
+}
+
+.selected.club:before {
+    color: black;
+    content: '♣';
+}
+
+.selected.diamond:before {
+    color: red;
+    content: '♦';
 }
 
 .popover{
