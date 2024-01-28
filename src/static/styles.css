@@ -18,12 +18,6 @@ td {
     vertical-align: middle;
 }
 
-#right-gutter {
-    position: absolute;
-    top: 0px;
-    right:-190px;
-}
-
 .navigation {
     color: #FCFCFC;
 }
