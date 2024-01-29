@@ -1,0 +1,47 @@
+name: deploy
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Build
+        run: npm run build
+
+      - name: Create page artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist'
+
+  # deploy:
+  #   needs: build
+  #   permissions:
+  #     pages: write
+  #     id-token: write
+
+  #   environment:
+  #     name: github-pages
+  #     url: '${{ steps.deployment.outputs.page_url }}'
+
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
+
