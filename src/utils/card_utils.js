@@ -93,7 +93,7 @@ const genCardSelect = function() {
 
 exports.addCardSelect = function(element) {
   element.popover({
-    container: 'body',
+    container: element,
     content: genCardSelect,
     trigger: 'focus',
     html: true,
