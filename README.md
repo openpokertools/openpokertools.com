@@ -1,5 +1,5 @@
 <h1>
-    <img style="position: relative; bottom: -10px;" width="50" src="https://raw.githubusercontent.com/openpokertools/openpokertools.com/main/src/static/logo.png">
+    <img width="50" src="https://raw.githubusercontent.com/openpokertools/openpokertools.com/main/src/static/logo_tight.png">
     OpenPokerTools.com
 </h1>
 
