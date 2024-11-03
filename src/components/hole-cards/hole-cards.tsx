@@ -3,7 +3,7 @@ import PlayingCard from "../playing-card/playing-card";
 import { PlayingCardStateProps } from "../playing-card/playing-card-props";
 import { HoleCards, HoleCardsProps } from "./hole-cards-props";
 
-const Hole: React.FC<HoleCardsProps> = ({ holeCards, setHoleCards }) => {
+const Hole = ({ holeCards, setHoleCards }: HoleCardsProps) => {
     const [card1State, setCard1State] = useState<PlayingCardStateProps>({});
     const [card2State, setCard2State] = useState<PlayingCardStateProps>({});
 
@@ -11,8 +11,8 @@ const Hole: React.FC<HoleCardsProps> = ({ holeCards, setHoleCards }) => {
         cardState: PlayingCardStateProps,
         boardKey: keyof HoleCards,
     ) => {
-        setHoleCards((prevBoard) => ({
-            ...prevBoard,
+        setHoleCards((prevHoleCards) => ({
+            ...prevHoleCards,
             [boardKey]:
                 cardState.rank && cardState.suit
                     ? cardState.rank + cardState.suit

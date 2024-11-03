@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import RangeSelector from "../range/range-selector";
+import { Player } from "./range-equity-props";
 
-const PlayerDisplay = () => {
-    const [selectedHands, setSelectedHands] = useState<Set<string>>(new Set());
+interface PlayerDisplayProps {
+    player: Player;
+    updatePlayer: (id: number, newData: Partial<Player>) => void;
+}
+
+const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
+    const handleSelectedHandsChange = (newHands: Set<string>) => {
+        updatePlayer(player.id, { selectedHands: newHands });
+    };
 
     return (
         <div
@@ -11,8 +19,9 @@ const PlayerDisplay = () => {
             data-nosnippet
         >
             <RangeSelector
-                selectedHands={selectedHands}
-                setSelectedHands={setSelectedHands}
+                selectedHands={player.selectedHands}
+                setSelectedHands={handleSelectedHandsChange}
+                name={player.id === 0 ? "Hero" : `Villain ${player.id}`}
             />
         </div>
     );

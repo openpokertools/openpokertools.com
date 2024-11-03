@@ -18,17 +18,21 @@ import PlayingCardProvider from "../playing-card/playing-card-context";
 import ClearBoardButton from "../board/clear-board-button";
 import SimulateButton from "./simulate-button";
 import AddPlayerButton from "./add-player-button";
-import PlayerDisplay from "./player-display";
+import { Player } from "./range-equity-props";
+import { Button } from "../ui/button";
 
-const RangeEquityDisplay = () => {
+interface RangeEquityDisplayProps {
+  players: Array<Player>;
+  setPlayers: Dispatch<SetStateAction<Array<Player>>>;
+  updatePlayer: (id: number, newData: Partial<Player>) => void;
+}
+
+const RangeEquityDisplay = ({
+  players,
+  setPlayers,
+  updatePlayer,
+}: RangeEquityDisplayProps) => {
   const [boardCards, setBoardCards] = useState<BoardCards>({});
-  const holeCards: Array<HoleCards> = [];
-  const setHoleCards: Array<Dispatch<SetStateAction<HoleCards>>> = [];
-  for (let i = 0; i < 2; i++) {
-    const [h, setH] = useState<HoleCards>({});
-    holeCards.push(h);
-    setHoleCards.push(setH);
-  }
 
   return (
     <PlayingCardProvider>
@@ -48,24 +52,37 @@ const RangeEquityDisplay = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {holeCards.map((holeCard, index) => (
-            <TableRow key={index}>
-              <TableCell className="text-center">
-                <Checkbox />
-              </TableCell>
-              <TableCell>Villain</TableCell>
-              <TableCell className="flex py-2">
-                <Hole holeCards={holeCard} setHoleCards={setHoleCards[index]} />
-              </TableCell>
-              <TableCell className="text-center">-</TableCell>
-              <TableCell className="text-center">-</TableCell>
-              <TableCell className="text-center">-</TableCell>
-              <TableCell className="text-center">-</TableCell>
-              <TableCell>
-                <X className="mx-auto" />
-              </TableCell>
-            </TableRow>
-          ))}
+          {players.map((player) => {
+            const handleHoleCardsChange = (newHoleCards: HoleCards) => {
+              updatePlayer(player.id, { holeCards: newHoleCards });
+            };
+
+            return (
+              <TableRow key={player.id}>
+                <TableCell className="text-center">
+                  <Checkbox checked={player.active} />
+                </TableCell>
+                <TableCell>
+                  {player.id === 0 ? "Hero" : `Villain ${player.id}`}
+                </TableCell>
+                <TableCell className="flex p-1">
+                  <Hole
+                    holeCards={player.holeCards}
+                    setHoleCards={handleHoleCardsChange}
+                  />
+                </TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-center p-10 h-0">
+                  <Button className="h-[30px] p-0 m-0 bg-transparent hover:bg-transparent text-black">
+                    <X />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
       <BoardProvider>
@@ -75,7 +92,7 @@ const RangeEquityDisplay = () => {
         <div className="flex p-3">
           <div className="ml-auto flex gap-x-1">
             <ClearBoardButton />
-            <AddPlayerButton />
+            <AddPlayerButton players={players} setPlayers={setPlayers} />
             <SimulateButton />
           </div>
         </div>

@@ -7,15 +7,16 @@ import RangePercent from "./range-percent";
 import RangeLoader from "./range-loader";
 import { RangeSelectorProps } from "./range-props";
 
-const RangeSelector: React.FC<RangeSelectorProps> = ({
+const RangeSelector = ({
   selectedHands,
   setSelectedHands,
   activeHands,
-}) => {
+  name,
+}: RangeSelectorProps) => {
   return (
     <div className="player p-3">
       <h4 className="mb-2">
-        Range
+        {name ? name : "Range"}
         <RangePercent
           selectedHands={selectedHands}
           setSelectedHands={setSelectedHands}
