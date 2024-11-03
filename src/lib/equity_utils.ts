@@ -38,20 +38,20 @@ const randomChoiceN = <T>(choices: Array<T>, n: number): Array<T> => {
   return elements;
 };
 
-const chooseHand = (
-  hands: Array<Array<string>>,
+const chooseCombo = (
+  combos: Array<Array<string>>,
   selectedCards: Set<number>,
 ): Array<number> | null => {
-  for (let i = hands.length - 1; i >= 0; i--) {
+  for (let i = combos.length - 1; i >= 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const x = hands[j];
-    hands[j] = hands[i];
-    hands[i] = x;
-    const hand = [cardToInt(x[0]), cardToInt(x[1])];
-    if (!(selectedCards.has(hand[0]) || selectedCards.has(hand[1]))) {
-      selectedCards.add(hand[0]);
-      selectedCards.add(hand[1]);
-      return hand;
+    const x = combos[j];
+    combos[j] = combos[i];
+    combos[i] = x;
+    const combo = [cardToInt(x[0]), cardToInt(x[1])];
+    if (!(selectedCards.has(combo[0]) || selectedCards.has(combo[1]))) {
+      selectedCards.add(combo[0]);
+      selectedCards.add(combo[1]);
+      return combo;
     }
   }
   return null;
@@ -59,7 +59,7 @@ const chooseHand = (
 
 export const calculateHandRangeEquity = function (
   hand: Array<string>,
-  villainHands: Array<Array<string>>,
+  villainCombos: Array<Array<string>>,
   dealtBoard: Array<string>,
 ): Array<number> {
   let wins = 0;
@@ -73,9 +73,9 @@ export const calculateHandRangeEquity = function (
 
   if (boardInts.length === 5) {
     const hscore = evaluate(boardInts, handInts);
-    for (const villainHand of villainHands) {
-      const villainHandInts = villainHand.map(cardToInt);
-      const vscore = evaluateEarly(boardInts, villainHandInts, hscore);
+    for (const villainCombo of villainCombos) {
+      const villainComboInts = villainCombo.map(cardToInt);
+      const vscore = evaluateEarly(boardInts, villainComboInts, hscore);
       if (hscore < vscore) {
         wins += 1;
       } else if (hscore === vscore) {
@@ -94,20 +94,20 @@ export const calculateHandRangeEquity = function (
       scores.push(hscore);
     }
 
-    for (const villainHand of villainHands) {
-      const villainHandInts = villainHand.map(cardToInt);
+    for (const villainCombo of villainCombos) {
+      const villainComboInts = villainCombo.map(cardToInt);
 
       for (let i = 0; i < deals.length; i++) {
         const deal = deals[i];
         if (
-          deal.includes(villainHandInts[0]) ||
-          deal.includes(villainHandInts[1])
+          deal.includes(villainComboInts[0]) ||
+          deal.includes(villainComboInts[1])
         ) {
           continue;
         }
         const board = boardInts.concat(deal);
         const hscore = scores[i];
-        const vscore = evaluateEarly(board, villainHandInts, hscore);
+        const vscore = evaluateEarly(board, villainComboInts, hscore);
         if (hscore < vscore) {
           wins += 1;
         } else if (hscore === vscore) {
@@ -122,7 +122,7 @@ export const calculateHandRangeEquity = function (
 
 export const approximateHandRangeEquity = (
   hand: Array<string>,
-  villainHands: Array<Array<string>>,
+  villainCombos: Array<Array<string>>,
   n: number,
 ): Array<number> => {
   let wins = 0;
@@ -130,17 +130,17 @@ export const approximateHandRangeEquity = (
   const handInts = hand.map(cardToInt);
 
   for (let i = 0; i < n; i++) {
-    const selectedHands = [handInts];
+    const selectedCombos = [handInts];
     const selectedCards = new Set(handInts);
-    const villainHand = chooseHand(villainHands, selectedCards);
-    if (villainHand === null) {
+    const villainCombo = chooseCombo(villainCombos, selectedCards);
+    if (villainCombo === null) {
       throw "No viable hand combinations in player ranges";
     }
-    selectedHands.push(villainHand);
+    selectedCombos.push(villainCombo);
     const deck = getDeck(selectedCards);
     const board = randomChoiceN(deck, 5);
     const results = [];
-    for (const h of selectedHands) {
+    for (const h of selectedCombos) {
       results.push(evaluate(board, h));
     }
     if (results[0] < results[1]) {
@@ -152,48 +152,51 @@ export const approximateHandRangeEquity = (
   return [wins / n, ties / n];
 };
 
-export const calculateRangeRangeEquities = function (playerHands, dealtBoard) {
+export const calculateRangeRangeEquities = (
+  playerCombos: Array<Array<Array<string>>>,
+  dealtBoard: Array<string>,
+): [Array<number>, Array<number>, number] => {
   const n = 5000;
-  const wins = new Array(playerHands.length).fill(0);
-  const ties = new Array(playerHands.length).fill(0);
+  const wins: Array<number> = new Array(playerCombos.length).fill(0);
+  const ties: Array<number> = new Array(playerCombos.length).fill(0);
   const indices = [];
-  dealtBoard = dealtBoard.map(cardToInt);
-  for (let i = 0; i < playerHands.length; i++) {
+  const board = dealtBoard.map(cardToInt);
+  for (let i = 0; i < playerCombos.length; i++) {
     indices.push(i);
   }
   indices.sort((i, j) => {
-    return playerHands[i].length - playerHands[j].length;
+    return playerCombos[i].length - playerCombos[j].length;
   });
 
   for (let i = 0; i < n; i++) {
-    let selectedCards = new Set(dealtBoard);
-    let selectedHands = [];
+    let selectedCards = new Set(board);
+    let selectedCombos = [];
     let selected = false;
     let m = 0;
 
     while (!selected) {
       selected = true;
       for (const ind of indices) {
-        const hand = chooseHand(playerHands[ind], selectedCards);
-        if (hand === false) {
+        const combo = chooseCombo(playerCombos[ind], selectedCards);
+        if (combo === null) {
           selected = false;
           if (m > 2000) {
             throw "No viable hand combinations in player ranges";
           }
           m += 1;
-          selectedCards = new Set(dealtBoard);
-          selectedHands = [];
+          selectedCards = new Set(board);
+          selectedCombos = [];
           break;
         }
-        selectedHands.push(hand);
+        selectedCombos.push(combo);
       }
     }
 
-    const deck = getDeck(dealtBoard.concat(...selectedHands));
-    const board = dealtBoard.concat(randomChoiceN(deck, 5 - dealtBoard.length));
+    const deck = getDeck(selectedCards);
+    const iterationBoard = board.concat(randomChoiceN(deck, 5 - board.length));
     const results = [];
-    for (const h of selectedHands) {
-      results.push(evaluate(board, h));
+    for (const h of selectedCombos) {
+      results.push(evaluate(iterationBoard, h));
     }
     const winners = findWinners(results);
     if (winners.length > 1) {

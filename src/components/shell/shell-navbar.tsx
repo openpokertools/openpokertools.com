@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Github } from "lucide-react";
+import { StaticImage } from "gatsby-plugin-image";
 
 export const ShellNavbar = () => {
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -18,10 +19,12 @@ export const ShellNavbar = () => {
             href="https://openpokertools.com/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src="/logo.png"
-              className="h-8"
-              alt="OpenPokerTools.com Logo"
+            <StaticImage
+              src="../../images/logo_tight.png"
+              alt="Logo"
+              layout="fixed"
+              height={40}
+              placeholder="none"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
               OpenPokerTools.com

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import RangeSelector from "../range/range-selector";
 import { Player } from "./range-equity-props";
 
@@ -12,18 +12,21 @@ const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
         updatePlayer(player.id, { selectedHands: newHands });
     };
 
-    return (
-        <div
-            className="rounded player mx-auto"
-            style={{ width: 460 }}
-            data-nosnippet
-        >
-            <RangeSelector
-                selectedHands={player.selectedHands}
-                setSelectedHands={handleSelectedHandsChange}
-                name={player.id === 0 ? "Hero" : `Villain ${player.id}`}
-            />
-        </div>
+    return useMemo(
+        () => (
+            <div
+                className="rounded player mx-auto"
+                style={{ width: 460 }}
+                data-nosnippet
+            >
+                <RangeSelector
+                    selectedHands={player.selectedHands}
+                    setSelectedHands={handleSelectedHandsChange}
+                    name={player.id === 0 ? "Hero" : `Villain ${player.id}`}
+                />
+            </div>
+        ),
+        [player.selectedHands],
     );
 };
 

@@ -29,7 +29,7 @@ const RangeEquityTool = () => {
       </DisplayContainer>
       <div className="grid grid-cols-2 mx-auto gap-4 max-w-[998px]">
         {players.map((player) => (
-          <div className="col-span-1">
+          <div key={player.id} className="col-span-1">
             <PlayerDisplay
               key={player.id}
               player={player}

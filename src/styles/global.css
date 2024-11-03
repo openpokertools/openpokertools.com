@@ -371,29 +371,29 @@ button.showbutton:before {
 }
 
 .irs--round {
-  height: 40px;
+  height: 40px !important;
 }
 
 .irs--round .irs-bar {
-  top: 18px;
-  height: 4px;
-  background-color: #007bff;
+  top: 18px !important;
+  height: 4px !important;
+  background-color: #007bff !important;
 }
 
 .irs--round .irs-line {
-  top: 18px;
-  height: 4px;
-  background-color: #dee2e6;
-  border-radius: 4px;
+  top: 18px !important;
+  height: 4px !important;
+  background-color: #dee2e6 !important;
+  border-radius: 4px !important;
 }
 
 .irs--round .irs-handle {
-  top: 8px;
-  width: 24px;
-  height: 24px;
-  border: 4px solid #007bff;
-  background-color: white;
-  border-radius: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 255, 0.3);
-  cursor: pointer;
+  top: 8px !important;
+  width: 24px !important;
+  height: 24px !important;
+  border: 4px solid #007bff !important;
+  background-color: white !important;
+  border-radius: 24px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 255, 0.3) !important;
+  cursor: pointer !important;
 }

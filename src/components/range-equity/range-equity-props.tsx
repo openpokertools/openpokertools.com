@@ -13,3 +13,10 @@ export const createPlayer = (id: number): Player => ({
     holeCards: {},
     selectedHands: new Set(),
 });
+
+export interface PlayerStats {
+    id: number;
+    win?: number;
+    tie?: number;
+    potOdds?: string;
+}
