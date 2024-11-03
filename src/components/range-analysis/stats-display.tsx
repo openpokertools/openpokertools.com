@@ -52,33 +52,35 @@ const StatsDisplay: React.FC<StatsProps> = ({
     >
       <TabsList className="grid w-full grid-cols-4">
         {ROUNDS.map((round) => (
-          <TabsTrigger value={round}>{ROUNDS_DISPLAY[round]}</TabsTrigger>
+          <TabsTrigger key={`${round}-tab`} value={round}>
+            {ROUNDS_DISPLAY[round]}
+          </TabsTrigger>
         ))}
       </TabsList>
       {ROUNDS.map((round) => {
         const roundStats = stats.get(round) || new Map();
         return (
-          <TabsContent value={round}>
+          <TabsContent key={`${round}-content`} value={round}>
             <Table className="stats_table">
               <TableBody>
                 {QUALIFIERS.map((q) => {
                   return (
-                    <>
+                    <React.Fragment key={`${round}-content-fragment-${q}`}>
                       {q === "straightflush" && (
-                        <TableRow>
+                        <TableRow key={`${round}-content-madehands`}>
                           <TableCell className="p-0" colSpan={4}>
                             <i>Made Hands</i>
                           </TableCell>
                         </TableRow>
                       )}
                       {q === "flushdraw" && (
-                        <TableRow>
+                        <TableRow key={`${round}-content-draws`}>
                           <TableCell className="p-0" colSpan={4}>
                             <i>Draws</i>
                           </TableCell>
                         </TableRow>
                       )}
-                      <TableRow key={round + q}>
+                      <TableRow key={`${round}-content-${q}`}>
                         <TableCell className="stats_hand_check">
                           {round !== "preflop" && (
                             <Checkbox
@@ -107,7 +109,10 @@ const StatsDisplay: React.FC<StatsProps> = ({
                       {SUBQUALIFIERS[q] &&
                         SUBQUALIFIERS[q].map((sq) => {
                           return (
-                            <TableRow key={round + sq} className="subqualifier">
+                            <TableRow
+                              key={`${round}-content-${sq}`}
+                              className="subqualifier"
+                            >
                               <TableCell className="stats_hand_check"></TableCell>
                               <TableCell className="stats_hand_qualifier">
                                 {round !== "preflop" && (
@@ -140,7 +145,7 @@ const StatsDisplay: React.FC<StatsProps> = ({
                             </TableRow>
                           );
                         })}
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </TableBody>

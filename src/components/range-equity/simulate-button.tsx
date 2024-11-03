@@ -54,7 +54,6 @@ const SimulateButton = ({
         newPlayerStats.push({ id: player.id });
       }
     });
-    console.log(newPlayerStats);
     setPlayerStats(newPlayerStats);
   };
 

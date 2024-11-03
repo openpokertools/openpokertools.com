@@ -4088,10 +4088,10 @@ export const QUALIFIER_DISPLAY = {
 };
 
 export const SUITS_TO_HTML = {
-  s: "&spades;",
-  c: "&clubs;",
-  d: "&diams;",
-  h: "&hearts;",
+  s: "♠",
+  c: "♣",
+  d: "♦",
+  h: "♥",
 };
 
 export const ROUNDS = ["preflop", "flop", "turn", "river"];

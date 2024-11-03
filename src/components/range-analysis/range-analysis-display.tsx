@@ -45,6 +45,11 @@ const RangeAnalysisDisplay = () => {
   const [analysisHands, setAnalysisHands] = useState<AnalysisHands>(
     ANALYSIS_HANDS_DEFAULT,
   );
+  const [keptToTurn, setKeptToTurn] = useState<Array<[string, string]>>([]);
+  const [keptToRiver, setKeptToRiver] = useState<Array<[string, string]>>([]);
+  const [keptToShowdown, setKeptToShowdown] = useState<Array<[string, string]>>(
+    [],
+  );
 
   useEffect(() => {
     const newStats = calculateStats(
@@ -69,6 +74,10 @@ const RangeAnalysisDisplay = () => {
       keptToRiver: newStats.keptToRiver,
       keptToShowdown: newStats.keptToShowdown,
     });
+
+    setKeptToTurn(newStats.keptToTurn);
+    setKeptToRiver(newStats.keptToRiver);
+    setKeptToShowdown(newStats.keptToShowdown);
   }, [selectedHands, boardCards, holeCards, selectedQualifiers, selectedTab]);
 
   return (
@@ -117,7 +126,11 @@ const RangeAnalysisDisplay = () => {
           />
         </div>
       </div>
-      <CombosDisplay />
+      <CombosDisplay
+        keptToTurn={keptToTurn}
+        keptToRiver={keptToRiver}
+        keptToShowdown={keptToShowdown}
+      />
     </>
   );
 };
