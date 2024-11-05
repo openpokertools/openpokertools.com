@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { SUIT_SVGS } from "./playing-card-svgs";
-import { PlayingCardStateProps } from "./playing-card-props";
-import { RANKS, SUITS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { RANKS, SUITS } from "@/lib/constants";
+import React, { useState } from "react";
 import { usePlayingCardContext } from "./playing-card-context";
+import { PlayingCardStateProps } from "./playing-card-props";
+import { SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardPopoverProps {
   playingCardState: PlayingCardStateProps;

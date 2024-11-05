@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DisplayContainer from "../shell/display-container";
-import RangeEquityDisplay from "./range-equity-display";
 import PlayerDisplay from "./player-display";
+import RangeEquityDisplay from "./range-equity-display";
 import { Player, createPlayer } from "./range-equity-props";
 
 const RangeEquityTool = () => {

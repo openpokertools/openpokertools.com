@@ -1,5 +1,5 @@
+import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
 import React, { useState, useEffect } from "react";
-import { handsToDescriptor, descriptorToHands } from "@/lib/descriptor";
 import { RangeSelectorProps } from "./range-props";
 
 const RangeText: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {

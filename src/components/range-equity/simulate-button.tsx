@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
-import { Player, PlayerStats } from "./range-equity-props";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
-import { BoardCards } from "../board/board-props";
-import { handsToCombos } from "@/lib/range_utils";
 import { getPotOdds } from "@/lib/pot_odds";
+import { handsToCombos } from "@/lib/range_utils";
+import React, { Dispatch, SetStateAction } from "react";
+import { BoardCards } from "../board/board-props";
+import { Player, PlayerStats } from "./range-equity-props";
 
 interface SimulateButtonProps {
   players: Array<Player>;

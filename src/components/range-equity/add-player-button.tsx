@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Player, PlayerStats, createPlayer } from "./range-equity-props";
 
 interface AddPlayerButtonProps {

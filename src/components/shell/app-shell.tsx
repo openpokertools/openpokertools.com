@@ -1,6 +1,6 @@
 import React from "react";
-import { ShellNavbar } from "./shell-navbar";
 import { ShellFooter } from "./shell-footer";
+import { ShellNavbar } from "./shell-navbar";
 
 const AppShell = ({ children }: { children: React.ReactNode }) => {
   return (

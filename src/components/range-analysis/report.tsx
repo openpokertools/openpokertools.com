@@ -1,6 +1,6 @@
+import { Underline } from "lucide-react";
 import React, { useState } from "react";
 import { CombosReport, EquityReport } from "./report-props";
-import { Underline } from "lucide-react";
 
 interface ReportProps {
   combosReport: CombosReport;

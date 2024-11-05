@@ -1,9 +1,9 @@
-import React from "react";
-import type { HeadFC, PageProps } from "gatsby";
-import AppShell from "@/components/shell/app-shell";
-import DisplayContainer from "@/components/shell/display-container";
 import RangeAnalysisDisplay from "@/components/range-analysis/range-analysis-display";
 import RangeAnalysisInfo from "@/components/range-analysis/range-analysis-info";
+import AppShell from "@/components/shell/app-shell";
+import DisplayContainer from "@/components/shell/display-container";
+import type { HeadFC, PageProps } from "gatsby";
+import React from "react";
 
 const IndexPage: React.FC<PageProps> = () => {
   return (

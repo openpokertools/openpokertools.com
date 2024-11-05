@@ -1,4 +1,4 @@
-import { getRankInt, getSuitInt, cardToInt, evaluate } from "./evaluation_utils";
+import { cardToInt, evaluate, getRankInt, getSuitInt } from "./evaluation_utils";
 
 const MAX_STRAIGHT_FLUSH = 10;
 const MAX_FOUR_OF_A_KIND = 166;

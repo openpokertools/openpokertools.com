@@ -1,7 +1,7 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { useBoardContext } from "./board-context";
+import React from "react";
 import { usePlayingCardContext } from "../playing-card/playing-card-context";
+import { useBoardContext } from "./board-context";
 
 const ClearBoardButton = () => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();

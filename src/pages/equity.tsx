@@ -1,8 +1,8 @@
-import React from "react";
-import type { HeadFC, PageProps } from "gatsby";
-import AppShell from "@/components/shell/app-shell";
 import RangeEquityInfo from "@/components/range-equity/range-equity-info";
 import RangeEquityTool from "@/components/range-equity/range-equity-tool";
+import AppShell from "@/components/shell/app-shell";
+import type { HeadFC, PageProps } from "gatsby";
+import React from "react";
 
 const EquityPage: React.FC<PageProps> = () => {
   return (

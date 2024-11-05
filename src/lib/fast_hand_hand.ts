@@ -1,11 +1,11 @@
 import { RANKS, SUITS } from "./constants";
 import {
   cardToInt,
-  findWinners,
   combinations,
+  evaluate,
   evaluateFlush,
   evaluateRainbow,
-  evaluate,
+  findWinners,
 } from "./evaluation_utils";
 
 const SUIT_MASKS = [0x1000, 0x2000, 0x4000, 0x8000];

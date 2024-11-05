@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { SUIT_SVGS } from "./playing-card-svgs";
-import { PlayingCardStateProps } from "./playing-card-props";
-import PlayingCardPopover from "./playing-card-popover";
 import { StaticImage } from "gatsby-plugin-image";
+import React, { Dispatch, SetStateAction } from "react";
+import PlayingCardPopover from "./playing-card-popover";
+import { PlayingCardStateProps } from "./playing-card-props";
+import { SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardProps {
   height: number;

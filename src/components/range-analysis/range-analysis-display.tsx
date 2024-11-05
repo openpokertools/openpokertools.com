@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import RangeSelector from "@/components/range/range-selector";
 import Board from "@/components/board/board";
-import Hole from "@/components/hole-cards/hole-cards";
-import Report from "./report";
-import CalculateWinButton from "./calculate-win-button";
-import { calculateStats } from "@/lib/stats";
-import { SelectedQualifiers, SELECTED_QUALIFIERS_DEFAULT } from "./stats-display-props";
-import StatsDisplay from "./stats-display";
 import { BoardCards } from "@/components/board/board-props";
+import Hole from "@/components/hole-cards/hole-cards";
 import { HoleCards } from "@/components/hole-cards/hole-cards-props";
-import { CombosReport, COMBOS_REPORT_DEFAULT, EquityReport } from "./report-props";
-import CombosDisplay from "./combos-display";
-import { AnalysisHands, ANALYSIS_HANDS_DEFAULT } from "./analysis-props";
-import RandomBoardButton from "../board/random-board-button";
-import ClearBoardButton from "../board/clear-board-button";
+import RangeSelector from "@/components/range/range-selector";
+import { calculateStats } from "@/lib/stats";
+import React, { useState, useEffect } from "react";
 import BoardProvider from "../board/board-context";
+import ClearBoardButton from "../board/clear-board-button";
+import RandomBoardButton from "../board/random-board-button";
 import PlayingCardProvider from "../playing-card/playing-card-context";
+import { ANALYSIS_HANDS_DEFAULT, AnalysisHands } from "./analysis-props";
+import CalculateWinButton from "./calculate-win-button";
+import CombosDisplay from "./combos-display";
+import Report from "./report";
+import { COMBOS_REPORT_DEFAULT, CombosReport, EquityReport } from "./report-props";
+import StatsDisplay from "./stats-display";
+import { SELECTED_QUALIFIERS_DEFAULT, SelectedQualifiers } from "./stats-display-props";
 
 const RangeAnalysisDisplay = () => {
   const [selectedHands, setSelectedHands] = useState<Set<string>>(new Set());

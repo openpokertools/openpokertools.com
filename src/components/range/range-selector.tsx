@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import RangeTable from "./range-table";
-import RangeSlider from "./range-slider";
-import RangeText from "./range-text";
-import RangePercent from "./range-percent";
 import RangeLoader from "./range-loader";
+import RangePercent from "./range-percent";
 import { RangeSelectorProps } from "./range-props";
+import RangeSlider from "./range-slider";
+import RangeTable from "./range-table";
+import RangeText from "./range-text";
 
 const RangeSelector = ({
   selectedHands,

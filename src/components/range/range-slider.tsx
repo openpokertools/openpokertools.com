@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
 import { HANDS_ORDERED } from "@/lib/constants";
-import { RangeSelectorProps } from "./range-props";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import IonRangeSlider from "react-ion-slider";
+import { RangeSelectorProps } from "./range-props";
 
 const RangeSlider: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {
   const [sliderValues, setSliderValues] = useState({ from: 0, to: 0 });

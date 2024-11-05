@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import type { HeadFC, PageProps } from "gatsby";
 import AppShell from "@/components/shell/app-shell";
+import type { HeadFC, PageProps } from "gatsby";
+import React, { useState } from "react";
 
 const ContactPage: React.FC<PageProps> = () => {
   const [message, setMessage] = useState();

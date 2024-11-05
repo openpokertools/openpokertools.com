@@ -1,8 +1,8 @@
-import React from "react";
-import { RANKS, SUITS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { useBoardContext } from "./board-context";
+import { RANKS, SUITS } from "@/lib/constants";
+import React from "react";
 import { usePlayingCardContext } from "../playing-card/playing-card-context";
+import { useBoardContext } from "./board-context";
 
 const RandomBoardButton = () => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();

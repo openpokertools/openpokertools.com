@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PlayingCard from "../playing-card/playing-card";
 import { PlayingCardStateProps } from "../playing-card/playing-card-props";
-import RandomBoardButton from "./random-board-button";
+import { BoardCards, BoardProps } from "./board-props";
 import ClearBoardButton from "./clear-board-button";
-import { BoardProps, BoardCards } from "./board-props";
+import RandomBoardButton from "./random-board-button";
 
 const Board: React.FC<BoardProps> = ({
   selectedCards,

@@ -1,5 +1,5 @@
-import React from "react";
 import { RANKS } from "@/lib/constants";
+import React from "react";
 import { RangeSelectorProps } from "./range-props";
 
 const RangeTable: React.FC<RangeSelectorProps> = ({

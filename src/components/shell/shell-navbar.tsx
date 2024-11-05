@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Github } from "lucide-react";
 import { StaticImage } from "gatsby-plugin-image";
+import { Github } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 export const ShellNavbar = () => {
   const [currentPath, setCurrentPath] = useState<string>("");

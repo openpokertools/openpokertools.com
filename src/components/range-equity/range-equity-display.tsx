@@ -1,25 +1,25 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
   TableCell,
-  TableRow,
-  TableHeader,
   TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
-import { HoleCards } from "../hole-cards/hole-cards-props";
-import { BoardCards } from "../board/board-props";
-import Hole from "../hole-cards/hole-cards";
-import Board from "../board/board";
 import { Trash2, Underline, X } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import React, { useState, Dispatch, SetStateAction } from "react";
+import Board from "../board/board";
 import BoardProvider from "../board/board-context";
-import PlayingCardProvider from "../playing-card/playing-card-context";
+import { BoardCards } from "../board/board-props";
 import ClearBoardButton from "../board/clear-board-button";
-import SimulateButton from "./simulate-button";
+import Hole from "../hole-cards/hole-cards";
+import { HoleCards } from "../hole-cards/hole-cards-props";
+import PlayingCardProvider from "../playing-card/playing-card-context";
+import { Button } from "../ui/button";
 import AddPlayerButton from "./add-player-button";
 import { Player, PlayerStats } from "./range-equity-props";
-import { Button } from "../ui/button";
+import SimulateButton from "./simulate-button";
 
 interface RangeEquityDisplayProps {
   players: Array<Player>;

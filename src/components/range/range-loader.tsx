@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { SIX_MAX_OPEN, NINE_MAX_OPEN } from "@/lib/constants";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectValue,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { RangeSelectorProps } from "./range-props";
+import { NINE_MAX_OPEN, SIX_MAX_OPEN } from "@/lib/constants";
 import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
+import React, { useEffect, useState } from "react";
+import { RangeSelectorProps } from "./range-props";
 
 interface Range {
   name: string;

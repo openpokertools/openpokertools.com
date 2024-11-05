@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import PlayingCard from "../playing-card/playing-card";
 import { PlayingCardStateProps } from "../playing-card/playing-card-props";
-import { BoardProps, BoardCards } from "./board-props";
 import { useBoardContext } from "./board-context";
+import { BoardCards, BoardProps } from "./board-props";
 
 const Board: React.FC<BoardProps> = ({ setBoardCards }) => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();

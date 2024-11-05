@@ -1,15 +1,15 @@
-import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   QUALIFIERS,
   QUALIFIER_DISPLAY,
-  SUBQUALIFIERS,
   ROUNDS,
   ROUNDS_DISPLAY,
+  SUBQUALIFIERS,
 } from "@/lib/constants";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SelectedQualifiers } from "./stats-display-props";
+import React from "react";
+import type { SelectedQualifiers } from "./stats-display-props";
 
 export interface StatsProps {
   stats: Map<string, Map<string, number>>;
