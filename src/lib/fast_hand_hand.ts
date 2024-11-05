@@ -62,10 +62,7 @@ const countCards = (indices: Array<number>): Map<number, number> => {
   return count;
 };
 
-const calcNumColorings = (
-  cardCount: Map<number, number>,
-  deck: BinedDeck,
-): number => {
+const calcNumColorings = (cardCount: Map<number, number>, deck: BinedDeck): number => {
   let num = 1;
   for (const [k, v] of cardCount) {
     num *= binomial(deck.cards[k].length, v);
@@ -102,10 +99,7 @@ interface FlushColorings {
   num: number;
 }
 
-const flushColorings = (
-  cardCount: Map<number, number>,
-  deck: BinedDeck,
-): Array<FlushColorings> => {
+const flushColorings = (cardCount: Map<number, number>, deck: BinedDeck): Array<FlushColorings> => {
   if (cardCount.size == 3) {
     return flushColorings3(cardCount, deck);
   } else if (cardCount.size == 4) {
@@ -185,16 +179,13 @@ const flushColorings4 = (
           if (excluded[0] == a[0]) {
             numVariations = binomial(deck.cards[a[0]].length - 1, 2);
           } else {
-            numVariations =
-              (deck.cards[a[0]].length - 1) *
-              (deck.cards[excluded[0]].length - 1);
+            numVariations = (deck.cards[a[0]].length - 1) * (deck.cards[excluded[0]].length - 1);
           }
         } else {
           if (excluded[0] == a[0]) {
             numVariations = binomial(deck.cards[a[0]].length, 2);
           } else {
-            numVariations =
-              (deck.cards[a[0]].length - 1) * deck.cards[excluded[0]].length;
+            numVariations = (deck.cards[a[0]].length - 1) * deck.cards[excluded[0]].length;
           }
         }
         colorings.push({
@@ -262,19 +253,13 @@ const flushColorings5 = (
 
         if (aPossible && bPossible) {
           numVariations =
-            (deck.cards[excluded[0]].length - 1) *
-            (deck.cards[excluded[1]].length - 1);
+            (deck.cards[excluded[0]].length - 1) * (deck.cards[excluded[1]].length - 1);
         } else if (aPossible) {
-          numVariations =
-            (deck.cards[excluded[0]].length - 1) *
-            deck.cards[excluded[1]].length;
+          numVariations = (deck.cards[excluded[0]].length - 1) * deck.cards[excluded[1]].length;
         } else if (bPossible) {
-          numVariations =
-            deck.cards[excluded[0]].length *
-            (deck.cards[excluded[1]].length - 1);
+          numVariations = deck.cards[excluded[0]].length * (deck.cards[excluded[1]].length - 1);
         } else {
-          numVariations =
-            deck.cards[excluded[0]].length * deck.cards[excluded[1]].length;
+          numVariations = deck.cards[excluded[0]].length * deck.cards[excluded[1]].length;
         }
 
         colorings.push({
@@ -389,9 +374,7 @@ const evalHandFlushFast = (
   throw "Unexpected number of flushes";
 };
 
-const fastHandHand = (
-  hands: Array<Array<number>>,
-): [Array<number>, Array<number>, number] => {
+const fastHandHand = (hands: Array<Array<number>>): [Array<number>, Array<number>, number] => {
   const wins = new Array(hands.length).fill(0);
   const ties = new Array(hands.length).fill(0);
   let n = 0;
@@ -488,13 +471,12 @@ const fastHandHand = (
 };
 
 const ALLCARDS = [
-  69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853,
-  279045, 295429, 529159, 533255, 541447, 557831, 1053707, 1057803, 1065995,
-  1082379, 2102541, 2106637, 2114829, 2131213, 4199953, 4204049, 4212241,
-  4228625, 8394515, 8398611, 8406803, 8423187, 16783383, 16787479, 16795671,
-  16812055, 33560861, 33564957, 33573149, 33589533, 67115551, 67119647,
-  67127839, 67144223, 134224677, 134228773, 134236965, 134253349, 268442665,
-  268446761, 268454953, 268471337,
+  69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853, 279045, 295429,
+  529159, 533255, 541447, 557831, 1053707, 1057803, 1065995, 1082379, 2102541, 2106637, 2114829,
+  2131213, 4199953, 4204049, 4212241, 4228625, 8394515, 8398611, 8406803, 8423187, 16783383,
+  16787479, 16795671, 16812055, 33560861, 33564957, 33573149, 33589533, 67115551, 67119647,
+  67127839, 67144223, 134224677, 134228773, 134236965, 134253349, 268442665, 268446761, 268454953,
+  268471337,
 ];
 
 const getDeck = (exclusions: Array<number>): Array<number> => {

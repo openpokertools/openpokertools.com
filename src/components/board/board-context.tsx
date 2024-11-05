@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  createContext,
-  useContext,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { useState, createContext, useContext, Dispatch, SetStateAction } from "react";
 import { PlayingCardStateProps } from "../playing-card/playing-card-props";
 
 interface BoardContextProps {
@@ -22,22 +16,14 @@ export const useBoardContext = () => {
   return context;
 };
 
-const BoardProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const BoardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [card1State, setCard1State] = useState<PlayingCardStateProps>({});
   const [card2State, setCard2State] = useState<PlayingCardStateProps>({});
   const [card3State, setCard3State] = useState<PlayingCardStateProps>({});
   const [card4State, setCard4State] = useState<PlayingCardStateProps>({});
   const [card5State, setCard5State] = useState<PlayingCardStateProps>({});
 
-  const playingCardStates = [
-    card1State,
-    card2State,
-    card3State,
-    card4State,
-    card5State,
-  ];
+  const playingCardStates = [card1State, card2State, card3State, card4State, card5State];
 
   const setPlayingCardStates = [
     setCard1State,

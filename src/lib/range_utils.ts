@@ -52,10 +52,7 @@ const expandHandInts = (hand: string): Array<Array<number>> => {
   if (hand.length === 2) {
     for (let i = 0; i <= 2; i++) {
       for (let j = i + 1; j <= 3; j++) {
-        combos.push([
-          cardToInt(hand[0] + SUITS[i]),
-          cardToInt(hand[1] + SUITS[j]),
-        ]);
+        combos.push([cardToInt(hand[0] + SUITS[i]), cardToInt(hand[1] + SUITS[j])]);
       }
     }
   } else if (hand[2] === "s") {

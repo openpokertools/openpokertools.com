@@ -3,10 +3,7 @@ import { HANDS_ORDERED } from "@/lib/constants";
 import { RangeSelectorProps } from "./range-props";
 import IonRangeSlider from "react-ion-slider";
 
-const RangeSlider: React.FC<RangeSelectorProps> = ({
-  selectedHands,
-  setSelectedHands,
-}) => {
+const RangeSlider: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {
   const [sliderValues, setSliderValues] = useState({ from: 0, to: 0 });
   const isInternalUpdate = useRef(false);
 

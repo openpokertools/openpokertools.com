@@ -1,4 +1,4 @@
 export interface PlayingCardStateProps {
-    rank?: string;
-    suit?: string;
+  rank?: string;
+  suit?: string;
 }

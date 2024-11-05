@@ -17,29 +17,17 @@ const RangeSelector = ({
     <div className="player p-3">
       <h4 className="mb-2">
         {name ? name : "Range"}
-        <RangePercent
-          selectedHands={selectedHands}
-          setSelectedHands={setSelectedHands}
-        />
+        <RangePercent selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
       </h4>
 
-      <RangeText
-        selectedHands={selectedHands}
-        setSelectedHands={setSelectedHands}
-      />
-      <RangeSlider
-        selectedHands={selectedHands}
-        setSelectedHands={setSelectedHands}
-      />
+      <RangeText selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
+      <RangeSlider selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
       <RangeTable
         selectedHands={selectedHands}
         setSelectedHands={setSelectedHands}
         activeHands={activeHands}
       />
-      <RangeLoader
-        selectedHands={selectedHands}
-        setSelectedHands={setSelectedHands}
-      />
+      <RangeLoader selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
     </div>
   );
 };

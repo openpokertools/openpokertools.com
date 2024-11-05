@@ -7,10 +7,7 @@ export const ShellFooter = () => (
     style={{ maxWidth: 1000 }}
   >
     <div className="flex flex-row py-5">
-      <a
-        href="/contact"
-        className="block px-3 ml-auto text-gray-500 hover:text-gray-300"
-      >
+      <a href="/contact" className="block px-3 ml-auto text-gray-500 hover:text-gray-300">
         Contact Us
       </a>
       &bull;

@@ -201,9 +201,7 @@ const calculatePreFlop = (selectedHands: Set<string>): Map<string, number> => {
   return stats;
 };
 
-const calculateActiveHandsPercent = (
-  combos: Array<Array<string>>,
-): Map<string, number> => {
+const calculateActiveHandsPercent = (combos: Array<Array<string>>): Map<string, number> => {
   const activeHands: Map<string, number> = new Map();
   for (const c of combos) {
     const { hand, count } = comboToHandAndCount(c);

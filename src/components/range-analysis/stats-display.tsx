@@ -25,11 +25,7 @@ const StatsDisplay: React.FC<StatsProps> = ({
   selectedTab,
   setSelectedTab,
 }) => {
-  const updateSelectedQualifiers = (
-    round: string,
-    qualifier: string,
-    isChecked: boolean,
-  ) => {
+  const updateSelectedQualifiers = (round: string, qualifier: string, isChecked: boolean) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
       [round]: {
@@ -45,11 +41,7 @@ const StatsDisplay: React.FC<StatsProps> = ({
   };
 
   return (
-    <Tabs
-      defaultValue="preflop"
-      className="w-full"
-      onValueChange={updateSelectedTab}
-    >
+    <Tabs defaultValue="preflop" className="w-full" onValueChange={updateSelectedTab}>
       <TabsList className="grid w-full grid-cols-4">
         {ROUNDS.map((round) => (
           <TabsTrigger key={`${round}-tab`} value={round}>
@@ -109,27 +101,18 @@ const StatsDisplay: React.FC<StatsProps> = ({
                       {SUBQUALIFIERS[q] &&
                         SUBQUALIFIERS[q].map((sq) => {
                           return (
-                            <TableRow
-                              key={`${round}-content-${sq}`}
-                              className="subqualifier"
-                            >
+                            <TableRow key={`${round}-content-${sq}`} className="subqualifier">
                               <TableCell className="stats_hand_check"></TableCell>
                               <TableCell className="stats_hand_qualifier">
                                 {round !== "preflop" && (
                                   <Checkbox
                                     checked={selectedQualifiers[round][sq]}
                                     onCheckedChange={(isChecked) =>
-                                      updateSelectedQualifiers(
-                                        round,
-                                        sq,
-                                        isChecked,
-                                      )
+                                      updateSelectedQualifiers(round, sq, isChecked)
                                     }
                                   />
                                 )}
-                                <span className="ml-1">
-                                  {QUALIFIER_DISPLAY[sq]}
-                                </span>
+                                <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
                               </TableCell>
                               <TableCell className="stats_hand_percent">
                                 {((roundStats.get(sq) || 0) * 100).toFixed(1)}%

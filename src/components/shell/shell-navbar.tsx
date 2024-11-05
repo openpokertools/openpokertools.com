@@ -36,9 +36,7 @@ export const ShellNavbar = () => {
                 <a
                   href="/"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/")
-                      ? "text-gray-50"
-                      : "text-gray-500 hover:text-gray-300"
+                    isActive("/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/") ? "page" : undefined}
                 >
@@ -49,9 +47,7 @@ export const ShellNavbar = () => {
                 <a
                   href="/equity"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/equity/")
-                      ? "text-gray-50"
-                      : "text-gray-500 hover:text-gray-300"
+                    isActive("/equity/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/equity/") ? "page" : undefined}
                 >
@@ -62,9 +58,7 @@ export const ShellNavbar = () => {
                 <a
                   href="/odds"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/odds/")
-                      ? "text-gray-50"
-                      : "text-gray-500 hover:text-gray-300"
+                    isActive("/odds/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/odds/") ? "page" : undefined}
                 >

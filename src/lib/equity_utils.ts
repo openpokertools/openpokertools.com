@@ -1,19 +1,12 @@
-import {
-  cardToInt,
-  combinations,
-  evaluate,
-  evaluateEarly,
-  findWinners,
-} from "./evaluation_utils";
+import { cardToInt, combinations, evaluate, evaluateEarly, findWinners } from "./evaluation_utils";
 
 const ALLCARDS = [
-  69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853,
-  279045, 295429, 529159, 533255, 541447, 557831, 1053707, 1057803, 1065995,
-  1082379, 2102541, 2106637, 2114829, 2131213, 4199953, 4204049, 4212241,
-  4228625, 8394515, 8398611, 8406803, 8423187, 16783383, 16787479, 16795671,
-  16812055, 33560861, 33564957, 33573149, 33589533, 67115551, 67119647,
-  67127839, 67144223, 134224677, 134228773, 134236965, 134253349, 268442665,
-  268446761, 268454953, 268471337,
+  69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853, 279045, 295429,
+  529159, 533255, 541447, 557831, 1053707, 1057803, 1065995, 1082379, 2102541, 2106637, 2114829,
+  2131213, 4199953, 4204049, 4212241, 4228625, 8394515, 8398611, 8406803, 8423187, 16783383,
+  16787479, 16795671, 16812055, 33560861, 33564957, 33573149, 33589533, 67115551, 67119647,
+  67127839, 67144223, 134224677, 134228773, 134236965, 134253349, 268442665, 268446761, 268454953,
+  268471337,
 ];
 
 const getDeck = (exclusions: Set<number>) => {
@@ -99,10 +92,7 @@ export const calculateHandRangeEquity = function (
 
       for (let i = 0; i < deals.length; i++) {
         const deal = deals[i];
-        if (
-          deal.includes(villainComboInts[0]) ||
-          deal.includes(villainComboInts[1])
-        ) {
+        if (deal.includes(villainComboInts[0]) || deal.includes(villainComboInts[1])) {
           continue;
         }
         const board = boardInts.concat(deal);

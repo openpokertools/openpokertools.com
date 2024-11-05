@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HANDS_ORDERED } from "@/lib/constants";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RangeSelectorProps } from "./range-props";
 
 const RangePercent: React.FC<RangeSelectorProps> = ({ selectedHands }) => {

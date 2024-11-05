@@ -169,21 +169,7 @@ export const HANDS_ORDERED = [
   "42o",
   "32o",
 ];
-export const RANKS = [
-  "A",
-  "K",
-  "Q",
-  "J",
-  "T",
-  "9",
-  "8",
-  "7",
-  "6",
-  "5",
-  "4",
-  "3",
-  "2",
-];
+export const RANKS = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
 export const SUITS = ["s", "h", "d", "c"];
 
 export const USER_RANGE_INDICES = [];
@@ -192,8 +178,7 @@ export const USER_RANGES = [];
 
 export const SIX_MAX_OPEN = {
   UTG: "44+, A2s+, K9s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, ATo+, KJo+",
-  "UTG+1":
-    "22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo",
+  "UTG+1": "22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo",
   Cutoff:
     "22+, A2s+, K6s+, Q8s+, J8s+, T8s+, 97s+, 86s+, 75s+, 65s, 54s, 43s, 32s, A8o+, A5o, KTo+, QTo+, JTo, T9o, 98o",
   Button:
@@ -207,8 +192,7 @@ export const NINE_MAX_OPEN = {
   "UTG+1": "77+, ATs+, A5s, KTs+, QTs+, J9s+, T9s, 98s, AQo+",
   "UTG+2": "77+, A8s+, A4s-A5s, K9s+, Q9s+, J9s+, T9s, 98s, AJo+",
   Lojack: "44+, A2s+, K9s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, ATo+, KJo+",
-  Hijack:
-    "22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo",
+  Hijack: "22+, A2s+, K8s+, Q9s+, J9s+, T9s, 98s, 87s, 76s, 65s, 54s, ATo+, KTo+, QJo, JTo",
   Cutoff:
     "22+, A2s+, K6s+, Q8s+, J8s+, T8s+, 97s+, 86s+, 75s+, 65s, 54s, 43s, 32s, A8o+, A5o, KTo+, QTo+, JTo, T9o, 98o",
   Button:

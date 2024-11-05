@@ -18,10 +18,7 @@ interface Range {
   value: string;
 }
 
-const RangeLoader: React.FC<RangeSelectorProps> = ({
-  selectedHands,
-  setSelectedHands,
-}) => {
+const RangeLoader: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {
   const [userRanges, setUserRanges] = useState<Range[]>([]);
   const [selectedRange, setSelectedRange] = useState<string>(":");
 

@@ -74,10 +74,7 @@ const OddsCalculator = () => {
         const newStats = {
           win: scores[0][scoreIndex] / scores[2],
           tie: scores[0][scoreIndex] / scores[2],
-          potOdds: getPotOdds(
-            scores[0][scoreIndex] / scores[2],
-            scores[0][scoreIndex] / scores[2],
-          ),
+          potOdds: getPotOdds(scores[0][scoreIndex] / scores[2], scores[0][scoreIndex] / scores[2]),
         };
         setHoleCardStats[i](newStats);
         scoreIndex += 1;
@@ -122,9 +119,7 @@ const OddsCalculator = () => {
                   : "-"}
               </TableCell>
               <TableCell className="text-center">
-                {holeCardStats[index].potOdds !== undefined
-                  ? holeCardStats[index].potOdds
-                  : "-"}
+                {holeCardStats[index].potOdds !== undefined ? holeCardStats[index].potOdds : "-"}
               </TableCell>
             </TableRow>
           ))}

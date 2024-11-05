@@ -1,9 +1,4 @@
-import {
-  getRankInt,
-  getSuitInt,
-  cardToInt,
-  evaluate,
-} from "./evaluation_utils";
+import { getRankInt, getSuitInt, cardToInt, evaluate } from "./evaluation_utils";
 
 const MAX_STRAIGHT_FLUSH = 10;
 const MAX_FOUR_OF_A_KIND = 166;
@@ -65,11 +60,7 @@ const isPocketPair = (hand: number[]): boolean => {
   return getRankInt(hand[0]) === getRankInt(hand[1]);
 };
 
-const isOvercards = (
-  qualifier: string,
-  hand: number[],
-  board: number[],
-): boolean => {
+const isOvercards = (qualifier: string, hand: number[], board: number[]): boolean => {
   const minHand = Math.min(...hand.map(getRankInt));
   const maxBoard = Math.max(...board.map(getRankInt));
   return minHand > maxBoard;
@@ -124,8 +115,7 @@ const getStraightDraw = (cards: number[]): string => {
   } else if (pattern.includes("111") || pattern.includes("2112")) {
     if (
       (pattern.indexOf("111") === 0 && cards[0] === -1) ||
-      (pattern.indexOf("111") === pattern.length - 3 &&
-        cards[cards.length - 1] === 12)
+      (pattern.indexOf("111") === pattern.length - 3 && cards[cards.length - 1] === 12)
     ) {
       return "gutshot";
     }
@@ -137,11 +127,7 @@ const getStraightDraw = (cards: number[]): string => {
   }
 };
 
-const getMadeHandSubqualifier = (
-  qualifier: string,
-  hand: number[],
-  board: number[],
-): string => {
+const getMadeHandSubqualifier = (qualifier: string, hand: number[], board: number[]): string => {
   if (qualifier === "trips") {
     if (isPocketPair(hand)) {
       return "set";
@@ -170,11 +156,7 @@ const getMadeHandSubqualifier = (
   return "none";
 };
 
-const getDrawQualifiers = (
-  qualifier: string,
-  hand: number[],
-  board: number[],
-): string[] => {
+const getDrawQualifiers = (qualifier: string, hand: number[], board: number[]): string[] => {
   const qualifiers: string[] = [];
   const flushCount = getFlushCount(hand.concat(...board));
   const straightDraw = getStraightDraw(hand.concat(...board));

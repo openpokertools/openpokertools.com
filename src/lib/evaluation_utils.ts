@@ -118,10 +118,7 @@ const combinations65 = <T>(elements: T[]): T[][] => {
   ];
 };
 
-export const evaluate = (
-  cards: Array<number>,
-  board: Array<number>,
-): number => {
+export const evaluate = (cards: Array<number>, board: Array<number>): number => {
   const allCards = board.concat(cards);
   let minimum = 7462;
   if (allCards.length === 7) {
@@ -221,10 +218,7 @@ export const findWinners = (results: Array<number>): Array<number> => {
   }, []);
 };
 
-export const evaluateRainbow = (
-  cards: Array<number>,
-  board: Array<number>,
-): number => {
+export const evaluateRainbow = (cards: Array<number>, board: Array<number>): number => {
   const allCards = board.concat(cards);
   let minimum = 7462;
   if (allCards.length === 7) {
@@ -251,10 +245,7 @@ export const evaluateRainbow = (
   throw "Unexpected number of cards";
 };
 
-export const evaluateFlush = (
-  cards: Array<number>,
-  board: Array<number>,
-): number => {
+export const evaluateFlush = (cards: Array<number>, board: Array<number>): number => {
   const allCards = board.concat(cards);
   let minimum = 7462;
   if (allCards.length === 7) {

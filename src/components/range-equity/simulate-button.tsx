@@ -12,11 +12,7 @@ interface SimulateButtonProps {
   boardCards: BoardCards;
 }
 
-const SimulateButton = ({
-  players,
-  setPlayerStats,
-  boardCards,
-}: SimulateButtonProps) => {
+const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonProps) => {
   const simulate = () => {
     const activePlayers = players.filter((player) => player.active);
     const playerCombos = activePlayers.map((player) =>
@@ -43,10 +39,7 @@ const SimulateButton = ({
           id: player.id,
           win: equities[0][index] / equities[2],
           tie: equities[1][index] / equities[2],
-          potOdds: getPotOdds(
-            equities[0][index] / equities[2],
-            equities[0][index] / equities[2],
-          ),
+          potOdds: getPotOdds(equities[0][index] / equities[2], equities[0][index] / equities[2]),
         };
         newPlayerStats.push(stats);
         index++;

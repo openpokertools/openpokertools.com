@@ -36,8 +36,7 @@ const ContactPage: React.FC<PageProps> = () => {
     "x",
   ];
   const code = [
-    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13,
-    25, 16, 11, 9,
+    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9,
   ];
 
   const handleSubmit = (e) => {
@@ -97,10 +96,7 @@ export default ContactPage;
 export const Head: HeadFC = () => (
   <>
     <title>OpenPokerTools.com - Contact Information</title>
-    <meta
-      name="description"
-      content="Contact us, report a bug, suggest a feature."
-    />
+    <meta name="description" content="Contact us, report a bug, suggest a feature." />
     <meta name="keywords" content="contact" />
     <meta name="language" content="english" />
   </>

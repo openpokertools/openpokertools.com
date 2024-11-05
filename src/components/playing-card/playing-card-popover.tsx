@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SUIT_SVGS } from "./playing-card-svgs";
 import { PlayingCardStateProps } from "./playing-card-props";
 import { RANKS, SUITS } from "@/lib/constants";
@@ -63,9 +59,7 @@ const PlayingCardPopover: React.FC<PlayingCardPopoverProps> = ({
           {SUITS.map((suit) => (
             <div key={suit} className="flex flex-row gap-1">
               {RANKS.map((rank) => {
-                const isSelected =
-                  playingCardState.rank === rank &&
-                  playingCardState.suit === suit;
+                const isSelected = playingCardState.rank === rank && playingCardState.suit === suit;
                 const isCardTaken = selectedCards.has(rank + suit);
                 const isAvailable = !isSelected && !isCardTaken;
 
@@ -88,18 +82,12 @@ const PlayingCardPopover: React.FC<PlayingCardPopoverProps> = ({
                       style={{
                         width: "100%",
                         height: "50%",
-                        color:
-                          suit === "d" || suit === "h" ? "#df0000" : "#000",
+                        color: suit === "d" || suit === "h" ? "#df0000" : "#000",
                       }}
                     >
-                      <div style={{ fontSize: fontSize, lineHeight: "100%" }}>
-                        {rank}
-                      </div>
+                      <div style={{ fontSize: fontSize, lineHeight: "100%" }}>{rank}</div>
                     </div>
-                    <div
-                      className="text-center"
-                      style={{ width: "100%", height: "50%" }}
-                    >
+                    <div className="text-center" style={{ width: "100%", height: "50%" }}>
                       {SUIT_SVGS[suit]}
                     </div>
                   </div>
