@@ -1,7 +1,9 @@
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  METERS,
   QUALIFIERS,
   QUALIFIER_DISPLAY,
   ROUNDS,
@@ -25,13 +27,33 @@ const StatsDisplay = ({
   selectedTab,
   setSelectedTab,
 }: StatsProps) => {
-  const updateSelectedQualifiers = (round: string, qualifier: string, isChecked: boolean) => {
+  const updateSelectedQualifiers = (
+    round: string,
+    qualifier: string,
+    value: boolean,
+  ) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
       [round]: {
         ...selectedQualifiers[round],
-        [qualifier]: isChecked,
+        [qualifier]: value,
       },
+    };
+    setSelectedQualifiers(updatedQualifiers);
+  };
+
+  const updateMultipleQualifiers = (
+    round: string,
+    qualifiers: Array<string>,
+    value: boolean,
+  ) => {
+    const roundQualifiers = selectedQualifiers[round];
+    for (const q of qualifiers) {
+      roundQualifiers[q] = value;
+    }
+    const updatedQualifiers = {
+      ...selectedQualifiers,
+      [round]: roundQualifiers,
     };
     setSelectedQualifiers(updatedQualifiers);
   };
@@ -40,8 +62,46 @@ const StatsDisplay = ({
     setSelectedTab(value);
   };
 
+  const setAllMade = (round: string, value: boolean) => {
+    const roundQualifiers = selectedQualifiers[round];
+    for (const q of METERS) {
+      if (q === "flushdraw") {
+        break;
+      }
+      roundQualifiers[q] = value;
+    }
+    const updatedQualifiers = {
+      ...selectedQualifiers,
+      [round]: roundQualifiers,
+    };
+    setSelectedQualifiers(updatedQualifiers);
+  };
+
+  const setAllDraws = (round: string, value: boolean) => {
+    const roundQualifiers = selectedQualifiers[round];
+    let inDraws = false;
+    for (const q of METERS) {
+      if (q === "flushdraw") {
+        inDraws = true;
+      }
+      if (!inDraws) {
+        continue;
+      }
+      roundQualifiers[q] = value;
+    }
+    const updatedQualifiers = {
+      ...selectedQualifiers,
+      [round]: roundQualifiers,
+    };
+    setSelectedQualifiers(updatedQualifiers);
+  };
+
   return (
-    <Tabs defaultValue="preflop" className="w-full" onValueChange={updateSelectedTab}>
+    <Tabs
+      defaultValue="preflop"
+      className="w-full"
+      onValueChange={updateSelectedTab}
+    >
       <TabsList className="grid w-full grid-cols-4">
         {ROUNDS.map((round) => (
           <TabsTrigger key={`${round}-tab`} value={round}>
@@ -61,25 +121,76 @@ const StatsDisplay = ({
                       {q === "straightflush" && (
                         <TableRow key={`${round}-content-madehands`}>
                           <TableCell className="p-0" colSpan={4}>
-                            <i>Made Hands</i>
+                            <i className="mr-1">Made Hands</i>
+                            {round !== "preflop" && (
+                              <span className="text-gray-600 text-xs font-light">
+                                (
+                                <Button
+                                  onClick={() => setAllMade(round, true)}
+                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                  variant="link"
+                                >
+                                  select
+                                </Button>
+                                /
+                                <Button
+                                  onClick={() => setAllMade(round, false)}
+                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                  variant="link"
+                                >
+                                  unselect
+                                </Button>
+                                )
+                              </span>
+                            )}
                           </TableCell>
                         </TableRow>
                       )}
                       {q === "flushdraw" && (
                         <TableRow key={`${round}-content-draws`}>
                           <TableCell className="p-0" colSpan={4}>
-                            <i>Draws</i>
+                            <i className="mr-1">Draws</i>
+                            {round !== "preflop" && (
+                              <span className="text-gray-600 text-xs font-light">
+                                (
+                                <Button
+                                  onClick={() => setAllDraws(round, true)}
+                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                  variant="link"
+                                >
+                                  select
+                                </Button>
+                                /
+                                <Button
+                                  onClick={() => setAllDraws(round, false)}
+                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                  variant="link"
+                                >
+                                  unselect
+                                </Button>
+                                )
+                              </span>
+                            )}
                           </TableCell>
                         </TableRow>
                       )}
                       <TableRow key={`${round}-content-${q}`}>
-                        <TableCell className="stats_hand_check">
+                        <TableCell className="stats_hand_check relative">
                           {round !== "preflop" && (
                             <Checkbox
+                              className="absolute top-[2.5px]"
                               checked={selectedQualifiers[round][q]}
-                              onCheckedChange={(isChecked) =>
-                                updateSelectedQualifiers(round, q, isChecked)
-                              }
+                              onCheckedChange={(isChecked) => {
+                                if (isChecked) {
+                                  updateMultipleQualifiers(
+                                    round,
+                                    [q].concat(SUBQUALIFIERS[q] || []),
+                                    isChecked,
+                                  );
+                                } else {
+                                  updateSelectedQualifiers(round, q, isChecked);
+                                }
+                              }}
                             />
                           )}
                         </TableCell>
@@ -100,18 +211,38 @@ const StatsDisplay = ({
                       </TableRow>
                       {SUBQUALIFIERS[q]?.map((sq) => {
                         return (
-                          <TableRow key={`${round}-content-${sq}`} className="subqualifier">
+                          <TableRow
+                            key={`${round}-content-${sq}`}
+                            className="subqualifier"
+                          >
                             <TableCell className="stats_hand_check" />
-                            <TableCell className="stats_hand_qualifier">
+                            <TableCell className="stats_hand_qualifier relative">
                               {round !== "preflop" && (
                                 <Checkbox
+                                  id={`${QUALIFIER_DISPLAY[sq]}-checkbox`}
+                                  className="absolute top-[2.5px]"
                                   checked={selectedQualifiers[round][sq]}
-                                  onCheckedChange={(isChecked) =>
-                                    updateSelectedQualifiers(round, sq, isChecked)
-                                  }
+                                  onCheckedChange={(isChecked) => {
+                                    if (!isChecked) {
+                                      updateMultipleQualifiers(
+                                        round,
+                                        [q, sq],
+                                        isChecked,
+                                      );
+                                    } else {
+                                      updateSelectedQualifiers(
+                                        round,
+                                        sq,
+                                        isChecked,
+                                      );
+                                    }
+                                  }}
                                 />
                               )}
-                              <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
+
+                              <span className="ml-5">
+                                {QUALIFIER_DISPLAY[sq]}
+                              </span>
                             </TableCell>
                             <TableCell className="stats_hand_percent">
                               {((roundStats.get(sq) || 0) * 100).toFixed(1)}%

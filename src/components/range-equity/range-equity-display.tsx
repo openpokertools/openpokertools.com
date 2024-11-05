@@ -27,8 +27,15 @@ interface RangeEquityDisplayProps {
   updatePlayer: (id: number, newData: Partial<Player>) => void;
 }
 
-const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDisplayProps) => {
-  const [playerStats, setPlayerStats] = useState<Array<PlayerStats>>([{ id: 0 }, { id: 1 }]);
+const RangeEquityDisplay = ({
+  players,
+  setPlayers,
+  updatePlayer,
+}: RangeEquityDisplayProps) => {
+  const [playerStats, setPlayerStats] = useState<Array<PlayerStats>>([
+    { id: 0 },
+    { id: 1 },
+  ]);
   const [boardCards, setBoardCards] = useState<BoardCards>({});
 
   return (
@@ -57,7 +64,9 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
             const handleDeletePlayer = () => {
               const newPlayers = players.filter((p) => p.id != player.id);
               setPlayers(newPlayers);
-              const newPlayerStats = playerStats.filter((p) => p.id != player.id);
+              const newPlayerStats = playerStats.filter(
+                (p) => p.id != player.id,
+              );
               setPlayerStats(newPlayerStats);
             };
 
@@ -68,11 +77,19 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
             return (
               <TableRow key={`${player.id}_stats_row`}>
                 <TableCell className="text-center">
-                  <Checkbox checked={player.active} onCheckedChange={handleTogglePlayer} />
+                  <Checkbox
+                    checked={player.active}
+                    onCheckedChange={handleTogglePlayer}
+                  />
                 </TableCell>
-                <TableCell>{player.id === 0 ? "Hero" : `Villain ${player.id}`}</TableCell>
+                <TableCell>
+                  {player.id === 0 ? "Hero" : `Villain ${player.id}`}
+                </TableCell>
                 <TableCell className="flex p-1">
-                  <Hole holeCards={player.holeCards} setHoleCards={handleHoleCardsChange} />
+                  <Hole
+                    holeCards={player.holeCards}
+                    setHoleCards={handleHoleCardsChange}
+                  />
                 </TableCell>
                 <TableCell className="text-center">-</TableCell>
                 <TableCell className="text-center">
@@ -86,7 +103,9 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
                     : "-"}
                 </TableCell>
                 <TableCell className="text-center">
-                  {playerStats[index].potOdds !== undefined ? playerStats[index].potOdds : "-"}
+                  {playerStats[index].potOdds !== undefined
+                    ? playerStats[index].potOdds
+                    : "-"}
                 </TableCell>
                 <TableCell className="text-center">
                   <Button
