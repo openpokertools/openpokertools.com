@@ -67,14 +67,13 @@ const OddsCalculator = () => {
     }
 
     const scores = calculateHandHandEquities(activeHoles, board);
-    console.log(scores);
     let scoreIndex = 0;
     for (let i = 0; i < 9; i++) {
       if (holeCards[i].hole1 && holeCards[i].hole2) {
         const newStats = {
           win: scores[0][scoreIndex] / scores[2],
-          tie: scores[0][scoreIndex] / scores[2],
-          potOdds: getPotOdds(scores[0][scoreIndex] / scores[2], scores[0][scoreIndex] / scores[2]),
+          tie: scores[1][scoreIndex] / scores[2],
+          potOdds: getPotOdds(scores[0][scoreIndex] / scores[2], scores[1][scoreIndex] / scores[2]),
         };
         setHoleCardStats[i](newStats);
         scoreIndex += 1;

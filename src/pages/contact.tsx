@@ -1,6 +1,6 @@
 import AppShell from "@/components/shell/app-shell";
 import type { HeadFC, PageProps } from "gatsby";
-import type React from "react";
+import React from "react";
 import { useState } from "react";
 
 const ContactPage: React.FC<PageProps> = () => {
