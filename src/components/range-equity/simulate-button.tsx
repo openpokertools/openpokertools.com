@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
 import { getPotOdds } from "@/lib/pot_odds";
 import { handsToCombos } from "@/lib/range_utils";
-import React, { Dispatch, SetStateAction } from "react";
-import { BoardCards } from "../board/board-props";
-import { Player, PlayerStats } from "./range-equity-props";
+import React, { type Dispatch, type SetStateAction } from "react";
+import type { BoardCards } from "../board/board-props";
+import type { Player, PlayerStats } from "./range-equity-props";
 
 interface SimulateButtonProps {
   players: Array<Player>;
@@ -33,7 +33,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
 
     let index = 0;
     const newPlayerStats: Array<PlayerStats> = [];
-    players.forEach((player) => {
+    for (const player of players) {
       if (player.active) {
         const stats = {
           id: player.id,
@@ -46,7 +46,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
       } else {
         newPlayerStats.push({ id: player.id });
       }
-    });
+    }
     setPlayerStats(newPlayerStats);
   };
 

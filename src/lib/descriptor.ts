@@ -1,6 +1,6 @@
 import { RANKS } from "./constants";
 
-export const handsToDescriptor = function (hands: Set<string>): string {
+export const handsToDescriptor = (hands: Set<string>): string => {
   let fullDescriptor = "";
 
   // pocket pairs
@@ -120,7 +120,7 @@ export const handsToDescriptor = function (hands: Set<string>): string {
 };
 
 // Update range
-export const descriptorToHands = function (descriptor: string): Set<string> {
+export const descriptorToHands = (descriptor: string): Set<string> => {
   const hands = new Set<string>();
   const handRanges = descriptor.toUpperCase().split(/[\s,]+/);
   for (let i = 0; i < handRanges.length; i++) {
@@ -132,7 +132,7 @@ export const descriptorToHands = function (descriptor: string): Set<string> {
   return hands;
 };
 
-const expandHandRange = function (handRangeString: string): string[] {
+const expandHandRange = (handRangeString: string): string[] => {
   const h = handRangeString;
   if (h[h.length - 1] === "+") {
     return expandPlus(h);
@@ -151,7 +151,7 @@ const expandHandRange = function (handRangeString: string): string[] {
   }
 };
 
-const expandPlus = function (c: string): string[] {
+const expandPlus = (c: string): string[] => {
   const hands: string[] = [];
   const ind = RANKS.indexOf(c[1]);
   if (c[0] === c[1]) {
@@ -167,7 +167,7 @@ const expandPlus = function (c: string): string[] {
   return hands;
 };
 
-const expandMinus = function (c: string): string[] {
+const expandMinus = (c: string): string[] => {
   const hands: string[] = [];
   const ind = RANKS.indexOf(c[1]);
   if (c[0] === c[1]) {
@@ -182,7 +182,7 @@ const expandMinus = function (c: string): string[] {
   return hands;
 };
 
-const expandDash = function (c: string): string[] {
+const expandDash = (c: string): string[] => {
   const hands: string[] = [];
   const x = c.split("-");
   const start = x[0];

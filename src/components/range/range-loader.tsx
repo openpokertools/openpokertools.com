@@ -10,15 +10,16 @@ import {
 } from "@/components/ui/select";
 import { NINE_MAX_OPEN, SIX_MAX_OPEN } from "@/lib/constants";
 import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
-import React, { useEffect, useState } from "react";
-import { RangeSelectorProps } from "./range-props";
+import React from "react";
+import { useEffect, useState } from "react";
+import type { RangeSelectorProps } from "./range-props";
 
 interface Range {
   name: string;
   value: string;
 }
 
-const RangeLoader: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {
+const RangeLoader = ({ selectedHands, setSelectedHands }: RangeSelectorProps) => {
   const [userRanges, setUserRanges] = useState<Range[]>([]);
   const [selectedRange, setSelectedRange] = useState<string>(":");
 
@@ -44,7 +45,7 @@ const RangeLoader: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedH
   const handleDeleteRange = () => {
     const [group, key] = selectedRange.split(":");
     if (group === "user") {
-      const index = parseInt(key);
+      const index = Number.parseInt(key);
       const updatedRanges = [...userRanges];
       updatedRanges.splice(index, 1);
       setUserRanges(updatedRanges);
@@ -56,13 +57,13 @@ const RangeLoader: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedH
   const handleLoadRange = (value: string) => {
     setSelectedRange(value);
     const [group, key] = value.split(":");
-    let descriptor;
+    let descriptor: string;
     if (group === "sixmax") {
       descriptor = SIX_MAX_OPEN[key];
     } else if (group === "ninemax") {
       descriptor = NINE_MAX_OPEN[key];
     } else {
-      const index = parseInt(key);
+      const index = Number.parseInt(key);
       descriptor = userRanges[index].value;
       console.log(descriptor);
     }

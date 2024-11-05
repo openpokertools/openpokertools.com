@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext, Dispatch, SetStateAction } from "react";
+import React from "react";
+import { type Dispatch, type SetStateAction, createContext, useContext, useState } from "react";
 
 interface PlayingCardContextProps {
   selectedCards: Set<string>;
@@ -15,7 +16,7 @@ export const usePlayingCardContext = () => {
   return context;
 };
 
-const PlayingCardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const PlayingCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedCards, setSelectedCards] = useState<Set<string>>(new Set());
 
   return (

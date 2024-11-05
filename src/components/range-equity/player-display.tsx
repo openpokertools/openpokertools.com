@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import RangeSelector from "../range/range-selector";
-import { Player } from "./range-equity-props";
+import type { Player } from "./range-equity-props";
 
 interface PlayerDisplayProps {
   player: Player;

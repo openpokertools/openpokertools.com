@@ -1,22 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { approximateHandRangeEquity, calculateHandRangeEquity } from "@/lib/equity_utils";
 import React from "react";
-import { AnalysisHands } from "./analysis-props";
-import { EquityReport } from "./report-props";
+import type { AnalysisHands } from "./analysis-props";
+import type { EquityReport } from "./report-props";
 
 interface CalculateWinButtonProps {
   analysisHands: AnalysisHands;
   setEquityReport: (report: EquityReport) => void;
 }
-const CalculateWinButton: React.FC<CalculateWinButtonProps> = ({
-  analysisHands,
-  setEquityReport,
-}) => {
+const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButtonProps) => {
   const setEquities = () => {
-    let preflopEquity;
-    let flopEquity;
-    let turnEquity;
-    let riverEquity;
+    let preflopEquity = undefined;
+    let flopEquity = undefined;
+    let turnEquity = undefined;
+    let riverEquity = undefined;
 
     const holeCards = [analysisHands.hole.hole1, analysisHands.hole.hole2];
     preflopEquity = approximateHandRangeEquity(holeCards, analysisHands.keptToFlop, 10000)[0];

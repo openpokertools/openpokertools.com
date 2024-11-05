@@ -77,7 +77,7 @@ const most = (array: number[]): [number, number] => {
   for (const k in count) {
     if (count[k] > most) {
       most = count[k];
-      mostKey = parseInt(k);
+      mostKey = Number.parseInt(k);
     }
   }
   return [mostKey, most];

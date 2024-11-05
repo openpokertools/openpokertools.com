@@ -1,37 +1,36 @@
-import { Underline } from "lucide-react";
-import React, { useState } from "react";
-import { CombosReport, EquityReport } from "./report-props";
+import React from "react";
+import type { CombosReport, EquityReport } from "./report-props";
 
 interface ReportProps {
   combosReport: CombosReport;
   equityReport: EquityReport;
 }
-const Report: React.FC<ReportProps> = ({ combosReport, equityReport }) => {
+const Report = ({ combosReport, equityReport }: ReportProps) => {
   return (
     <>
       <p className="pl-2 mt-2 mb-0">
         <strong>
           {equityReport.preflop !== undefined
-            ? "~" + (equityReport.preflop * 100).toFixed(1) + "%"
+            ? `~${(equityReport.preflop * 100).toFixed(1)}%`
             : "-"}
         </strong>{" "}
         against Pre-flop combos
       </p>
       <p className="pl-2 my-0">
         <strong>
-          {equityReport.flop !== undefined ? (equityReport.flop * 100).toFixed(1) + "%" : "-"}
+          {equityReport.flop !== undefined ? `${(equityReport.flop * 100).toFixed(1)}%` : "-"}
         </strong>{" "}
         against Flop combos
       </p>
       <p className="pl-2 my-0">
         <strong>
-          {equityReport.turn !== undefined ? (equityReport.turn * 100).toFixed(1) + "%" : "-"}
+          {equityReport.turn !== undefined ? `${(equityReport.turn * 100).toFixed(1)}%` : "-"}
         </strong>{" "}
         against Turn combos
       </p>
       <p className="pl-2 my-0">
         <strong>
-          {equityReport.river !== undefined ? (equityReport.river * 100).toFixed(1) + "%" : "-"}
+          {equityReport.river !== undefined ? `${(equityReport.river * 100).toFixed(1)}%` : "-"}
         </strong>{" "}
         against River combos
       </p>

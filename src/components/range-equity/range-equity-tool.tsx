@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DisplayContainer from "../shell/display-container";
 import PlayerDisplay from "./player-display";
 import RangeEquityDisplay from "./range-equity-display";
-import { Player, createPlayer } from "./range-equity-props";
+import { type Player, createPlayer } from "./range-equity-props";
 
 const RangeEquityTool = () => {
   const [players, setPlayers] = useState<Array<Player>>([createPlayer(0), createPlayer(1)]);

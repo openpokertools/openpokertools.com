@@ -1,5 +1,5 @@
-import { BoardCards } from "../board/board-props";
-import { HoleCards } from "../hole-cards/hole-cards-props";
+import type { BoardCards } from "../board/board-props";
+import type { HoleCards } from "../hole-cards/hole-cards-props";
 
 export interface AnalysisHands {
   hole: HoleCards;

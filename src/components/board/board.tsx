@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import PlayingCard from "../playing-card/playing-card";
-import { PlayingCardStateProps } from "../playing-card/playing-card-props";
+import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
 import { useBoardContext } from "./board-context";
-import { BoardCards, BoardProps } from "./board-props";
+import type { BoardCards, BoardProps } from "./board-props";
 
-const Board: React.FC<BoardProps> = ({ setBoardCards }) => {
+const Board = ({ setBoardCards }: BoardProps) => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();
 
   const updateBoardCard = (cardState: PlayingCardStateProps, boardKey: keyof BoardCards) => {
@@ -13,6 +13,7 @@ const Board: React.FC<BoardProps> = ({ setBoardCards }) => {
       [boardKey]: cardState.rank && cardState.suit ? cardState.rank + cardState.suit : undefined,
     }));
   };
+
   useEffect(() => {
     updateBoardCard(playingCardStates[0], "flop1");
   }, [playingCardStates[0]]);

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import React, { Dispatch, SetStateAction, useRef } from "react";
-import { Player, PlayerStats, createPlayer } from "./range-equity-props";
+import React, { type Dispatch, type SetStateAction, useRef } from "react";
+import { type Player, type PlayerStats, createPlayer } from "./range-equity-props";
 
 interface AddPlayerButtonProps {
   players: Array<Player>;

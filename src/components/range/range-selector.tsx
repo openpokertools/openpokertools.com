@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import RangeLoader from "./range-loader";
 import RangePercent from "./range-percent";
-import { RangeSelectorProps } from "./range-props";
+import type { RangeSelectorProps } from "./range-props";
 import RangeSlider from "./range-slider";
 import RangeTable from "./range-table";
 import RangeText from "./range-text";

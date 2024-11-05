@@ -10,16 +10,16 @@ const ClearBoardButton = () => {
   const clearAllCards = () => {
     const newSelectedCards = new Set(selectedCards);
 
-    playingCardStates.forEach((playingCardState) => {
+    for (const playingCardState of playingCardStates) {
       if (playingCardState.rank && playingCardState.suit) {
         const oldCard = playingCardState.rank + playingCardState.suit;
         newSelectedCards.delete(oldCard);
       }
-    });
+    }
 
-    setPlayingCardStates.forEach((setPlayingCardState) => {
+    for (const setPlayingCardState of setPlayingCardStates) {
       setPlayingCardState({});
-    });
+    }
 
     setSelectedCards(newSelectedCards);
   };

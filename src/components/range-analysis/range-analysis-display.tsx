@@ -1,7 +1,7 @@
 import Board from "@/components/board/board";
-import { BoardCards } from "@/components/board/board-props";
+import type { BoardCards } from "@/components/board/board-props";
 import Hole from "@/components/hole-cards/hole-cards";
-import { HoleCards } from "@/components/hole-cards/hole-cards-props";
+import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
 import RangeSelector from "@/components/range/range-selector";
 import { calculateStats } from "@/lib/stats";
 import React, { useState, useEffect } from "react";
@@ -9,13 +9,13 @@ import BoardProvider from "../board/board-context";
 import ClearBoardButton from "../board/clear-board-button";
 import RandomBoardButton from "../board/random-board-button";
 import PlayingCardProvider from "../playing-card/playing-card-context";
-import { ANALYSIS_HANDS_DEFAULT, AnalysisHands } from "./analysis-props";
+import { ANALYSIS_HANDS_DEFAULT, type AnalysisHands } from "./analysis-props";
 import CalculateWinButton from "./calculate-win-button";
 import CombosDisplay from "./combos-display";
 import Report from "./report";
-import { COMBOS_REPORT_DEFAULT, CombosReport, EquityReport } from "./report-props";
+import { COMBOS_REPORT_DEFAULT, type CombosReport, type EquityReport } from "./report-props";
 import StatsDisplay from "./stats-display";
-import { SELECTED_QUALIFIERS_DEFAULT, SelectedQualifiers } from "./stats-display-props";
+import { SELECTED_QUALIFIERS_DEFAULT, type SelectedQualifiers } from "./stats-display-props";
 
 const RangeAnalysisDisplay = () => {
   const [selectedHands, setSelectedHands] = useState<Set<string>>(new Set());
@@ -39,7 +39,7 @@ const RangeAnalysisDisplay = () => {
     const newStats = calculateStats(selectedHands, selectedQualifiers, holeCards, boardCards);
     setStats(newStats.counts);
     setCombosReport(newStats.combosReport);
-    if (selectedTab != "preflop") {
+    if (selectedTab !== "preflop") {
       setActiveHands(newStats[selectedTab + "ActiveHands"]);
     } else {
       setActiveHands(new Map());

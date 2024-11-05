@@ -50,11 +50,11 @@ const chooseCombo = (
   return null;
 };
 
-export const calculateHandRangeEquity = function (
+export const calculateHandRangeEquity = (
   hand: Array<string>,
   villainCombos: Array<Array<string>>,
   dealtBoard: Array<string>,
-): Array<number> {
+): Array<number> => {
   let wins = 0;
   let ties = 0;
   let n = 0;
@@ -114,7 +114,7 @@ export const approximateHandRangeEquity = (
   hand: Array<string>,
   villainCombos: Array<Array<string>>,
   n: number,
-): Array<number> => {
+): [number, number] => {
   let wins = 0;
   let ties = 0;
   const handInts = hand.map(cardToInt);

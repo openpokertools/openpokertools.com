@@ -7,18 +7,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trash2, Underline, X } from "lucide-react";
-import React, { useState, Dispatch, SetStateAction } from "react";
+import { Trash2, X } from "lucide-react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import Board from "../board/board";
 import BoardProvider from "../board/board-context";
-import { BoardCards } from "../board/board-props";
+import type { BoardCards } from "../board/board-props";
 import ClearBoardButton from "../board/clear-board-button";
 import Hole from "../hole-cards/hole-cards";
-import { HoleCards } from "../hole-cards/hole-cards-props";
+import type { HoleCards } from "../hole-cards/hole-cards-props";
 import PlayingCardProvider from "../playing-card/playing-card-context";
 import { Button } from "../ui/button";
 import AddPlayerButton from "./add-player-button";
-import { Player, PlayerStats } from "./range-equity-props";
+import type { Player, PlayerStats } from "./range-equity-props";
 import SimulateButton from "./simulate-button";
 
 interface RangeEquityDisplayProps {
@@ -36,7 +36,7 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead></TableHead>
+            <TableHead />
             <TableHead>Player</TableHead>
             <TableHead className="text-center">Cards</TableHead>
             <TableHead className="text-center">Range</TableHead>
@@ -77,12 +77,12 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
                 <TableCell className="text-center">-</TableCell>
                 <TableCell className="text-center">
                   {playerStats[index].win !== undefined
-                    ? (playerStats[index].win * 100).toFixed(1) + "%"
+                    ? `${(playerStats[index].win * 100).toFixed(1)}%`
                     : "-"}
                 </TableCell>
                 <TableCell className="text-center">
                   {playerStats[index].tie !== undefined
-                    ? (playerStats[index].tie * 100).toFixed(1) + "%"
+                    ? `${(playerStats[index].tie * 100).toFixed(1)}%`
                     : "-"}
                 </TableCell>
                 <TableCell className="text-center">

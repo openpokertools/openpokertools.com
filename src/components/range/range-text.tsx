@@ -1,8 +1,9 @@
 import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
-import React, { useState, useEffect } from "react";
-import { RangeSelectorProps } from "./range-props";
+import React from "react";
+import { useEffect, useState } from "react";
+import type { RangeSelectorProps } from "./range-props";
 
-const RangeText: React.FC<RangeSelectorProps> = ({ selectedHands, setSelectedHands }) => {
+const RangeText = ({ selectedHands, setSelectedHands }: RangeSelectorProps) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {

@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/table";
 import { calculateHandHandEquities } from "@/lib/fast_hand_hand";
 import { getPotOdds } from "@/lib/pot_odds";
-import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
+import React, { useState, type Dispatch, type SetStateAction, useEffect } from "react";
 import Board from "../board/board";
 import BoardProvider from "../board/board-context";
-import { BoardCards } from "../board/board-props";
+import type { BoardCards } from "../board/board-props";
 import Hole from "../hole-cards/hole-cards";
-import { HoleCards } from "../hole-cards/hole-cards-props";
+import type { HoleCards } from "../hole-cards/hole-cards-props";
 import PlayingCardProvider from "../playing-card/playing-card-context";
 
 interface HoleCardStats {
@@ -39,7 +39,7 @@ const OddsCalculator = () => {
   }
 
   useEffect(() => {
-    const activeHoles: Array<Array<string>> = holeCards
+    const activeHoles: Array<[string, string]> = holeCards
       .filter((holeCard) => holeCard.hole1 && holeCard.hole2)
       .map((holeCard) => [holeCard.hole1, holeCard.hole2]);
 
@@ -68,7 +68,7 @@ const OddsCalculator = () => {
 
     const scores = calculateHandHandEquities(activeHoles, board);
     console.log(scores);
-    let scoreIndex: number = 0;
+    let scoreIndex = 0;
     for (let i = 0; i < 9; i++) {
       if (holeCards[i].hole1 && holeCards[i].hole2) {
         const newStats = {
@@ -104,18 +104,18 @@ const OddsCalculator = () => {
         </TableHeader>
         <TableBody>
           {holeCards.map((holeCard, index) => (
-            <TableRow key={index}>
+            <TableRow key={`hole-${index}`}>
               <TableCell className="flex py-2">
                 <Hole holeCards={holeCard} setHoleCards={setHoleCards[index]} />
               </TableCell>
               <TableCell className="text-center">
                 {holeCardStats[index].win !== undefined
-                  ? (holeCardStats[index].win * 100).toFixed(1) + "%"
+                  ? `${(holeCardStats[index].win * 100).toFixed(1)}%`
                   : "-"}
               </TableCell>
               <TableCell className="text-center">
                 {holeCardStats[index].tie !== undefined
-                  ? (holeCardStats[index].tie * 100).toFixed(1) + "%"
+                  ? `${(holeCardStats[index].tie * 100).toFixed(1)}%`
                   : "-"}
               </TableCell>
               <TableCell className="text-center">

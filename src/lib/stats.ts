@@ -1,7 +1,7 @@
-import { BoardCards } from "@/components/board/board-props";
-import { HoleCards } from "@/components/hole-cards/hole-cards-props";
-import { CombosReport } from "@/components/range-analysis/report-props";
-import { SelectedQualifiers } from "@/components/range-analysis/stats-display-props";
+import type { BoardCards } from "@/components/board/board-props";
+import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
+import type { CombosReport } from "@/components/range-analysis/report-props";
+import type { SelectedQualifiers } from "@/components/range-analysis/stats-display-props";
 import { HANDS_FLOP, METERS } from "./constants";
 import { qualifyCards } from "./descriptor_utils";
 import { handsToCombos } from "./range_utils";
@@ -12,10 +12,10 @@ interface Stats {
   flopActiveHands: Map<string, number>;
   turnActiveHands: Map<string, number>;
   riverActiveHands: Map<string, number>;
-  keptToFlop: Array<Array<string>>;
-  keptToTurn: Array<Array<string>>;
-  keptToRiver: Array<Array<string>>;
-  keptToShowdown: Array<Array<string>>;
+  keptToFlop: Array<[string, string]>;
+  keptToTurn: Array<[string, string]>;
+  keptToRiver: Array<[string, string]>;
+  keptToShowdown: Array<[string, string]>;
 }
 
 export const calculateStats = (
@@ -27,10 +27,10 @@ export const calculateStats = (
   const stats: Map<string, Map<string, number>> = new Map();
   stats.set("preflop", calculatePreFlop(selectedHands));
 
-  const keptToFlop: Array<Array<string>> = [];
-  const keptToTurn: Array<Array<string>> = [];
-  const keptToRiver: Array<Array<string>> = [];
-  const keptToShowdown: Array<Array<string>> = [];
+  const keptToFlop: Array<[string, string]> = [];
+  const keptToTurn: Array<[string, string]> = [];
+  const keptToRiver: Array<[string, string]> = [];
+  const keptToShowdown: Array<[string, string]> = [];
   const board: Array<string> = [];
 
   const combos = handsToCombos(selectedHands);
@@ -214,7 +214,7 @@ interface HandAndCount {
   hand: string;
   count: number;
 }
-const comboToHandAndCount = function (combo: Array<string>): HandAndCount {
+const comboToHandAndCount = (combo: Array<string>): HandAndCount => {
   if (combo[0][0] === combo[1][0]) {
     return { hand: combo[0][0] + combo[1][0], count: 2 };
   } else if (combo[0][1] === combo[1][1]) {

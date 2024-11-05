@@ -3,7 +3,7 @@ import OddsCalculatorInfo from "@/components/odds-calculator/odds-calculator-inf
 import AppShell from "@/components/shell/app-shell";
 import DisplayContainer from "@/components/shell/display-container";
 import type { HeadFC, PageProps } from "gatsby";
-import React from "react";
+import type React from "react";
 
 const OddsPage: React.FC<PageProps> = () => {
   return (

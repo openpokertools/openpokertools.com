@@ -1,12 +1,8 @@
 import { RANKS } from "@/lib/constants";
 import React from "react";
-import { RangeSelectorProps } from "./range-props";
+import type { RangeSelectorProps } from "./range-props";
 
-const RangeTable: React.FC<RangeSelectorProps> = ({
-  selectedHands,
-  setSelectedHands,
-  activeHands,
-}) => {
+const RangeTable = ({ selectedHands, setSelectedHands, activeHands }: RangeSelectorProps) => {
   const toggleHandSelection = (hand: string) => {
     const newSelectedHands = new Set(selectedHands);
     if (newSelectedHands.has(hand)) {
@@ -35,7 +31,7 @@ const RangeTable: React.FC<RangeSelectorProps> = ({
                 hand = `${rank2}${rank1}o`;
                 handType = "offsuit";
               }
-              const isActive = activeHands && activeHands.get(hand);
+              const isActive = activeHands?.get(hand);
               const percent = isActive ? (activeHands.get(hand) * 100) / 12 : 0;
               const style = isActive
                 ? {

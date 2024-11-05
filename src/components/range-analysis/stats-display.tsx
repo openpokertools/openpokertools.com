@@ -18,13 +18,13 @@ export interface StatsProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
 }
-const StatsDisplay: React.FC<StatsProps> = ({
+const StatsDisplay = ({
   stats,
   selectedQualifiers,
   setSelectedQualifiers,
   selectedTab,
   setSelectedTab,
-}) => {
+}: StatsProps) => {
   const updateSelectedQualifiers = (round: string, qualifier: string, isChecked: boolean) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
@@ -95,39 +95,38 @@ const StatsDisplay: React.FC<StatsProps> = ({
                             value={(roundStats.get(q) || 0) * 1000}
                             min={0}
                             max={1000}
-                          ></meter>
+                          />
                         </TableCell>
                       </TableRow>
-                      {SUBQUALIFIERS[q] &&
-                        SUBQUALIFIERS[q].map((sq) => {
-                          return (
-                            <TableRow key={`${round}-content-${sq}`} className="subqualifier">
-                              <TableCell className="stats_hand_check"></TableCell>
-                              <TableCell className="stats_hand_qualifier">
-                                {round !== "preflop" && (
-                                  <Checkbox
-                                    checked={selectedQualifiers[round][sq]}
-                                    onCheckedChange={(isChecked) =>
-                                      updateSelectedQualifiers(round, sq, isChecked)
-                                    }
-                                  />
-                                )}
-                                <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
-                              </TableCell>
-                              <TableCell className="stats_hand_percent">
-                                {((roundStats.get(sq) || 0) * 100).toFixed(1)}%
-                              </TableCell>
-                              <TableCell className="stats_hand_meter">
-                                <meter
-                                  className="w-full"
-                                  value={(roundStats.get(sq) || 0) * 1000}
-                                  min={0}
-                                  max={1000}
-                                ></meter>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
+                      {SUBQUALIFIERS[q]?.map((sq) => {
+                        return (
+                          <TableRow key={`${round}-content-${sq}`} className="subqualifier">
+                            <TableCell className="stats_hand_check" />
+                            <TableCell className="stats_hand_qualifier">
+                              {round !== "preflop" && (
+                                <Checkbox
+                                  checked={selectedQualifiers[round][sq]}
+                                  onCheckedChange={(isChecked) =>
+                                    updateSelectedQualifiers(round, sq, isChecked)
+                                  }
+                                />
+                              )}
+                              <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
+                            </TableCell>
+                            <TableCell className="stats_hand_percent">
+                              {((roundStats.get(sq) || 0) * 100).toFixed(1)}%
+                            </TableCell>
+                            <TableCell className="stats_hand_meter">
+                              <meter
+                                className="w-full"
+                                value={(roundStats.get(sq) || 0) * 1000}
+                                min={0}
+                                max={1000}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </React.Fragment>
                   );
                 })}

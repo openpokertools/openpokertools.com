@@ -1,9 +1,10 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { HANDS_ORDERED } from "@/lib/constants";
-import React, { useEffect, useState } from "react";
-import { RangeSelectorProps } from "./range-props";
+import React from "react";
+import { useEffect, useState } from "react";
+import type { RangeSelectorProps } from "./range-props";
 
-const RangePercent: React.FC<RangeSelectorProps> = ({ selectedHands }) => {
+const RangePercent = ({ selectedHands }: RangeSelectorProps) => {
   const [raisePercent, setRaisePercent] = useState<string>("0.0%");
   const [callPercent, setCallPercent] = useState<string>("0.0%");
 
@@ -12,7 +13,7 @@ const RangePercent: React.FC<RangeSelectorProps> = ({ selectedHands }) => {
     let topTotal = 0;
     let aboveRange = true;
 
-    HANDS_ORDERED.forEach((h) => {
+    for (const h of HANDS_ORDERED) {
       let val = 0;
 
       if (h[0] === h[1]) {
@@ -29,14 +30,14 @@ const RangePercent: React.FC<RangeSelectorProps> = ({ selectedHands }) => {
       } else if (aboveRange) {
         topTotal += val;
       }
-    });
+    }
 
     if (topTotal === 1326) {
       topTotal = 0;
     }
 
-    const raise = ((topTotal / 1326) * 100).toFixed(1) + "%";
-    const call = ((rangeTotal / 1326) * 100).toFixed(1) + "%";
+    const raise = `${((topTotal / 1326) * 100).toFixed(1)}%`;
+    const call = `${((rangeTotal / 1326) * 100).toFixed(1)}%`;
 
     setRaisePercent(raise);
     setCallPercent(call);

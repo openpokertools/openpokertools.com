@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PlayingCard from "../playing-card/playing-card";
-import { PlayingCardStateProps } from "../playing-card/playing-card-props";
-import { HoleCards, HoleCardsProps } from "./hole-cards-props";
+import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
+import type { HoleCards, HoleCardsProps } from "./hole-cards-props";
 
 const Hole = ({ holeCards, setHoleCards }: HoleCardsProps) => {
   const [card1State, setCard1State] = useState<PlayingCardStateProps>({});
@@ -13,6 +13,7 @@ const Hole = ({ holeCards, setHoleCards }: HoleCardsProps) => {
       [boardKey]: cardState.rank && cardState.suit ? cardState.rank + cardState.suit : undefined,
     }));
   };
+
   useEffect(() => {
     updateHoleCard(card1State, "hole1");
   }, [card1State]);

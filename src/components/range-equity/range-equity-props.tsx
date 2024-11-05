@@ -1,4 +1,4 @@
-import { HoleCards } from "../hole-cards/hole-cards-props";
+import type { HoleCards } from "../hole-cards/hole-cards-props";
 
 export interface Player {
   id: number;

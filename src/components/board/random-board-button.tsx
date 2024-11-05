@@ -15,14 +15,14 @@ const RandomBoardButton = () => {
   const setAllCardsRandomly = () => {
     const newSelectedCards = new Set(selectedCards);
 
-    playingCardStates.forEach((playingCardState) => {
+    for (const playingCardState of playingCardStates) {
       if (playingCardState.rank && playingCardState.suit) {
         const oldCard = playingCardState.rank + playingCardState.suit;
         newSelectedCards.delete(oldCard);
       }
-    });
+    }
 
-    setPlayingCardStates.forEach((setPlayingCardState) => {
+    for (const setPlayingCardState of setPlayingCardStates) {
       let randomRank = getRandomElement(RANKS);
       let randomSuit = getRandomElement(SUITS);
       while (newSelectedCards.has(randomRank + randomSuit)) {
@@ -31,7 +31,7 @@ const RandomBoardButton = () => {
       }
       newSelectedCards.add(randomRank + randomSuit);
       setPlayingCardState({ rank: randomRank, suit: randomSuit });
-    });
+    }
 
     setSelectedCards(newSelectedCards);
   };

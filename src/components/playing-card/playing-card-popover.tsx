@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { usePlayingCardContext } from "./playing-card-context";
-import { PlayingCardStateProps } from "./playing-card-props";
+import type { PlayingCardStateProps } from "./playing-card-props";
 import { SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardPopoverProps {
@@ -11,11 +12,11 @@ interface PlayingCardPopoverProps {
   setPlayingCardState: (values: { rank?: string; suit?: string }) => void;
   children: React.ReactNode;
 }
-const PlayingCardPopover: React.FC<PlayingCardPopoverProps> = ({
+const PlayingCardPopover = ({
   playingCardState,
   setPlayingCardState,
   children,
-}) => {
+}: PlayingCardPopoverProps) => {
   const { selectedCards, setSelectedCards } = usePlayingCardContext();
   const [open, setOpen] = useState(false);
 

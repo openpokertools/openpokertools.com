@@ -1,7 +1,8 @@
 import { StaticImage } from "gatsby-plugin-image";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
+import type { Dispatch, SetStateAction } from "react";
 import PlayingCardPopover from "./playing-card-popover";
-import { PlayingCardStateProps } from "./playing-card-props";
+import type { PlayingCardStateProps } from "./playing-card-props";
 import { SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardProps {
@@ -10,12 +11,12 @@ interface PlayingCardProps {
   setPlayingCardState: Dispatch<SetStateAction<PlayingCardStateProps>>;
   className?: string;
 }
-const PlayingCard: React.FC<PlayingCardProps> = ({
+const PlayingCard = ({
   height,
   playingCardState,
   setPlayingCardState,
   className,
-}) => {
+}: PlayingCardProps) => {
   const width = (height * 2) / 3;
   const fontSize = height / 2;
 

@@ -1,6 +1,8 @@
+import type { Dispatch, SetStateAction } from "react";
+
 export interface HoleCardsProps {
   holeCards: HoleCards;
-  setHoleCards: (holeCards: HoleCards) => void;
+  setHoleCards: Dispatch<SetStateAction<HoleCards>>;
 }
 
 export interface HoleCards {
