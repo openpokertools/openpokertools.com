@@ -2,8 +2,8 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `openpokertools.com`,
-    siteUrl: `https://openpokertools.com`,
+    title: "openpokertools.com",
+    siteUrl: "https://openpokertools.com",
   },
   graphqlTypegen: true,
   plugins: [
@@ -18,6 +18,12 @@ const config: GatsbyConfig = {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/logo.png",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-svgr",
+      options: {
+        icon: true,
       },
     },
     "gatsby-plugin-cname",

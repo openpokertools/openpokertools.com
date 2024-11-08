@@ -1,9 +1,9 @@
 import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
 import type { Dispatch, SetStateAction } from "react";
+import React from "react";
 import PlayingCardPopover from "./playing-card-popover";
 import type { PlayingCardStateProps } from "./playing-card-props";
-import { SUIT_SVGS } from "./playing-card-svgs";
+import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardProps {
   height: number;
@@ -18,7 +18,7 @@ const PlayingCard = ({
   className,
 }: PlayingCardProps) => {
   const width = (height * 2) / 3;
-  const fontSize = height / 2;
+  const fontSize = height * 11 / 32;
 
   let color = "#000";
   if (playingCardState.suit === "d" || playingCardState.suit === "h") {
@@ -36,29 +36,20 @@ const PlayingCard = ({
           style={{
             width: `${width}px`,
             height: `${height}px`,
+            fontSize: fontSize,
           }}
         >
           {playingCardState.rank && playingCardState.suit ? (
             <>
-              <div
-                className="text-center"
-                style={{
-                  width: "100%",
-                  height: "50%",
-                  color: color,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: `${fontSize}px`,
-                    lineHeight: "100%",
-                  }}
-                >
-                  {playingCardState.rank}
+              <div className="w-full h-1/2">
+                <div className="translate-y-[5px]">
+                  {RANK_SVGS[playingCardState.rank]}
                 </div>
               </div>
-              <div className="text-center" style={{ width: "100%", height: "50%" }}>
-                {SUIT_SVGS[playingCardState.suit]}
+              <div className="w-full h-1/2">
+                <div className="translate-y-1">
+                  {SUIT_SVGS[playingCardState.suit]}
+                </div>
               </div>
             </>
           ) : (

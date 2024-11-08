@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="47.350231"
+   height="75.000015"
+   viewBox="0 0 12.528082 19.843754"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="Q.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.3621494"
+     inkscape:cx="1.7193359"
+     inkscape:cy="93.41725"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1" />
+  <path
+     d="m 3.58925,11.33929 q 1.394549,0.16003 2.789098,1.280242 0.868736,0.685844 2.217562,2.1947 V 4.549435 Q 8.59591,3.726423 7.795759,3.06344 7.01847,2.400457 6.104011,2.400457 q -0.914459,0 -1.71461,0.662983 Q 3.58925,3.726423 3.58925,4.549435 Z M 7.475699,17.008933 4.52657,14.128388 Q 4.160786,13.762605 3.58925,13.671159 v 1.646025 q 0,0.800152 0.800151,1.463134 0.800151,0.662982 1.71461,0.662982 0.708705,0 1.371688,-0.434367 z m 5.052383,2.423315 q -1.348826,0 -1.943224,-0.114308 -0.685844,-0.16003 -1.325965,-0.640121 -1.440273,1.165935 -3.154882,1.165935 -1.851779,0 -3.314913,-1.325965 Q 1.257381,17.146101 1.257381,15.317184 V 13.625436 H 0 v -2.1947 q 0.06858,-0.02286 1.257381,-0.09145 V 4.549431 q 0,-1.851778 1.531717,-3.223466 Q 4.252232,0 6.104011,0 7.955789,0 9.441785,1.348826 10.950641,2.697653 10.950641,4.549431 V 15.31718 q 0,0.77729 -0.32006,1.531718 0.32006,0.205754 0.594398,0.274338 h 1.303103 z"
+     id="text2"
+     style="font-size:35.2777px;font-family:'Card Characters';-inkscape-font-specification:'Card Characters';letter-spacing:-2.80194px;stroke-width:0.171461"
+     aria-label="Q" />
+</svg>

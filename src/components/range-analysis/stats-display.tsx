@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -163,10 +164,10 @@ const StatsDisplay = ({
                         </TableRow>
                       )}
                       <TableRow key={`${round}-content-${q}`}>
-                        <TableCell className="stats_hand_check relative">
+                        <TableCell className="stats_hand_check">
                           {round !== "preflop" && (
                             <Checkbox
-                              className="absolute top-[2.5px]"
+                              className="translate-y-[1.5px]"
                               checked={selectedQualifiers[round][q]}
                               onCheckedChange={(isChecked) => {
                                 if (isChecked) {
@@ -189,23 +190,18 @@ const StatsDisplay = ({
                           {((roundStats.get(q) || 0) * 100).toFixed(1)}%
                         </TableCell>
                         <TableCell className="stats_hand_meter">
-                          <meter
-                            className="w-full"
-                            value={(roundStats.get(q) || 0) * 1000}
-                            min={0}
-                            max={1000}
-                          />
+                          <Progress value={(roundStats.get(q) || 0) * 100} />
                         </TableCell>
                       </TableRow>
                       {SUBQUALIFIERS[q]?.map((sq) => {
                         return (
                           <TableRow key={`${round}-content-${sq}`} className="subqualifier">
                             <TableCell className="stats_hand_check" />
-                            <TableCell className="stats_hand_qualifier relative">
+                            <TableCell className="stats_hand_qualifier">
                               {round !== "preflop" && (
                                 <Checkbox
                                   id={`${QUALIFIER_DISPLAY[sq]}-checkbox`}
-                                  className="absolute top-[2.5px]"
+                                  className="translate-y-[2.4px]"
                                   checked={selectedQualifiers[round][sq]}
                                   onCheckedChange={(isChecked) => {
                                     if (!isChecked) {
@@ -217,18 +213,13 @@ const StatsDisplay = ({
                                 />
                               )}
 
-                              <span className="ml-5">{QUALIFIER_DISPLAY[sq]}</span>
+                              <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
                             </TableCell>
                             <TableCell className="stats_hand_percent">
                               {((roundStats.get(sq) || 0) * 100).toFixed(1)}%
                             </TableCell>
                             <TableCell className="stats_hand_meter">
-                              <meter
-                                className="w-full"
-                                value={(roundStats.get(sq) || 0) * 1000}
-                                min={0}
-                                max={1000}
-                              />
+                              <Progress value={(roundStats.get(sq) || 0) * 100} />
                             </TableCell>
                           </TableRow>
                         );

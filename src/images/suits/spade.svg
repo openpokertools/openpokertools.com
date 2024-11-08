@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="58.12294"
+   height="75"
+   viewBox="0 0 15.378359 19.84375"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="spade.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.3621494"
+     inkscape:cx="-11.806106"
+     inkscape:cy="62.698449"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1" />
+  <path
+     d="m 7.6891807,0 q 0.08713,0.6316891 2.5049743,3.6812222 1.568331,1.938632 3.136663,3.877264 1.154466,1.590114 1.568331,2.7010158 0.479213,1.28516 0.479213,3.071315 0,1.502985 -0.871295,2.635668 -0.958425,1.241596 -2.417844,1.241596 -1.459421,0 -2.3960633,-1.198031 -0.871295,-1.110901 -0.871295,-2.613885 h -0.522778 q 0,1.633679 0.413866,3.332704 0.45743,1.851502 1.241596,3.114881 h -4.530736 q 1.655462,-2.613886 1.655462,-6.447585 h -0.522778 q 0,1.502984 -0.871295,2.613885 -0.936642,1.198031 -2.3960625,1.198031 -1.4594192,0 -2.417844,-1.241596 Q 0,14.833802 0,13.330817 0,11.544662 0.4792124,10.259502 0.8930776,9.1486002 2.0475438,7.5584862 3.6158753,5.6198542 5.1842067,3.6812222 7.6020517,0.6316891 7.6891807,0 Z"
+     id="text6"
+     style="font-size:28.2223px;font-family:'Card Characters';-inkscape-font-specification:'Card Characters';letter-spacing:-2.80194px;stroke-width:0.204209"
+     aria-label="}" />
+</svg>

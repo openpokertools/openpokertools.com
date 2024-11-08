@@ -1,51 +1,42 @@
 import AppShell from "@/components/shell/app-shell";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { HeadFC, PageProps } from "gatsby";
-import React from "react";
-import { useState } from "react";
+import React, { useState, type ReactElement } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const FormSchema = z.object({
+  type: z.enum(["pair", "straight", "flush", "threeOfAKind"], {
+    required_error: "You need to select a notification type.",
+  }),
+})
 
 const ContactPage: React.FC<PageProps> = () => {
-  const [message, setMessage] = useState();
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  })
+
+  const [message, setMessage] = useState<ReactElement | null>(null);
   const alpha = [
-    "x",
-    "y",
-    "v",
-    "u",
-    "d",
-    "g",
-    "b",
-    "j",
-    "k",
-    "m",
-    "s",
-    "o",
-    "t",
-    "l",
-    "f",
-    "p",
-    "c",
-    "@",
-    "i",
-    "e",
-    "z",
-    "n",
-    "r",
-    "h",
-    "w",
-    ".",
-    "q",
-    "a",
-    "x",
+    "x", "y", "v", "u", "d", "g", "b", "j", "k", "m", "s", "o", "t", "l", "f", "p", "c", "@", "i", "e", "z", "n", "r", "h", "w", ".", "q", "a", "x",
   ];
   const code = [
     11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9,
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const selectedValue = formData.get("pokertest");
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
 
-    if (selectedValue === "flush") {
+    if (data.type === "flush") {
       let decodedMessage = "";
       for (let i = 0; i < code.length; i++) {
         decodedMessage += alpha[code[i]];
@@ -56,37 +47,75 @@ const ContactPage: React.FC<PageProps> = () => {
         </a>,
       );
     } else {
-      setMessage(
-        <div className="my-2 alert alert-danger" role="alert">
-          Incorrect. Please try again.
-        </div>,
-      );
+      // setMessage(
+      //   <div className="my-2 alert alert-danger" role="alert">
+      //     Incorrect. Please try again.
+      //   </div>,
+      // );
     }
   };
 
   return (
     <AppShell>
       <div
-        className="container rounded analysisview my-3 p-4 mx-auto"
-        style={{ maxWidth: "380px" }}
+        className="container rounded analysisview my-3 p-4 mx-auto flex"
+        style={{ maxWidth: "360px" }}
       >
-        <form onSubmit={handleSubmit}>
-          <p>Which of the following is the best hand?</p>
-          <input type="radio" id="pair" name="pokertest" value="pair" />
-          <label htmlFor="pair">Pair</label>
-          <br />
-          <input type="radio" id="straight" name="pokertest" value="straight" />
-          <label htmlFor="straight">Straight</label>
-          <br />
-          <input type="radio" id="flush" name="pokertest" value="flush" />
-          <label htmlFor="flush">Flush</label>
-          <br />
-          <input type="radio" id="trips" name="pokertest" value="trips" />
-          <label htmlFor="trips">Three of a kind</label>
-          <br />
-          <input type="submit" value="Submit" />
-        </form>
-        {message}
+        {message === null ?
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-64 space-y-6 mx-auto">
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel>Which of the following is the best hand?</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="pair" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            Pair
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="straight" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            Straight
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="flush" />
+                          </FormControl>
+                          <FormLabel className="font-normal">Flush</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="threeOfAKind" />
+                          </FormControl>
+                          <FormLabel className="font-normal">Three of a kind</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+          :
+          message
+        }
       </div>
     </AppShell>
   );

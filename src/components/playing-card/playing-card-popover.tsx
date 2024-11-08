@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { usePlayingCardContext } from "./playing-card-context";
 import type { PlayingCardStateProps } from "./playing-card-props";
-import { SUIT_SVGS } from "./playing-card-svgs";
+import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardPopoverProps {
   playingCardState: PlayingCardStateProps;
@@ -50,7 +49,7 @@ const PlayingCardPopover = ({
 
   const height = 40;
   const width = (height * 2) / 3;
-  const fontSize = height / 2;
+  const fontSize = height * 11 / 32;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -68,28 +67,25 @@ const PlayingCardPopover = ({
                   <div
                     key={`${rank}-${suit}`}
                     onClick={() => isAvailable && handleCardSelect(rank, suit)}
-                    className={`rounded playingcard border ${
-                      isAvailable ? "cursor-pointer" : "cursor-not-allowed"
-                    }`}
+                    className={`rounded playingcard border ${isAvailable ? "cursor-pointer" : "cursor-not-allowed"
+                      }`}
                     style={{
                       display: "inline-block",
                       height: height,
                       width: width,
+                      fontSize: fontSize,
                       background: isAvailable ? "#ffffff" : "#d0d0d0",
                     }}
                   >
-                    <div
-                      className="text-center"
-                      style={{
-                        width: "100%",
-                        height: "50%",
-                        color: suit === "d" || suit === "h" ? "#df0000" : "#000",
-                      }}
-                    >
-                      <div style={{ fontSize: fontSize, lineHeight: "100%" }}>{rank}</div>
+                    <div className="w-full h-1/2">
+                      <div className="translate-y-[3.5px]">
+                        {RANK_SVGS[rank]}
+                      </div>
                     </div>
-                    <div className="text-center" style={{ width: "100%", height: "50%" }}>
-                      {SUIT_SVGS[suit]}
+                    <div className="w-full h-1/2">
+                      <div className="translate-y-[2.5px]">
+                        {SUIT_SVGS[suit]}
+                      </div>
                     </div>
                   </div>
                 );
