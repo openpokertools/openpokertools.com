@@ -14,7 +14,7 @@ const RangeSelector = ({
   name,
 }: RangeSelectorProps) => {
   return (
-    <div className="player p-3">
+    <div className="player p-3 w-[460px] mx-auto rounded">
       <h4 className="mb-2">
         {name ? name : "Range"}
         <RangePercent selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
@@ -22,11 +22,13 @@ const RangeSelector = ({
 
       <RangeText selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
       <RangeSlider selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
-      <RangeTable
-        selectedHands={selectedHands}
-        setSelectedHands={setSelectedHands}
-        activeHands={activeHands}
-      />
+      <div className="max-[500px]:h-[500px]">
+        <RangeTable
+          selectedHands={selectedHands}
+          setSelectedHands={setSelectedHands}
+          activeHands={activeHands}
+        />
+      </div>
       <RangeLoader selectedHands={selectedHands} setSelectedHands={setSelectedHands} />
     </div>
   );

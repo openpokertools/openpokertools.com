@@ -20,10 +20,7 @@ const PlayingCard = ({
   const width = (height * 2) / 3;
   const fontSize = height * 11 / 32;
 
-  let color = "#000";
-  if (playingCardState.suit === "d" || playingCardState.suit === "h") {
-    color = "#df0000";
-  }
+  const color = (playingCardState.suit === "d" || playingCardState.suit === "h") ? "#df0000" : "#000";
 
   return (
     <div className={className}>
@@ -37,12 +34,13 @@ const PlayingCard = ({
             width: `${width}px`,
             height: `${height}px`,
             fontSize: fontSize,
+            fill: color,
           }}
         >
           {playingCardState.rank && playingCardState.suit ? (
             <>
               <div className="w-full h-1/2">
-                <div className="translate-y-[5px]">
+                <div className="translate-y-[4.5px]">
                   {RANK_SVGS[playingCardState.rank]}
                 </div>
               </div>

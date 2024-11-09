@@ -14,7 +14,7 @@ const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
 
   return useMemo(
     () => (
-      <div className="rounded player mx-auto" style={{ width: 460 }} data-nosnippet>
+      <div className="rounded player mx-auto max-w-[480px]" data-nosnippet>
         <RangeSelector
           selectedHands={player.selectedHands}
           setSelectedHands={handleSelectedHandsChange}

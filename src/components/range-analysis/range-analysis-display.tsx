@@ -62,7 +62,7 @@ const RangeAnalysisDisplay = () => {
   return (
     <>
       <div className="grid min-[1100px]:grid-cols-12 md:grid-cols-8 grid-cols-4" id="viewer">
-        <div className="col-span-5 h-[630px]">
+        <div className="col-span-5">
           <RangeSelector
             selectedHands={selectedHands}
             setSelectedHands={setSelectedHands}
@@ -70,7 +70,7 @@ const RangeAnalysisDisplay = () => {
           />
         </div>
         <PlayingCardProvider>
-          <div className="col-span-3 p-3">
+          <div className="col-span-3 p-3 max-w-[300px] mx-auto">
             <h4 className="mb-2">Board</h4>
             <BoardProvider>
               <Board setBoardCards={setBoardCards} />

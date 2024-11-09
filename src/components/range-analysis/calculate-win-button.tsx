@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { approximateHandRangeEquity, calculateHandRangeEquity } from "@/lib/equity_utils";
 import React from "react";
 import type { AnalysisHands } from "./analysis-props";
@@ -9,7 +10,33 @@ interface CalculateWinButtonProps {
   setEquityReport: (report: EquityReport) => void;
 }
 const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButtonProps) => {
+  const { toast } = useToast();
+
   const setEquities = () => {
+    if (analysisHands.hole.hole1 === undefined || analysisHands.hole.hole2 === undefined) {
+      toast({
+        variant: "destructive",
+        description: (
+          <span>
+            No <strong>Hole Cards</strong> were specified!
+          </span>
+        ),
+      });
+      return;
+    }
+
+    if (analysisHands.keptToFlop.length === 0) {
+      toast({
+        variant: "destructive",
+        description: (
+          <span>
+            No hands in <strong>Range</strong>!
+          </span>
+        ),
+      });
+      return;
+    }
+
     let preflopEquity = undefined;
     let flopEquity = undefined;
     let turnEquity = undefined;

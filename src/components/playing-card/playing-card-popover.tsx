@@ -62,6 +62,7 @@ const PlayingCardPopover = ({
                 const isSelected = playingCardState.rank === rank && playingCardState.suit === suit;
                 const isCardTaken = selectedCards.has(rank + suit);
                 const isAvailable = !isSelected && !isCardTaken;
+                const color = (suit === "d" || suit === "h") ? "#df0000" : "#000";
 
                 return (
                   <div
@@ -75,6 +76,7 @@ const PlayingCardPopover = ({
                       width: width,
                       fontSize: fontSize,
                       background: isAvailable ? "#ffffff" : "#d0d0d0",
+                      fill: color,
                     }}
                   >
                     <div className="w-full h-1/2">
