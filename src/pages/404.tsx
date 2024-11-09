@@ -1,49 +1,28 @@
-import { type HeadFC, Link, type PageProps } from "gatsby";
-import type * as React from "react";
+import AppShell from "@/components/shell/app-shell";
+import type { HeadFC, PageProps } from "gatsby";
+import React from "react";
 
-const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-};
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-};
-
-const paragraphStyles = {
-  marginBottom: 48,
-};
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-};
-
-const NotFoundPage: React.FC<PageProps> = () => {
+const IndexPage: React.FC<PageProps> = () => {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
+    <AppShell>
+      <div className="text-center w-full text-white my-64">
+        <h1 className="mx-auto text-5xl font-extrabold">
+          404
+        </h1>
+        <h2 className="mx-auto text-2xl font-bold my-2">
+          Page not found
+        </h2>
+        <p>The requested URL was not found on this server.</p>
+      </div>
+    </AppShell>
   );
 };
 
-export default NotFoundPage;
+export default IndexPage;
 
-export const Head: HeadFC = () => <title>Not found</title>;
+export const Head: HeadFC = () => (
+  <>
+    <title>Page not found</title>
+    <meta name="language" content="english" />
+  </>
+);
