@@ -1,6 +1,7 @@
-import { StaticImage } from "gatsby-plugin-image";
+import { cn } from "@/lib/utils";
 import type { Dispatch, SetStateAction } from "react";
 import React from "react";
+import { ReactComponent as CARD_BACK_SVG } from "../../images/card_back.svg";
 import PlayingCardPopover from "./playing-card-popover";
 import type { PlayingCardStateProps } from "./playing-card-props";
 import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
@@ -18,9 +19,12 @@ const PlayingCard = ({
   className,
 }: PlayingCardProps) => {
   const width = (height * 2) / 3;
-  const fontSize = height * 11 / 32;
+  const fontSize = (height * 11) / 32;
 
-  const color = (playingCardState.suit === "d" || playingCardState.suit === "h") ? "#df0000" : "#000";
+  const color =
+    playingCardState.suit === "d" || playingCardState.suit === "h"
+      ? "#df0000"
+      : "#000";
 
   return (
     <div className={className}>
@@ -29,7 +33,12 @@ const PlayingCard = ({
         setPlayingCardState={setPlayingCardState}
       >
         <div
-          className="rounded playingcard border"
+          className={cn(
+            className,
+            "rounded",
+            "playingcard",
+            playingCardState.rank && playingCardState.suit && "border",
+          )}
           style={{
             width: `${width}px`,
             height: `${height}px`,
@@ -51,13 +60,7 @@ const PlayingCard = ({
               </div>
             </>
           ) : (
-            <StaticImage
-              src="../../images/card_back.png"
-              alt="Card back"
-              layout="fixed"
-              style={{ width: "100%", height: "100%" }}
-              placeholder="none"
-            />
+            <CARD_BACK_SVG width={"100%"} height={"100%"} />
           )}
         </div>
       </PlayingCardPopover>

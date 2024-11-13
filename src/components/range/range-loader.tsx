@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/select";
 import { NINE_MAX_OPEN, SIX_MAX_OPEN } from "@/lib/constants";
 import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { RangeSelectorProps } from "./range-props";
 
 interface Range {
@@ -19,7 +18,10 @@ interface Range {
   value: string;
 }
 
-const RangeLoader = ({ selectedHands, setSelectedHands }: RangeSelectorProps) => {
+const RangeLoader = ({
+  selectedHands,
+  setSelectedHands,
+}: RangeSelectorProps) => {
   const [userRanges, setUserRanges] = useState<Range[]>([]);
   const [selectedRange, setSelectedRange] = useState<string>(":");
 
@@ -65,7 +67,6 @@ const RangeLoader = ({ selectedHands, setSelectedHands }: RangeSelectorProps) =>
     } else {
       const index = Number.parseInt(key);
       descriptor = userRanges[index].value;
-      console.log(descriptor);
     }
     const hands = descriptorToHands(descriptor);
     setSelectedHands(hands);

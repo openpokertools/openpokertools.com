@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    width="48.92857"
    height="75"
    viewBox="0 0 12.945684 19.84375"
    version="1.1"
-   id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="T.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="4.3621494"
-     inkscape:cx="42.295663"
-     inkscape:cy="91.812537"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
-  <defs
-     id="defs1" />
   <path
-     d="M 2.905692,17.245164 H 5.2680431 V 2.5985862 H 2.5513393 V 5.1263019 H 0 V 0 H 12.945684 V 5.1263019 H 10.394345 V 2.5985862 H 7.7957589 V 17.245164 H 10.228981 V 19.84375 H 2.905692 Z"
-     id="text2"
-     style="font-size:35.2777px;font-family:'Card Characters';-inkscape-font-specification:'Card Characters';letter-spacing:-2.80194px;stroke-width:0.177177"
-     aria-label="T" />
+     d="M 2.905692,17.245164 H 5.2680431 V 2.5985862 H 2.5513393 V 5.1263019 H 0 V 0 H 12.945684 V 5.1263019 H 10.394345 V 2.5985862 H 7.7957589 V 17.245164 H 10.228981 V 19.84375 H 2.905692 Z" />
 </svg>

@@ -1,6 +1,6 @@
-import { StaticImage } from "gatsby-plugin-image";
 import { Github } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { ReactComponent as Logo } from "../../images/logo.svg";
 
 export const ShellNavbar = () => {
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -14,18 +14,14 @@ export const ShellNavbar = () => {
   return (
     <div data-nosnippet>
       <nav className="border-gray-700">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
           <a
             href="https://openpokertools.com/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <StaticImage
-              src="../../images/logo_tight.png"
-              alt="Logo"
-              layout="fixed"
-              height={40}
-              placeholder="none"
-            />
+            <span className="text-[2.5rem]">
+              <Logo width={"1.3em"} />
+            </span>
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
               OpenPokerTools.com
             </span>
@@ -36,7 +32,9 @@ export const ShellNavbar = () => {
                 <a
                   href="/"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
+                    isActive("/")
+                      ? "text-gray-50"
+                      : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/") ? "page" : undefined}
                 >
@@ -47,7 +45,9 @@ export const ShellNavbar = () => {
                 <a
                   href="/equity"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/equity/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
+                    isActive("/equity/")
+                      ? "text-gray-50"
+                      : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/equity/") ? "page" : undefined}
                 >
@@ -58,7 +58,9 @@ export const ShellNavbar = () => {
                 <a
                   href="/odds"
                   className={`block py-2 px-3 rounded md:p-0 ${
-                    isActive("/odds/") ? "text-gray-50" : "text-gray-500 hover:text-gray-300"
+                    isActive("/odds/")
+                      ? "text-gray-50"
+                      : "text-gray-500 hover:text-gray-300"
                   }`}
                   aria-current={isActive("/odds/") ? "page" : undefined}
                 >

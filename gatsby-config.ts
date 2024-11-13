@@ -29,8 +29,6 @@ const config: GatsbyConfig = {
     "gatsby-plugin-cname",
     "gatsby-plugin-postcss",
     "gatsby-plugin-sitemap",
-    "gatsby-plugin-image",
-    "gatsby-plugin-sharp",
   ],
 };
 

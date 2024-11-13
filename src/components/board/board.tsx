@@ -7,10 +7,16 @@ import type { BoardCards, BoardProps } from "./board-props";
 const Board = ({ setBoardCards }: BoardProps) => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();
 
-  const updateBoardCard = (cardState: PlayingCardStateProps, boardKey: keyof BoardCards) => {
+  const updateBoardCard = (
+    cardState: PlayingCardStateProps,
+    boardKey: keyof BoardCards,
+  ) => {
     setBoardCards((prevBoard) => ({
       ...prevBoard,
-      [boardKey]: cardState.rank && cardState.suit ? cardState.rank + cardState.suit : undefined,
+      [boardKey]:
+        cardState.rank && cardState.suit
+          ? cardState.rank + cardState.suit
+          : undefined,
     }));
   };
 
@@ -40,25 +46,25 @@ const Board = ({ setBoardCards }: BoardProps) => {
         height={55}
         playingCardState={playingCardStates[0]}
         setPlayingCardState={setPlayingCardStates[0]}
-        className="ml-auto mr-[1px]"
+        className="ml-auto mr-[1.5px]"
       />
       <PlayingCard
         height={55}
         playingCardState={playingCardStates[1]}
         setPlayingCardState={setPlayingCardStates[1]}
-        className="mx-[1px]"
+        className="mx-[1.5px]"
       />
       <PlayingCard
         height={55}
         playingCardState={playingCardStates[2]}
         setPlayingCardState={setPlayingCardStates[2]}
-        className="ml-[1px]"
+        className="ml-[1.5px]"
       />
       <PlayingCard
         height={55}
         playingCardState={playingCardStates[3]}
         setPlayingCardState={setPlayingCardStates[3]}
-        className="mx-[5px]"
+        className="mx-[5.5px]"
       />
       <PlayingCard
         height={55}

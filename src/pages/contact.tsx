@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { HeadFC, PageProps } from "gatsby";
 import React, { useState, type ReactElement } from "react";
@@ -19,23 +20,52 @@ const FormSchema = z.object({
   type: z.enum(["pair", "straight", "flush", "threeOfAKind"], {
     required_error: "You need to select a notification type.",
   }),
-})
+});
 
 const ContactPage: React.FC<PageProps> = () => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
+  });
 
   const [message, setMessage] = useState<ReactElement | null>(null);
   const alpha = [
-    "x", "y", "v", "u", "d", "g", "b", "j", "k", "m", "s", "o", "t", "l", "f", "p", "c", "@", "i", "e", "z", "n", "r", "h", "w", ".", "q", "a", "x",
+    "x",
+    "y",
+    "v",
+    "u",
+    "d",
+    "g",
+    "b",
+    "j",
+    "k",
+    "m",
+    "s",
+    "o",
+    "t",
+    "l",
+    "f",
+    "p",
+    "c",
+    "@",
+    "i",
+    "e",
+    "z",
+    "n",
+    "r",
+    "h",
+    "w",
+    ".",
+    "q",
+    "a",
+    "x",
   ];
   const code = [
-    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9,
+    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13,
+    25, 16, 11, 9,
   ];
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-
     if (data.type === "flush") {
       let decodedMessage = "";
       for (let i = 0; i < code.length; i++) {
@@ -47,11 +77,10 @@ const ContactPage: React.FC<PageProps> = () => {
         </a>,
       );
     } else {
-      // setMessage(
-      //   <div className="my-2 alert alert-danger" role="alert">
-      //     Incorrect. Please try again.
-      //   </div>,
-      // );
+      toast({
+        variant: "destructive",
+        description: "Incorrect. Please try again.",
+      });
     }
   };
 
@@ -61,15 +90,20 @@ const ContactPage: React.FC<PageProps> = () => {
         className="container rounded analysisview my-3 p-4 mx-auto flex"
         style={{ maxWidth: "360px" }}
       >
-        {message === null ?
+        {message === null ? (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-64 space-y-6 mx-auto">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-64 space-y-6 mx-auto"
+            >
               <FormField
                 control={form.control}
                 name="type"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
-                    <FormLabel>Which of the following is the best hand?</FormLabel>
+                    <FormLabel>
+                      Which of the following is the best hand?
+                    </FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
@@ -80,9 +114,7 @@ const ContactPage: React.FC<PageProps> = () => {
                           <FormControl>
                             <RadioGroupItem value="pair" />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Pair
-                          </FormLabel>
+                          <FormLabel className="font-normal">Pair</FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-2 space-y-0">
                           <FormControl>
@@ -102,7 +134,9 @@ const ContactPage: React.FC<PageProps> = () => {
                           <FormControl>
                             <RadioGroupItem value="threeOfAKind" />
                           </FormControl>
-                          <FormLabel className="font-normal">Three of a kind</FormLabel>
+                          <FormLabel className="font-normal">
+                            Three of a kind
+                          </FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
@@ -113,9 +147,9 @@ const ContactPage: React.FC<PageProps> = () => {
               <Button type="submit">Submit</Button>
             </form>
           </Form>
-          :
+        ) : (
           message
-        }
+        )}
       </div>
     </AppShell>
   );
@@ -126,7 +160,10 @@ export default ContactPage;
 export const Head: HeadFC = () => (
   <>
     <title>OpenPokerTools.com - Contact Information</title>
-    <meta name="description" content="Contact us, report a bug, suggest a feature." />
+    <meta
+      name="description"
+      content="Contact us, report a bug, suggest a feature."
+    />
     <meta name="keywords" content="contact" />
     <meta name="language" content="english" />
   </>

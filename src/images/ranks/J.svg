@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    width="47.600861"
    height="75"
    viewBox="0 0 12.594394 19.84375"
    version="1.1"
-   id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="J.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="4.3621494"
-     inkscape:cx="-17.307981"
-     inkscape:cy="91.812537"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
-  <defs
-     id="defs1" />
   <path
-     d="m 2.6957561,12.686988 q -0.023237,1.41741 -0.023237,1.185048 0,1.394175 0.580906,2.230679 0.697087,0.999159 2.0912616,0.999159 1.185049,0 1.905373,-0.859741 0.650614,-0.790032 0.650614,-1.975081 V 2.765113 H 5.7861757 V 0 h 6.8082193 v 2.765113 h -2.021552 v 11.501939 q 0,2.34686 -1.4174113,3.926925 -1.48712,1.649773 -3.810744,1.649773 -2.3468605,0 -3.8572162,-1.626537 Q -0.02288423,16.590676 3.5206602e-4,14.243816 L 0.02358807,12.686988 Z"
-     id="text2"
-     style="font-size:35.2777px;font-family:'Card Characters';-inkscape-font-specification:'Card Characters';letter-spacing:-2.80194px;stroke-width:0.174272"
-     aria-label="J" />
+     d="m 2.6957561,12.686988 q -0.023237,1.41741 -0.023237,1.185048 0,1.394175 0.580906,2.230679 0.697087,0.999159 2.0912616,0.999159 1.185049,0 1.905373,-0.859741 0.650614,-0.790032 0.650614,-1.975081 V 2.765113 H 5.7861757 V 0 h 6.8082193 v 2.765113 h -2.021552 v 11.501939 q 0,2.34686 -1.4174113,3.926925 -1.48712,1.649773 -3.810744,1.649773 -2.3468605,0 -3.8572162,-1.626537 Q -0.02288423,16.590676 3.5206602e-4,14.243816 L 0.02358807,12.686988 Z" />
 </svg>

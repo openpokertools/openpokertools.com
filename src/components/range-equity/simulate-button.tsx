@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
 import { getPotOdds } from "@/lib/pot_odds";
 import { handsToCombos } from "@/lib/range_utils";
@@ -12,12 +13,30 @@ interface SimulateButtonProps {
   boardCards: BoardCards;
 }
 
-const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonProps) => {
+const SimulateButton = ({
+  players,
+  setPlayerStats,
+  boardCards,
+}: SimulateButtonProps) => {
+  const { toast } = useToast();
+
   const simulate = () => {
     const activePlayers = players.filter((player) => player.active);
-    const playerCombos = activePlayers.map((player) =>
-      Array.from(handsToCombos(player.selectedHands)),
-    );
+    if (activePlayers.length === 0) {
+      toast({
+        variant: "destructive",
+        description: "No active players to simulate",
+      });
+      return;
+    }
+
+    const playerCombos = activePlayers.map((player) => {
+      if (player.holeCards.hole1 && player.holeCards.hole2) {
+        return [[player.holeCards.hole1, player.holeCards.hole2]];
+      }
+      return Array.from(handsToCombos(player.selectedHands));
+    });
+
     const board: Array<string> = [];
     if (boardCards.flop1 && boardCards.flop2 && boardCards.flop3) {
       board.push(boardCards.flop1, boardCards.flop2, boardCards.flop3);
@@ -29,7 +48,16 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
       }
     }
 
-    const equities = calculateRangeRangeEquities(playerCombos, board);
+    let equities: [Array<number>, Array<number>, number];
+    try {
+      equities = calculateRangeRangeEquities(playerCombos, board);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        description: error,
+      });
+      return;
+    }
 
     let index = 0;
     const newPlayerStats: Array<PlayerStats> = [];
@@ -39,7 +67,10 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
           id: player.id,
           win: equities[0][index] / equities[2],
           tie: equities[1][index] / equities[2],
-          potOdds: getPotOdds(equities[0][index] / equities[2], equities[0][index] / equities[2]),
+          potOdds: getPotOdds(
+            equities[0][index] / equities[2],
+            equities[0][index] / equities[2],
+          ),
         };
         newPlayerStats.push(stats);
         index++;

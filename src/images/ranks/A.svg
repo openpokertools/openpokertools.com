@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    width="49.045349"
    height="75"
    viewBox="0 0 12.976582 19.84375"
    version="1.1"
-   id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="A.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="4.1071408"
-     inkscape:cx="31.773929"
-     inkscape:cy="45.408718"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
-  <defs
-     id="defs1" />
   <path
-     style="font-size:35.2777px;font-family:'Card Characters';-inkscape-font-specification:'Card Characters';letter-spacing:-2.80194px;stroke-width:0.177599"
-     d="M 4.972778,12.97658 H 8.003804 L 6.488291,4.90174 Z m 0.307838,4.4755 v 2.39167 H 0 V 17.45208 H 1.728632 L 4.996458,0 h 2.959986 l 3.291506,17.45208 h 1.728632 v 2.39167 H 7.695965 V 17.45208 H 8.832601 L 8.453722,15.36825 H 4.52286 l -0.378879,2.08383 z"
-     id="text1"
-     aria-label="A" />
+     d="M 4.972778,12.97658 H 8.003804 L 6.488291,4.90174 Z m 0.307838,4.4755 v 2.39167 H 0 V 17.45208 H 1.728632 L 4.996458,0 h 2.959986 l 3.291506,17.45208 h 1.728632 v 2.39167 H 7.695965 V 17.45208 H 8.832601 L 8.453722,15.36825 H 4.52286 l -0.378879,2.08383 z" />
 </svg>

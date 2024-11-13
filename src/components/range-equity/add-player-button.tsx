@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import React, { type Dispatch, type SetStateAction, useRef } from "react";
-import { type Player, type PlayerStats, createPlayer } from "./range-equity-props";
+import {
+  type Player,
+  type PlayerStats,
+  createPlayer,
+} from "./range-equity-props";
 
 interface AddPlayerButtonProps {
   players: Array<Player>;
@@ -20,7 +24,6 @@ const AddPlayerButton = ({
   const addPlayer = () => {
     const newPlayer = createPlayer(index.current);
     index.current += 1;
-    console.log(players);
     setPlayers([...players, newPlayer]);
 
     const newPlayerStats = { id: newPlayer.id };
