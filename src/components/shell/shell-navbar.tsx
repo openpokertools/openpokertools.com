@@ -22,7 +22,7 @@ export const ShellNavbar = () => {
             <span className="text-[2.5rem]">
               <Logo width={"1.3em"} />
             </span>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
+            <span className="self-center text-2xl font-semibold whitespace-nowrap text-white select-none">
               OpenPokerTools.com
             </span>
           </a>
