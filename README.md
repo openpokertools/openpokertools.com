@@ -1,5 +1,5 @@
 <h1>
-    <img width="50" src="https://raw.githubusercontent.com/openpokertools/openpokertools.com/main/src/static/logo_tight.png">
+    <img width="50" src="https://raw.githubusercontent.com/openpokertools/openpokertools.com/main/src/images/logo_tight.png">
     OpenPokerTools.com
 </h1>
 
@@ -9,14 +9,14 @@ The goal of this project is to provide a set of free and open source poker tools
 
 To use the tools simply go to [https://openpokertools.com/](https://openpokertools.com/).
 
-## Build
+## Develop locally
 
-Follow these steps to build the website on your machine.
-1. [Install node](https://nodejs.org/en/download)
-2. `npm install`
-3. `npm run build`
-4. Go to the newly created folder `dist`
-5. Open the `dist/index.html` file in your browser
+Follow these steps to run the website on your machine.
+
+1. [Install bun](https://bun.sh/docs/installation)
+2. `bun i`
+3. `bun dev`
+4. Navigate to `http://localhost:8000/`
 
 ## Contributing
 
