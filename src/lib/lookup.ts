@@ -15,7 +15,7 @@ export const UNSUITED_LOOKUP: Map<number, number> = new Map();
 function flushes(): void {
   const straightFlushes = [7936, 3968, 1984, 992, 496, 248, 124, 62, 31, 4111];
   const flushes: number[] = [];
-  const gen = getLexographicallyNextBitSequence(31);
+  const gen = getLexicographicallyNextBitSequence(31);
 
   for (let i = 0; i < 1286; i++) {
     const f = gen.next().value;
@@ -137,7 +137,7 @@ function multiples(): void {
   }
 }
 
-function* getLexographicallyNextBitSequence(bits: number): Generator<number> {
+function* getLexicographicallyNextBitSequence(bits: number): Generator<number> {
   let t = (bits | (bits - 1)) + 1;
   let next = t | ((Math.floor((t & -t) / (bits & -bits)) >> 1) - 1);
   yield next;
