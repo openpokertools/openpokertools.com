@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 concurrency:
   group: deploy
@@ -16,38 +16,35 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
+      - name: Check for typos
+        uses: crate-ci/typos@v1.30.0
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
+        run: bun i
 
       - name: Build
-        run: npm run build
+        run: bun gatsby build
 
       - name: Create page artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: "public"
 
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
+  # deploy:
+  #   needs: build
+  #   permissions:
+  #     pages: write
+  #     id-token: write
 
-    environment:
-      name: github-pages
-      url: '${{ steps.deployment.outputs.page_url }}'
+  #   environment:
+  #     name: github-pages
+  #     url: "${{ steps.deployment.outputs.page_url }}"
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4

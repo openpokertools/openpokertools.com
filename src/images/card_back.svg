@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="600"
+   height="900"
+   viewBox="0 0 600 900"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+   <defs>
+      <pattern
+         xlink:href="#a"
+         id="pattern2"
+         patternTransform="matrix(18.741689,-18.987656,18.741689,18.987656,-17.880242,37.300756)" />
+      <pattern
+         id="a"
+         width="3"
+         height="1"
+         patternTransform="matrix(19.455 -19.455 19.455 19.455 -7.1429 27.143)"
+         patternUnits="userSpaceOnUse">
+         <rect
+            y="-.5"
+            width="1.5"
+            height="2"
+            fill="#190c80" />
+    </pattern>
+  </defs>
+  <rect
+     transform="scale(-1,1)"
+     x="-574.55054"
+     y="25.44945"
+     width="549.10107"
+     height="849.10107"
+     fill="url(#a)"
+     stroke="#190c80"
+     strokeWidth="30"
+     style="fill:url(#pattern2);stroke-width:50.8989;stroke-dasharray:none;stroke-linejoin:round" />
+</svg>
