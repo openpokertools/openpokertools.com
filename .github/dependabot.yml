@@ -1,10 +1,5 @@
 version: 2
 updates:
-  - directory: /
-    package-ecosystem: bun
-    schedule:
-      interval: monthly
-
   - directory: .github/workflows
     package-ecosystem: github-actions
     schedule:
