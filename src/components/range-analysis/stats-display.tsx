@@ -28,7 +28,11 @@ const StatsDisplay = ({
   selectedTab,
   setSelectedTab,
 }: StatsProps) => {
-  const updateSelectedQualifiers = (round: string, qualifier: string, value: boolean) => {
+  const updateSelectedQualifiers = (
+    round: string,
+    qualifier: string,
+    value: boolean,
+  ) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
       [round]: {
@@ -39,7 +43,11 @@ const StatsDisplay = ({
     setSelectedQualifiers(updatedQualifiers);
   };
 
-  const updateMultipleQualifiers = (round: string, qualifiers: Array<string>, value: boolean) => {
+  const updateMultipleQualifiers = (
+    round: string,
+    qualifiers: Array<string>,
+    value: boolean,
+  ) => {
     const roundQualifiers = selectedQualifiers[round];
     for (const q of qualifiers) {
       roundQualifiers[q] = value;
@@ -90,7 +98,11 @@ const StatsDisplay = ({
   };
 
   return (
-    <Tabs defaultValue="preflop" className="w-full" onValueChange={updateSelectedTab}>
+    <Tabs
+      defaultValue="preflop"
+      className="w-full"
+      onValueChange={updateSelectedTab}
+    >
       <TabsList className="grid w-full grid-cols-4">
         {ROUNDS.map((round) => (
           <TabsTrigger key={`${round}-tab`} value={round}>
@@ -195,7 +207,10 @@ const StatsDisplay = ({
                       </TableRow>
                       {SUBQUALIFIERS[q]?.map((sq) => {
                         return (
-                          <TableRow key={`${round}-content-${sq}`} className="subqualifier">
+                          <TableRow
+                            key={`${round}-content-${sq}`}
+                            className="subqualifier"
+                          >
                             <TableCell className="stats_hand_check" />
                             <TableCell className="stats_hand_qualifier">
                               {round !== "preflop" && (
@@ -205,21 +220,33 @@ const StatsDisplay = ({
                                   checked={selectedQualifiers[round][sq]}
                                   onCheckedChange={(isChecked) => {
                                     if (!isChecked) {
-                                      updateMultipleQualifiers(round, [q, sq], isChecked);
+                                      updateMultipleQualifiers(
+                                        round,
+                                        [q, sq],
+                                        isChecked,
+                                      );
                                     } else {
-                                      updateSelectedQualifiers(round, sq, isChecked);
+                                      updateSelectedQualifiers(
+                                        round,
+                                        sq,
+                                        isChecked,
+                                      );
                                     }
                                   }}
                                 />
                               )}
 
-                              <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
+                              <span className="ml-1">
+                                {QUALIFIER_DISPLAY[sq]}
+                              </span>
                             </TableCell>
                             <TableCell className="stats_hand_percent">
                               {((roundStats.get(sq) || 0) * 100).toFixed(1)}%
                             </TableCell>
                             <TableCell className="stats_hand_meter">
-                              <Progress value={(roundStats.get(sq) || 0) * 100} />
+                              <Progress
+                                value={(roundStats.get(sq) || 0) * 100}
+                              />
                             </TableCell>
                           </TableRow>
                         );
