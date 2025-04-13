@@ -129,7 +129,8 @@ function multiples(): void {
       const k1 = k[0];
       const k2 = k[1];
       const k3 = k[2];
-      const product = PRIMES[pairrank] ** 2 * PRIMES[k1] * PRIMES[k2] * PRIMES[k3];
+      const product =
+        PRIMES[pairrank] ** 2 * PRIMES[k1] * PRIMES[k2] * PRIMES[k3];
       UNSUITED_LOOKUP.set(product, rank);
       rank += 1;
     }
@@ -155,7 +156,7 @@ function removeItem<T>(array: T[], item: T): void {
 }
 
 function combinations<T>(elements: T[], k: number): T[][] {
-  if (k > elements.length || k == 0) {
+  if (k > elements.length || k === 0) {
     return [];
   }
 
