@@ -1,3 +1,10 @@
+import React, { type ReactElement, useState } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { HeadFC, PageProps } from "gatsby";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import AppShell from "@/components/shell/app-shell";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +17,6 @@ import {
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { HeadFC, PageProps } from "gatsby";
-import React, { useState, type ReactElement } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const FormSchema = z.object({
   type: z.enum(["pair", "straight", "flush", "threeOfAKind"], {
@@ -61,8 +63,7 @@ const ContactPage: React.FC<PageProps> = () => {
     "x",
   ];
   const code = [
-    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13,
-    25, 16, 11, 9,
+    11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9,
   ];
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
@@ -92,18 +93,13 @@ const ContactPage: React.FC<PageProps> = () => {
       >
         {message === null ? (
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="w-64 space-y-6 mx-auto"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-64 space-y-6 mx-auto">
               <FormField
                 control={form.control}
                 name="type"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
-                    <FormLabel>
-                      Which of the following is the best hand?
-                    </FormLabel>
+                    <FormLabel>Which of the following is the best hand?</FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
@@ -120,9 +116,7 @@ const ContactPage: React.FC<PageProps> = () => {
                           <FormControl>
                             <RadioGroupItem value="straight" />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Straight
-                          </FormLabel>
+                          <FormLabel className="font-normal">Straight</FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-2 space-y-0">
                           <FormControl>
@@ -134,9 +128,7 @@ const ContactPage: React.FC<PageProps> = () => {
                           <FormControl>
                             <RadioGroupItem value="threeOfAKind" />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Three of a kind
-                          </FormLabel>
+                          <FormLabel className="font-normal">Three of a kind</FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
@@ -160,10 +152,7 @@ export default ContactPage;
 export const Head: HeadFC = () => (
   <>
     <title>OpenPokerTools.com - Contact Information</title>
-    <meta
-      name="description"
-      content="Contact us, report a bug, suggest a feature."
-    />
+    <meta name="description" content="Contact us, report a bug, suggest a feature." />
     <meta name="keywords" content="contact" />
     <meta name="language" content="english" />
   </>

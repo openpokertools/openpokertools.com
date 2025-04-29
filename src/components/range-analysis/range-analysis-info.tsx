@@ -41,6 +41,12 @@ const RangeAnalysisInfo = () => {
         The grid allows the addition and removal of individual hands from the defined range. Add and
         remove hands by clicking on them.
       </p>
+      <h6>Annotation</h6>
+      <p className="ml-1">
+        It is possible to annotate the hands in the grid with colors. This can be used for study
+        purposes to differentiate between groups of hands. To create an annotation simply right
+        click on the desired cell and select a color.
+      </p>
       <h5>Board</h5>
       <p className="ml-1">
         The board allows you to define a specific runout to examine. Click on the cards and select
