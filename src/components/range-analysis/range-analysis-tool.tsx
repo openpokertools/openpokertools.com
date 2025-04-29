@@ -1,14 +1,18 @@
+import React, { useEffect, useState } from "react";
+
 import Board from "@/components/board/board";
 import type { BoardCards } from "@/components/board/board-props";
 import Hole from "@/components/hole-cards/hole-cards";
 import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
+import { HandModifiers } from "@/components/range/range-props";
 import RangeSelector from "@/components/range/range-selector";
 import { calculateStats } from "@/lib/stats";
-import React, { useEffect, useState } from "react";
+
 import BoardProvider from "../board/board-context";
 import ClearBoardButton from "../board/clear-board-button";
 import RandomBoardButton from "../board/random-board-button";
 import PlayingCardProvider from "../playing-card/playing-card-context";
+import RangeLoaderProvider from "../range/range-loader-context";
 import { ANALYSIS_HANDS_DEFAULT, type AnalysisHands } from "./analysis-props";
 import CalculateWinButton from "./calculate-win-button";
 import CombosDisplay from "./combos-display";
@@ -17,8 +21,9 @@ import { COMBOS_REPORT_DEFAULT, type CombosReport, type EquityReport } from "./r
 import StatsDisplay from "./stats-display";
 import { SELECTED_QUALIFIERS_DEFAULT, type SelectedQualifiers } from "./stats-display-props";
 
-const RangeAnalysisDisplay = () => {
+const RangeAnalysisTool = () => {
   const [selectedHands, setSelectedHands] = useState<Set<string>>(new Set());
+  const [handModifiers, setHandModifiers] = useState<Map<string, HandModifiers>>(new Map());
   const [selectedQualifiers, setSelectedQualifiers] = useState<SelectedQualifiers>(
     SELECTED_QUALIFIERS_DEFAULT,
   );
@@ -63,11 +68,15 @@ const RangeAnalysisDisplay = () => {
     <>
       <div className="grid min-[1100px]:grid-cols-12 md:grid-cols-8 grid-cols-4" id="viewer">
         <div className="col-span-5">
-          <RangeSelector
-            selectedHands={selectedHands}
-            setSelectedHands={setSelectedHands}
-            activeHands={activeHands}
-          />
+          <RangeLoaderProvider>
+            <RangeSelector
+              selectedHands={selectedHands}
+              setSelectedHands={setSelectedHands}
+              handModifiers={handModifiers}
+              setHandModifiers={setHandModifiers}
+              activeHands={activeHands}
+            />
+          </RangeLoaderProvider>
         </div>
         <PlayingCardProvider>
           <div className="col-span-3 p-3 max-w-[300px] mx-auto">
@@ -111,4 +120,4 @@ const RangeAnalysisDisplay = () => {
   );
 };
 
-export default RangeAnalysisDisplay;
+export default RangeAnalysisTool;

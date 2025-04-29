@@ -1,15 +1,17 @@
+import React, { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
 import { getPotOdds } from "@/lib/pot_odds";
 import { handsToCombos } from "@/lib/range_utils";
-import type { Dispatch, SetStateAction } from "react";
-import React, { useEffect, useRef, useState } from "react";
+
 import type { BoardCards } from "../board/board-props";
 import type { Player, PlayerStats } from "./range-equity-props";
 
 interface SimulateButtonProps {
-  players: Array<Player>;
+  players: Record<number, Player>;
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
   boardCards: BoardCards;
 }
@@ -44,24 +46,22 @@ const SimulateButton = ({
   };
 
   const simulateOnce = () => {
-    const activePlayers = players.filter((player) => player.active);
+    const activePlayers = Object.values(players).filter((player) => player.active);
     if (activePlayers.length === 0) {
       throw "No active players to simulate";
     }
 
     const board = getBoard();
     const playerCombos = getPlayerCombos(activePlayers);
-    const [wins, ties, total] = calculateRangeRangeEquities(
-      playerCombos,
-      board,
-    );
+    const [wins, ties, total] = calculateRangeRangeEquities(playerCombos, board);
 
-    if (statsRef.current.length !== players.length) {
-      statsRef.current = players.map(() => ({ win: 0, tie: 0, count: 0 }));
+    const playerList = Object.values(players);
+    if (statsRef.current.length !== playerList.length) {
+      statsRef.current = playerList.map(() => ({ win: 0, tie: 0, count: 0 }));
     }
 
     let activeIndex = 0;
-    players.forEach((player, i) => {
+    playerList.forEach((player, i) => {
       if (player.active) {
         statsRef.current[i].win += wins[activeIndex];
         statsRef.current[i].tie += ties[activeIndex];
@@ -70,7 +70,7 @@ const SimulateButton = ({
       }
     });
 
-    const updatedStats = players.map((player, i) => {
+    const updatedStats = playerList.map((player, i) => {
       if (!player.active) return { id: player.id };
 
       const { win, tie, count } = statsRef.current[i];

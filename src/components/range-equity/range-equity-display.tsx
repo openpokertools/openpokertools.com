@@ -1,3 +1,7 @@
+import React, { type Dispatch, type SetStateAction, useState } from "react";
+
+import { Trash2, X } from "lucide-react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
@@ -7,8 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trash2, X } from "lucide-react";
-import React, { useState, type Dispatch, type SetStateAction } from "react";
+
 import Board from "../board/board";
 import BoardProvider from "../board/board-context";
 import type { BoardCards } from "../board/board-props";
@@ -22,20 +25,13 @@ import type { Player, PlayerStats } from "./range-equity-props";
 import SimulateButton from "./simulate-button";
 
 interface RangeEquityDisplayProps {
-  players: Array<Player>;
-  setPlayers: Dispatch<SetStateAction<Array<Player>>>;
+  players: Record<number, Player>;
+  setPlayers: Dispatch<SetStateAction<Record<number, Player>>>;
   updatePlayer: (id: number, newData: Partial<Player>) => void;
 }
 
-const RangeEquityDisplay = ({
-  players,
-  setPlayers,
-  updatePlayer,
-}: RangeEquityDisplayProps) => {
-  const [playerStats, setPlayerStats] = useState<Array<PlayerStats>>([
-    { id: 0 },
-    { id: 1 },
-  ]);
+const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDisplayProps) => {
+  const [playerStats, setPlayerStats] = useState<Array<PlayerStats>>([{ id: 0 }, { id: 1 }]);
   const [boardCards, setBoardCards] = useState<BoardCards>({});
 
   return (
@@ -56,19 +52,15 @@ const RangeEquityDisplay = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {players.map((player, index) => {
-            const handleHoleCardsChange = (
-              update: (prev: HoleCards) => HoleCards,
-            ) => {
+          {Object.values(players).map((player, index) => {
+            const handleHoleCardsChange = (update: (prev: HoleCards) => HoleCards) => {
               updatePlayer(player.id, { holeCards: update(player.holeCards) });
             };
 
             const handleDeletePlayer = () => {
-              const newPlayers = players.filter((p) => p.id != player.id);
+              const { [player.id]: _, ...newPlayers } = players;
               setPlayers(newPlayers);
-              const newPlayerStats = playerStats.filter(
-                (p) => p.id !== player.id,
-              );
+              const newPlayerStats = playerStats.filter((p) => p.id !== player.id);
               setPlayerStats(newPlayerStats);
             };
 
@@ -79,14 +71,9 @@ const RangeEquityDisplay = ({
             return (
               <TableRow key={`${player.id}_stats_row`}>
                 <TableCell className="text-center">
-                  <Checkbox
-                    checked={player.active}
-                    onCheckedChange={handleTogglePlayer}
-                  />
+                  <Checkbox checked={player.active} onCheckedChange={handleTogglePlayer} />
                 </TableCell>
-                <TableCell>
-                  {player.id === 0 ? "Hero" : `Villain ${player.id}`}
-                </TableCell>
+                <TableCell>{player.id === 0 ? "Hero" : `Villain ${player.id}`}</TableCell>
                 <TableCell className="flex py-2">
                   <Hole
                     holeCards={player.holeCards}
@@ -106,9 +93,7 @@ const RangeEquityDisplay = ({
                     : "-"}
                 </TableCell>
                 <TableCell className="text-center">
-                  {playerStats[index].potOdds !== undefined
-                    ? playerStats[index].potOdds
-                    : "-"}
+                  {playerStats[index].potOdds !== undefined ? playerStats[index].potOdds : "-"}
                 </TableCell>
                 <TableCell className="text-center">
                   <Button

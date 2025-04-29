@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -9,36 +11,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { NINE_MAX_OPEN, SIX_MAX_OPEN } from "@/lib/constants";
-import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
-import React, { useEffect, useState } from "react";
-import type { RangeSelectorProps } from "./range-props";
+import {
+  descriptorToHands,
+  handsToDescriptor,
+  modifiersToString,
+  stringToModifiers,
+} from "@/lib/descriptor";
 
-interface Range {
-  name: string;
-  value: string;
-}
+import { useRangeSelectorContext } from "./range-context";
+import { useRangeLoaderContext } from "./range-loader-context";
+import { UserRange } from "./range-props";
 
-const RangeLoader = ({
-  selectedHands,
-  setSelectedHands,
-}: RangeSelectorProps) => {
-  const [userRanges, setUserRanges] = useState<Range[]>([]);
+const RangeLoader = () => {
+  const { selectedHands, setSelectedHands, handModifiers, setHandModifiers } =
+    useRangeSelectorContext();
+  const { userRanges, setUserRanges } = useRangeLoaderContext();
   const [selectedRange, setSelectedRange] = useState<string>(":");
-
-  useEffect(() => {
-    const savedRanges = loadRangesFromLocalStorage();
-    setUserRanges(savedRanges);
-  }, []);
-
-  const loadRangesFromLocalStorage = (): Range[] => {
-    return JSON.parse(localStorage.getItem("user_ranges") || "[]");
-  };
 
   const handleSaveRange = () => {
     const rangeName = prompt("Please enter a name for this range.");
     if (!rangeName) return;
     const descriptor = handsToDescriptor(selectedHands);
-    const newRange: Range = { name: rangeName, value: descriptor };
+    const modifiersString = modifiersToString(handModifiers);
+    const newRange: UserRange = { name: rangeName, value: descriptor, modifiers: modifiersString };
     const updatedRanges = [...userRanges, newRange];
     setUserRanges(updatedRanges);
     localStorage.setItem("user_ranges", JSON.stringify(updatedRanges));
@@ -60,6 +55,7 @@ const RangeLoader = ({
     setSelectedRange(value);
     const [group, key] = value.split(":");
     let descriptor: string;
+    let modifiers = "";
     if (group === "sixmax") {
       descriptor = SIX_MAX_OPEN[key];
     } else if (group === "ninemax") {
@@ -67,9 +63,15 @@ const RangeLoader = ({
     } else {
       const index = Number.parseInt(key);
       descriptor = userRanges[index].value;
+      modifiers = userRanges[index].modifiers;
     }
     const hands = descriptorToHands(descriptor);
     setSelectedHands(hands);
+    if (modifiers) {
+      setHandModifiers(stringToModifiers(modifiers));
+    } else {
+      setHandModifiers(new Map());
+    }
   };
 
   return (

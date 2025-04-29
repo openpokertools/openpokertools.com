@@ -1,10 +1,13 @@
+import React, { useEffect, useState } from "react";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { HANDS_ORDERED } from "@/lib/constants";
-import React from "react";
-import { useEffect, useState } from "react";
-import type { RangeSelectorProps } from "./range-props";
 
-const RangePercent = ({ selectedHands }: RangeSelectorProps) => {
+import { useRangeSelectorContext } from "./range-context";
+
+
+const RangePercent = () => {
+  const { selectedHands } = useRangeSelectorContext();
   const [raisePercent, setRaisePercent] = useState<string>("0.0%");
   const [callPercent, setCallPercent] = useState<string>("0.0%");
 

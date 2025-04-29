@@ -1,15 +1,17 @@
-import RangeAnalysisDisplay from "@/components/range-analysis/range-analysis-display";
+import React from "react";
+
+import type { HeadFC, PageProps } from "gatsby";
+
 import RangeAnalysisInfo from "@/components/range-analysis/range-analysis-info";
+import RangeAnalysisTool from "@/components/range-analysis/range-analysis-tool";
 import AppShell from "@/components/shell/app-shell";
 import DisplayContainer from "@/components/shell/display-container";
-import type { HeadFC, PageProps } from "gatsby";
-import React from "react";
 
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <AppShell>
       <DisplayContainer maxWidth="1140px">
-        <RangeAnalysisDisplay />
+        <RangeAnalysisTool />
       </DisplayContainer>
       <RangeAnalysisInfo />
     </AppShell>

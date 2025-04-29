@@ -4085,3 +4085,11 @@ export const ROUNDS_DISPLAY = {
   turn: "Turn",
   river: "River",
 };
+
+export const COLORS = {
+  purple: ["#BBABE2", "#916FE2"],
+  blue: ["#90D5EC", "#31B5FF"],
+  green: ["#90EE90", "#4CD44C"],
+  yellow: ["#FFE7AC", "#FFC107"],
+  red: ["#EFACB3", "#FF3344"],
+};

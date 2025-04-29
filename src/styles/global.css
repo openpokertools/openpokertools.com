@@ -261,8 +261,6 @@ p {
 }
 
 .range_cell.pocketpair.selected {
-  background-color: lightgreen;
-  border-color: #acf2ac;
   border-style: inset;
 }
 

@@ -1,14 +1,24 @@
-import { descriptorToHands, handsToDescriptor } from "@/lib/descriptor";
-import React from "react";
-import { useEffect, useState } from "react";
-import type { RangeSelectorProps } from "./range-props";
+import React, { useEffect, useState } from "react";
 
-const RangeText = ({ selectedHands, setSelectedHands }: RangeSelectorProps) => {
+import {
+  descriptorToHands,
+  handsToDescriptor,
+  modifiersToString,
+  stringToModifiers,
+} from "@/lib/descriptor";
+
+import { useRangeSelectorContext } from "./range-context";
+
+const RangeText = () => {
+  const { selectedHands, setSelectedHands, handModifiers, setHandModifiers } =
+    useRangeSelectorContext();
   const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
-    setInputValue(handsToDescriptor(selectedHands));
-  }, [selectedHands]);
+    const descriptor = handsToDescriptor(selectedHands);
+    const modifiers = modifiersToString(handModifiers);
+    setInputValue(`${descriptor}::${modifiers}`);
+  }, [selectedHands, handModifiers]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -16,9 +26,14 @@ const RangeText = ({ selectedHands, setSelectedHands }: RangeSelectorProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const descriptor = inputValue;
+      const [descriptor, modifiers] = inputValue.split("::");
       const hands = descriptorToHands(descriptor);
       setSelectedHands(hands);
+      if (modifiers) {
+        setHandModifiers(stringToModifiers(modifiers));
+      } else {
+        setHandModifiers(new Map());
+      }
     }
   };
 

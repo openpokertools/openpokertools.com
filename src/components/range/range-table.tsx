@@ -1,8 +1,13 @@
-import { RANKS } from "@/lib/constants";
 import React from "react";
-import type { RangeSelectorProps } from "./range-props";
 
-const RangeTable = ({ selectedHands, setSelectedHands, activeHands }: RangeSelectorProps) => {
+import { COLORS, RANKS } from "@/lib/constants";
+
+import RangeCell from "./range-cell";
+import { useRangeSelectorContext } from "./range-context";
+
+const RangeTable = () => {
+  const { selectedHands, setSelectedHands, activeHands, handModifiers } = useRangeSelectorContext();
+
   const toggleHandSelection = (hand: string) => {
     const newSelectedHands = new Set(selectedHands);
     if (newSelectedHands.has(hand)) {
@@ -13,40 +18,47 @@ const RangeTable = ({ selectedHands, setSelectedHands, activeHands }: RangeSelec
     setSelectedHands(newSelectedHands);
   };
 
+  const handleMouseDown = (event: React.MouseEvent, hand: string) => {
+    if (event.button === 0) {
+      toggleHandSelection(hand);
+    }
+  };
+
   return (
     <table className="mx-auto range_table">
       <tbody>
         {RANKS.map((rank1, i) => (
-          <tr key={i}>
+          <tr key={rank1}>
             {RANKS.map((rank2, j) => {
-              let hand: string;
-              let handType: string;
-              if (i === j) {
-                hand = `${rank1}${rank2}`;
-                handType = "pocketpair";
-              } else if (i < j) {
-                hand = `${rank1}${rank2}s`;
-                handType = "suited";
-              } else {
-                hand = `${rank2}${rank1}o`;
-                handType = "offsuit";
-              }
-              const isActive = activeHands?.get(hand);
-              const percent = isActive ? (activeHands.get(hand) * 100) / 12 : 0;
-              const style = isActive
+              const isPocketPair = i === j;
+              const isSuited = i < j;
+              const hand = isPocketPair
+                ? `${rank1}${rank2}`
+                : isSuited
+                  ? `${rank1}${rank2}s`
+                  : `${rank2}${rank1}o`;
+              const handType = isPocketPair ? "pocketpair" : isSuited ? "suited" : "offsuit";
+              const percent = ((activeHands?.get(hand) ?? 0) * 100) / 12;
+              const color = handModifiers.get(hand)?.color ?? "green";
+              const style = percent
                 ? {
-                    background: `linear-gradient(to right, limegreen ${percent}%, lightgreen ${percent}%)`,
+                    background: `linear-gradient(to right, ${COLORS[color][1]} ${percent}%, ${COLORS[color][0]} ${percent}%)`,
                   }
-                : {};
+                : selectedHands.has(hand)
+                  ? {
+                      backgroundColor: COLORS[color][1],
+                      borderColor: COLORS[color][0],
+                    }
+                  : {};
 
               return (
                 <td
                   key={hand}
                   className={`range_cell ${handType} ${selectedHands.has(hand) ? "selected" : ""}`}
-                  onMouseDown={() => toggleHandSelection(hand)}
+                  onMouseDown={(event) => handleMouseDown(event, hand)}
                   style={style}
                 >
-                  {hand}
+                  <RangeCell hand={hand} />
                 </td>
               );
             })}

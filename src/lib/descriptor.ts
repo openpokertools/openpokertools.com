@@ -18,11 +18,11 @@ export const handsToDescriptor = (hands: Set<string>): string => {
     } else {
       if (streak) {
         if (start === current) {
-          fullDescriptor += current + ", ";
+          fullDescriptor += `${current}, `;
         } else if (start === "AA") {
-          fullDescriptor += current + "+, ";
+          fullDescriptor += `${current}+, `;
         } else {
-          fullDescriptor += current + "-" + start + ", ";
+          fullDescriptor += `${current}-${start}, `;
         }
       }
       streak = false;
@@ -30,11 +30,11 @@ export const handsToDescriptor = (hands: Set<string>): string => {
   }
   if (streak) {
     if (start === current) {
-      fullDescriptor += current + ", ";
+      fullDescriptor += `${current}, `;
     } else if (start === "AA") {
-      fullDescriptor += current + "+, ";
+      fullDescriptor += `${current}+, `;
     } else {
-      fullDescriptor += start + "-, ";
+      fullDescriptor += `${start}-, `;
     }
   }
 
@@ -48,17 +48,17 @@ export const handsToDescriptor = (hands: Set<string>): string => {
       if (hands.has(hand)) {
         if (!streak) {
           streak = true;
-          start = RANKS[i] + RANKS[j] + "s";
+          start = `${RANKS[i]}${RANKS[j]}s`;
         }
-        current = RANKS[i] + RANKS[j] + "s";
+        current = `${RANKS[i]}${RANKS[j]}s`;
       } else {
         if (streak) {
           if (start === current) {
-            fullDescriptor += current + ", ";
-          } else if (start === RANKS[i] + RANKS[i + 1] + "s") {
-            fullDescriptor += current + "+, ";
+            fullDescriptor += `${current}, `;
+          } else if (start === `${RANKS[i]}${RANKS[i + 1]}s`) {
+            fullDescriptor += `${current}+, `;
           } else {
-            fullDescriptor += current + "-" + start + ", ";
+            fullDescriptor += `${current}-${start}, `;
           }
         }
         streak = false;
@@ -66,11 +66,11 @@ export const handsToDescriptor = (hands: Set<string>): string => {
     }
     if (streak) {
       if (start === current) {
-        fullDescriptor += current + ", ";
-      } else if (start === RANKS[i] + RANKS[i + 1] + "s") {
-        fullDescriptor += current + "+, ";
+        fullDescriptor += `${current}, `;
+      } else if (start === `${RANKS[i]}${RANKS[i + 1]}s`) {
+        fullDescriptor += `${current}+, `;
       } else {
-        fullDescriptor += start + "-, ";
+        fullDescriptor += `${start}-, `;
       }
     }
   }
@@ -85,17 +85,17 @@ export const handsToDescriptor = (hands: Set<string>): string => {
       if (hands.has(hand)) {
         if (!streak) {
           streak = true;
-          start = RANKS[i] + RANKS[j] + "o";
+          start = `${RANKS[i]}${RANKS[j]}o`;
         }
-        current = RANKS[i] + RANKS[j] + "o";
+        current = `${RANKS[i]}${RANKS[j]}o`;
       } else {
         if (streak) {
           if (start === current) {
-            fullDescriptor += current + ", ";
-          } else if (start === RANKS[i] + RANKS[i + 1] + "o") {
-            fullDescriptor += current + "+, ";
+            fullDescriptor += `${current}, `;
+          } else if (start === `${RANKS[i]}${RANKS[i + 1]}o`) {
+            fullDescriptor += `${current}+, `;
           } else {
-            fullDescriptor += current + "-" + start + ", ";
+            fullDescriptor += `${current}-${start}, `;
           }
         }
         streak = false;
@@ -103,11 +103,11 @@ export const handsToDescriptor = (hands: Set<string>): string => {
     }
     if (streak) {
       if (start === current) {
-        fullDescriptor += current + ", ";
-      } else if (start === RANKS[i] + RANKS[i + 1] + "o") {
-        fullDescriptor += current + "+, ";
+        fullDescriptor += `${current}, `;
+      } else if (start === `${RANKS[i]}${RANKS[i + 1]}o`) {
+        fullDescriptor += `${current}+, `;
       } else {
-        fullDescriptor += start + "-, ";
+        fullDescriptor += `${start}-, `;
       }
     }
   }
@@ -206,4 +206,12 @@ const expandDash = (c: string): string[] => {
     }
   }
   return hands;
+};
+
+export const modifiersToString = (handModifiers: Map<string, object>) => {
+  return JSON.stringify(Object.fromEntries(handModifiers.entries()));
+};
+
+export const stringToModifiers = (modifierString: string) => {
+  return new Map(Object.entries(JSON.parse(modifierString)));
 };

@@ -1,17 +1,17 @@
-import { HANDS_ORDERED } from "@/lib/constants";
-import loadable from "@loadable/component";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-// import IonRangeSlider from "react-ion-slider";
-import type { RangeSelectorProps } from "./range-props";
+
+import loadable from "@loadable/component";
+
+import { HANDS_ORDERED } from "@/lib/constants";
+
+import { useRangeSelectorContext } from "./range-context";
 
 const IonRangeSlider = loadable(() => import("react-ion-slider"), {
   ssr: false,
 });
 
-const RangeSlider = ({
-  selectedHands,
-  setSelectedHands,
-}: RangeSelectorProps) => {
+const RangeSlider = () => {
+  const { selectedHands, setSelectedHands } = useRangeSelectorContext();
   const [sliderValues, setSliderValues] = useState({ from: 0, to: 0 });
   const isInternalUpdate = useRef(false);
 

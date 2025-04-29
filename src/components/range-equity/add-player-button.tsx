@@ -1,14 +1,12 @@
-import { Button } from "@/components/ui/button";
 import React, { type Dispatch, type SetStateAction, useRef } from "react";
-import {
-  type Player,
-  type PlayerStats,
-  createPlayer,
-} from "./range-equity-props";
+
+import { Button } from "@/components/ui/button";
+
+import { createPlayer, type Player, type PlayerStats } from "./range-equity-props";
 
 interface AddPlayerButtonProps {
-  players: Array<Player>;
-  setPlayers: Dispatch<SetStateAction<Array<Player>>>;
+  players: Record<number, Player>;
+  setPlayers: Dispatch<SetStateAction<Record<number, Player>>>;
   playerStats: Array<PlayerStats>;
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
 }
@@ -24,7 +22,10 @@ const AddPlayerButton = ({
   const addPlayer = () => {
     const newPlayer = createPlayer(index.current);
     index.current += 1;
-    setPlayers([...players, newPlayer]);
+    setPlayers((prev) => ({
+      ...prev,
+      [newPlayer.id]: newPlayer,
+    }));
 
     const newPlayerStats = { id: newPlayer.id };
     setPlayerStats([...playerStats, newPlayerStats]);
