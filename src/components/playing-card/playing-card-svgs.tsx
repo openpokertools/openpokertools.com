@@ -1,4 +1,5 @@
 import React from "react";
+
 import { ReactComponent as TWO_SVG } from "../../images/ranks/2.svg";
 import { ReactComponent as THREE_SVG } from "../../images/ranks/3.svg";
 import { ReactComponent as FOUR_SVG } from "../../images/ranks/4.svg";

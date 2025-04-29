@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import PlayingCard from "../playing-card/playing-card";
 import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
 import { useBoardContext } from "./board-context";
@@ -7,16 +8,10 @@ import type { BoardCards, BoardProps } from "./board-props";
 const Board = ({ setBoardCards }: BoardProps) => {
   const { playingCardStates, setPlayingCardStates } = useBoardContext();
 
-  const updateBoardCard = (
-    cardState: PlayingCardStateProps,
-    boardKey: keyof BoardCards,
-  ) => {
+  const updateBoardCard = (cardState: PlayingCardStateProps, boardKey: keyof BoardCards) => {
     setBoardCards((prevBoard) => ({
       ...prevBoard,
-      [boardKey]:
-        cardState.rank && cardState.suit
-          ? cardState.rank + cardState.suit
-          : undefined,
+      [boardKey]: cardState.rank && cardState.suit ? cardState.rank + cardState.suit : undefined,
     }));
   };
 

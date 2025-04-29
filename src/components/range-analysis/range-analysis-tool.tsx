@@ -45,7 +45,7 @@ const RangeAnalysisTool = () => {
     setStats(newStats.counts);
     setCombosReport(newStats.combosReport);
     if (selectedTab !== "preflop") {
-      setActiveHands(newStats[selectedTab + "ActiveHands"]);
+      setActiveHands(newStats[`${selectedTab}ActiveHands`]);
     } else {
       setActiveHands(new Map());
     }

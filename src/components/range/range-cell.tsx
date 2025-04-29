@@ -15,7 +15,7 @@ interface ColorSelectorProps {
   color: string;
 }
 const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
-  const { handModifiers, setHandModifiers } = useRangeSelectorContext();
+  const { setHandModifiers } = useRangeSelectorContext();
   const handleColorSelectorClick = (event: React.MouseEvent) => {
     setHandModifiers((prev) => {
       const next = new Map(prev);

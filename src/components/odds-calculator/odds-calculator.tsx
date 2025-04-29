@@ -1,3 +1,5 @@
+import React, { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+
 import {
   Table,
   TableBody,
@@ -8,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { calculateHandHandEquities } from "@/lib/fast_hand_hand";
 import { getPotOdds } from "@/lib/pot_odds";
-import React, { useState, type Dispatch, type SetStateAction, useEffect } from "react";
+
 import Board from "../board/board";
 import BoardProvider from "../board/board-context";
 import type { BoardCards } from "../board/board-props";

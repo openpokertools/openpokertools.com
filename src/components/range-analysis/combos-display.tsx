@@ -1,5 +1,7 @@
-import { SUITS_TO_HTML } from "@/lib/constants";
 import React from "react";
+
+import { SUITS_TO_HTML } from "@/lib/constants";
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 
 interface CardStringProps {

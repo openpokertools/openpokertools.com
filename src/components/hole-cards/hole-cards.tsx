@@ -1,5 +1,7 @@
-import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
+
+import { cn } from "@/lib/utils";
+
 import PlayingCard from "../playing-card/playing-card";
 import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
 import type { HoleCards, HoleCardsProps } from "./hole-cards-props";
@@ -8,16 +10,10 @@ const Hole = ({ holeCards, setHoleCards, displayActive }: HoleCardsProps) => {
   const [card1State, setCard1State] = useState<PlayingCardStateProps>({});
   const [card2State, setCard2State] = useState<PlayingCardStateProps>({});
 
-  const updateHoleCard = (
-    cardState: PlayingCardStateProps,
-    boardKey: keyof HoleCards,
-  ) => {
+  const updateHoleCard = (cardState: PlayingCardStateProps, boardKey: keyof HoleCards) => {
     setHoleCards((prevHoleCards) => ({
       ...prevHoleCards,
-      [boardKey]:
-        cardState.rank && cardState.suit
-          ? cardState.rank + cardState.suit
-          : undefined,
+      [boardKey]: cardState.rank && cardState.suit ? cardState.rank + cardState.suit : undefined,
     }));
   };
 
@@ -30,11 +26,7 @@ const Hole = ({ holeCards, setHoleCards, displayActive }: HoleCardsProps) => {
   }, [card2State]);
 
   const showActive =
-    displayActive &&
-    card1State.rank &&
-    card1State.suit &&
-    card2State.rank &&
-    card2State.suit;
+    displayActive && card1State.rank && card1State.suit && card2State.rank && card2State.suit;
 
   return (
     <>

@@ -1,7 +1,9 @@
+import React, { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
-import React, { useState } from "react";
+
 import { usePlayingCardContext } from "./playing-card-context";
 import type { PlayingCardStateProps } from "./playing-card-props";
 import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
@@ -49,7 +51,7 @@ const PlayingCardPopover = ({
 
   const height = 40;
   const width = (height * 2) / 3;
-  const fontSize = height * 11 / 32;
+  const fontSize = (height * 11) / 32;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -62,14 +64,15 @@ const PlayingCardPopover = ({
                 const isSelected = playingCardState.rank === rank && playingCardState.suit === suit;
                 const isCardTaken = selectedCards.has(rank + suit);
                 const isAvailable = !isSelected && !isCardTaken;
-                const color = (suit === "d" || suit === "h") ? "#df0000" : "#000";
+                const color = suit === "d" || suit === "h" ? "#df0000" : "#000";
 
                 return (
                   <div
                     key={`${rank}-${suit}`}
                     onClick={() => isAvailable && handleCardSelect(rank, suit)}
-                    className={`rounded playingcard border ${isAvailable ? "cursor-pointer" : "cursor-not-allowed"
-                      }`}
+                    className={`rounded playingcard border ${
+                      isAvailable ? "cursor-pointer" : "cursor-not-allowed"
+                    }`}
                     style={{
                       display: "inline-block",
                       height: height,
@@ -80,14 +83,10 @@ const PlayingCardPopover = ({
                     }}
                   >
                     <div className="w-full h-1/2">
-                      <div className="translate-y-[3.5px]">
-                        {RANK_SVGS[rank]}
-                      </div>
+                      <div className="translate-y-[3.5px]">{RANK_SVGS[rank]}</div>
                     </div>
                     <div className="w-full h-1/2">
-                      <div className="translate-y-[2.5px]">
-                        {SUIT_SVGS[suit]}
-                      </div>
+                      <div className="translate-y-[2.5px]">{SUIT_SVGS[suit]}</div>
                     </div>
                   </div>
                 );

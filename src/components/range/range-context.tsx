@@ -1,4 +1,4 @@
-import React, { createContext, type Dispatch, type SetStateAction, useContext } from "react";
+import React, { createContext, useContext } from "react";
 
 import { RangeSelectorProps } from "./range-props";
 
