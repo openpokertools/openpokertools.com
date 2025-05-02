@@ -1,4 +1,5 @@
 import React from "react";
+
 import type { CombosReport, EquityReport } from "./report-props";
 
 interface ReportProps {

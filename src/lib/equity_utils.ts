@@ -1,4 +1,5 @@
 import { cardToInt, combinations, evaluate, evaluateEarly, findWinners } from "./evaluation_utils";
+import { Equity } from "./models";
 
 const ALLCARDS = [
   69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853, 279045, 295429,
@@ -54,7 +55,7 @@ export const calculateHandRangeEquity = (
   hand: Array<string>,
   villainCombos: Array<Array<string>>,
   dealtBoard: Array<string>,
-): Array<number> => {
+): Equity => {
   let wins = 0;
   let ties = 0;
   let n = 0;
@@ -107,14 +108,18 @@ export const calculateHandRangeEquity = (
       }
     }
   }
-  return [wins / n, ties / n];
+  return {
+    win: wins / n,
+    draw: ties / n,
+    equity: (wins + ties / 2) / n,
+  };
 };
 
 export const approximateHandRangeEquity = (
   hand: Array<string>,
   villainCombos: Array<Array<string>>,
   n: number,
-): [number, number] => {
+): Equity => {
   let wins = 0;
   let ties = 0;
   const handInts = hand.map(cardToInt);
@@ -139,7 +144,11 @@ export const approximateHandRangeEquity = (
       ties += 1;
     }
   }
-  return [wins / n, ties / n];
+  return {
+    win: wins / n,
+    draw: ties / n,
+    equity: (wins + ties / 2) / n,
+  };
 };
 
 export const calculateRangeRangeEquities = (

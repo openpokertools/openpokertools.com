@@ -45,23 +45,23 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
     let riverEquity = undefined;
 
     const holeCards = [analysisHands.hole.hole1, analysisHands.hole.hole2];
-    preflopEquity = approximateHandRangeEquity(holeCards, analysisHands.keptToFlop, 10000)[0];
+    preflopEquity = approximateHandRangeEquity(holeCards, analysisHands.keptToFlop, 10000).equity;
 
     const board = [];
 
     if (analysisHands.keptToTurn.length > 0) {
       board.push(analysisHands.board.flop1, analysisHands.board.flop2, analysisHands.board.flop3);
-      flopEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToTurn, board)[0];
+      flopEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToTurn, board).equity;
     }
 
     if (analysisHands.keptToRiver.length > 0) {
       board.push(analysisHands.board.turn);
-      turnEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToRiver, board)[0];
+      turnEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToRiver, board).equity;
     }
 
     if (analysisHands.keptToShowdown.length) {
       board.push(analysisHands.board.river);
-      riverEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToShowdown, board)[0];
+      riverEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToShowdown, board).equity;
     }
 
     setEquityReport({
@@ -82,7 +82,7 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
     >
       Calculate
       <br />
-      Win %
+      Equity
     </Button>
   );
 };
