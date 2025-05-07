@@ -40,16 +40,17 @@ const RangeTable = () => {
               const handType = isPocketPair ? "pocketpair" : isSuited ? "suited" : "offsuit";
               const percent = ((activeHands?.get(hand) ?? 0) * 100) / 12;
               const color = handModifiers.get(hand)?.color ?? "green";
-              const style = percent
-                ? {
-                    background: `linear-gradient(to right, ${COLORS[color][1]} ${percent}%, ${COLORS[color][0]} ${percent}%)`,
-                  }
-                : selectedHands.has(hand)
+              const style =
+                activeHands !== undefined && selectedHands.has(hand)
                   ? {
-                      backgroundColor: COLORS[color][1],
-                      borderColor: COLORS[color][0],
+                      background: `linear-gradient(to right, ${COLORS[color][1]} ${percent}%, ${COLORS[color][0]} ${percent}%)`,
                     }
-                  : {};
+                  : selectedHands.has(hand)
+                    ? {
+                        backgroundColor: COLORS[color][1],
+                        borderColor: COLORS[color][0],
+                      }
+                    : {};
 
               return (
                 <td

@@ -34,7 +34,7 @@ const RangeAnalysisTool = () => {
   const [combosReport, setCombosReport] = useState<CombosReport>(COMBOS_REPORT_DEFAULT);
   const [equityReport, setEquityReport] = useState<EquityReport>({});
   const [stats, setStats] = useState<Map<string, Map<string, number>>>(new Map());
-  const [activeHands, setActiveHands] = useState<Map<string, number>>(new Map());
+  const [activeHands, setActiveHands] = useState<Map<string, number> | undefined>(new Map());
   const [analysisHands, setAnalysisHands] = useState<AnalysisHands>(ANALYSIS_HANDS_DEFAULT);
   const [keptToTurn, setKeptToTurn] = useState<Array<[string, string]>>([]);
   const [keptToRiver, setKeptToRiver] = useState<Array<[string, string]>>([]);
@@ -47,7 +47,7 @@ const RangeAnalysisTool = () => {
     if (selectedTab !== "preflop") {
       setActiveHands(newStats[`${selectedTab}ActiveHands`]);
     } else {
-      setActiveHands(new Map());
+      setActiveHands(undefined);
     }
 
     setAnalysisHands({
