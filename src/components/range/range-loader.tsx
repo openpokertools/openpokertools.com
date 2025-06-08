@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +20,7 @@ import {
 
 import { useRangeSelectorContext } from "./range-context";
 import { useRangeLoaderContext } from "./range-loader-context";
-import { UserRange } from "./range-props";
+import type { UserRange } from "./range-props";
 
 const RangeLoader = () => {
   const { selectedHands, setSelectedHands, handModifiers, setHandModifiers } =

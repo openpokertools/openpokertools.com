@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 
-import { RangeSelectorProps } from "./range-props";
+import type { RangeSelectorProps } from "./range-props";
 
 const RangeSelectorContext = createContext<RangeSelectorProps | undefined>(undefined);
 export const useRangeSelectorContext = () => {

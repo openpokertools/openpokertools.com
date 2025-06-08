@@ -39,10 +39,10 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
       return;
     }
 
-    let preflopEquity = undefined;
-    let flopEquity = undefined;
-    let turnEquity = undefined;
-    let riverEquity = undefined;
+    let preflopEquity;
+    let flopEquity;
+    let turnEquity;
+    let riverEquity;
 
     const holeCards = [analysisHands.hole.hole1, analysisHands.hole.hole2];
     preflopEquity = approximateHandRangeEquity(holeCards, analysisHands.keptToFlop, 10000).equity;

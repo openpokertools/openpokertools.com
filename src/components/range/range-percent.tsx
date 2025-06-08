@@ -5,7 +5,6 @@ import { HANDS_ORDERED } from "@/lib/constants";
 
 import { useRangeSelectorContext } from "./range-context";
 
-
 const RangePercent = () => {
   const { selectedHands } = useRangeSelectorContext();
   const [raisePercent, setRaisePercent] = useState<string>("0.0%");

@@ -4,7 +4,7 @@ import Board from "@/components/board/board";
 import type { BoardCards } from "@/components/board/board-props";
 import Hole from "@/components/hole-cards/hole-cards";
 import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
-import { HandModifiers } from "@/components/range/range-props";
+import type { HandModifiers } from "@/components/range/range-props";
 import RangeSelector from "@/components/range/range-selector";
 import { calculateStats } from "@/lib/stats";
 

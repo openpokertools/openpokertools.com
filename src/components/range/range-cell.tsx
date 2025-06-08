@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   ContextMenu,
@@ -16,7 +16,7 @@ interface ColorSelectorProps {
 }
 const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
   const { setHandModifiers } = useRangeSelectorContext();
-  const handleColorSelectorClick = (event: React.MouseEvent) => {
+  const handleColorSelectorClick = () => {
     setHandModifiers((prev) => {
       const next = new Map(prev);
       const modifier = next.get(hand) ?? {};

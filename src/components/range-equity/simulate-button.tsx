@@ -16,17 +16,11 @@ interface SimulateButtonProps {
   boardCards: BoardCards;
 }
 
-const SimulateButton = ({
-  players,
-  setPlayerStats,
-  boardCards,
-}: SimulateButtonProps) => {
+const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonProps) => {
   const { toast } = useToast();
   const [running, setRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const statsRef = useRef<Array<{ win: number; tie: number; count: number }>>(
-    [],
-  );
+  const statsRef = useRef<Array<{ win: number; tie: number; count: number }>>([]);
 
   const getBoard = () => {
     if (!(boardCards.flop1 && boardCards.flop2 && boardCards.flop3)) return [];

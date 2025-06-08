@@ -1,5 +1,5 @@
 import type { HoleCards } from "../hole-cards/hole-cards-props";
-import { HandModifiers } from "../range/range-props";
+import type { HandModifiers } from "../range/range-props";
 
 export interface Player {
   id: number;
