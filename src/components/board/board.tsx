@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import PlayingCard from "../playing-card/playing-card";
+import PlayingCardPopoverProvider from "../playing-card/playing-card-popover-context";
 import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
 import { useBoardContext } from "./board-context";
 import type { BoardCards, BoardProps } from "./board-props";
@@ -37,36 +38,43 @@ const Board = ({ setBoardCards }: BoardProps) => {
 
   return (
     <div className="flex flex-row">
-      <PlayingCard
-        height={55}
-        playingCardState={playingCardStates[0]}
-        setPlayingCardState={setPlayingCardStates[0]}
-        className="ml-auto mr-[1.5px]"
-      />
-      <PlayingCard
-        height={55}
-        playingCardState={playingCardStates[1]}
-        setPlayingCardState={setPlayingCardStates[1]}
-        className="mx-[1.5px]"
-      />
-      <PlayingCard
-        height={55}
-        playingCardState={playingCardStates[2]}
-        setPlayingCardState={setPlayingCardStates[2]}
-        className="ml-[1.5px]"
-      />
-      <PlayingCard
-        height={55}
-        playingCardState={playingCardStates[3]}
-        setPlayingCardState={setPlayingCardStates[3]}
-        className="mx-[5.5px]"
-      />
-      <PlayingCard
-        height={55}
-        playingCardState={playingCardStates[4]}
-        setPlayingCardState={setPlayingCardStates[4]}
-        className="mr-auto"
-      />
+      <PlayingCardPopoverProvider n={5}>
+        <PlayingCard
+          index={0}
+          height={55}
+          playingCardState={playingCardStates[0]}
+          setPlayingCardState={setPlayingCardStates[0]}
+          className="ml-auto mr-[1.5px]"
+        />
+        <PlayingCard
+          index={1}
+          height={55}
+          playingCardState={playingCardStates[1]}
+          setPlayingCardState={setPlayingCardStates[1]}
+          className="mx-[1.5px]"
+        />
+        <PlayingCard
+          index={2}
+          height={55}
+          playingCardState={playingCardStates[2]}
+          setPlayingCardState={setPlayingCardStates[2]}
+          className="ml-[1.5px]"
+        />
+        <PlayingCard
+          index={3}
+          height={55}
+          playingCardState={playingCardStates[3]}
+          setPlayingCardState={setPlayingCardStates[3]}
+          className="mx-[5.5px]"
+        />
+        <PlayingCard
+          index={4}
+          height={55}
+          playingCardState={playingCardStates[4]}
+          setPlayingCardState={setPlayingCardStates[4]}
+          className="mr-auto"
+        />
+      </PlayingCardPopoverProvider>
     </div>
   );
 };

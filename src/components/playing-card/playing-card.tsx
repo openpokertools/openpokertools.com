@@ -8,12 +8,14 @@ import type { PlayingCardStateProps } from "./playing-card-props";
 import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardProps {
+  index: number;
   height: number;
   playingCardState: PlayingCardStateProps;
   setPlayingCardState: Dispatch<SetStateAction<PlayingCardStateProps>>;
   className?: string;
 }
 const PlayingCard = ({
+  index,
   height,
   playingCardState,
   setPlayingCardState,
@@ -27,6 +29,7 @@ const PlayingCard = ({
   return (
     <div className={className}>
       <PlayingCardPopover
+        index={index}
         playingCardState={playingCardState}
         setPlayingCardState={setPlayingCardState}
       >

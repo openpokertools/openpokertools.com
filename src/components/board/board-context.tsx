@@ -1,10 +1,11 @@
 import React, {
+  createContext,
   type Dispatch,
   type SetStateAction,
-  createContext,
   useContext,
   useState,
 } from "react";
+
 import type { PlayingCardStateProps } from "../playing-card/playing-card-props";
 
 interface BoardContextProps {

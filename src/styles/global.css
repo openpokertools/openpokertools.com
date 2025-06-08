@@ -20,6 +20,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
+    --dark-border: 214.3 0% 75%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --chart-1: 12 76% 61%;
@@ -394,4 +395,24 @@ button.showbutton:before {
   border-radius: 24px !important;
   box-shadow: 0 1px 3px rgba(0, 0, 255, 0.3) !important;
   cursor: pointer !important;
+}
+
+.popover-arrow {
+  fill: hsl(var(--popover));
+  border: none;
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+
+[data-side="top"] .popover-arrow {
+  filter: drop-shadow(0 1px 0 hsl(var(--dark-border)));
+}
+[data-side="bottom"] .popover-arrow {
+  filter: drop-shadow(0 -1px 0 hsl(var(--dark-border)));
+}
+[data-side="left"] .popover-arrow {
+  filter: drop-shadow(1px 0 0 hsl(var(--dark-border)));
+}
+[data-side="right"] .popover-arrow {
+  filter: drop-shadow(-1px 0 0 hsl(var(--dark-border)));
 }
