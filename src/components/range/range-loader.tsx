@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Paintbrush } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -75,31 +77,19 @@ const RangeLoader = () => {
   };
 
   return (
-    <div className="grid grid-cols-12 range-loader mt-2 mx-0">
-      <div className="col-span-7 p-0">
-        <Button
-          style={{
-            width: "45%",
-            whiteSpace: "nowrap",
-            backgroundColor: "#209020",
-          }}
-          onClick={handleSaveRange}
-        >
-          Save range
-        </Button>
-        <Button
-          className="ml-1"
-          style={{
-            width: "45%",
-            whiteSpace: "nowrap",
-            backgroundColor: "#d01515",
-          }}
-          onClick={handleDeleteRange}
-        >
-          Delete range
-        </Button>
-      </div>
-      <div className="col-span-5 p-0">
+    <div className="flex range-loader mt-2 mx-0">
+      <Button className="w-[24%] bg-green-600 whitespace-nowrap" onClick={handleSaveRange}>
+        Save range
+      </Button>
+      <Button className="w-[24%] bg-red-600 whitespace-nowrap ml-1" onClick={handleDeleteRange}>
+        Delete range
+      </Button>
+      <Button className="w-10 bg-sky-500 whitespace-nowrap mx-1" onClick={handleDeleteRange}>
+        <span>
+          <Paintbrush />
+        </span>
+      </Button>
+      <div className="w-full ml-auto">
         <Select onValueChange={handleLoadRange}>
           <SelectTrigger>
             <SelectValue placeholder="<Empty>" />
