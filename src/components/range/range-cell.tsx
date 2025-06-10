@@ -7,6 +7,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { COLORS } from "@/lib/constants";
+import { isSuitSelected, setSelectedSuits } from "@/lib/suit_utils";
 import { cn, handType, suitToColor } from "@/lib/utils";
 
 import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
@@ -22,7 +23,17 @@ const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
     setHandModifiers((prev) => {
       const next = new Map(prev);
       const modifier = next.get(hand) ?? {};
-      next.set(hand, { ...modifier, color });
+      if (color === "green") {
+        delete modifier.color;
+        if (Object.keys(modifier).length === 0) {
+          next.delete(hand);
+        } else {
+          next.set(hand, { ...modifier });
+        }
+      } else {
+        next.set(hand, { ...modifier, color });
+      }
+
       return next;
     });
   };
@@ -56,29 +67,23 @@ const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
     setHandModifiers((prev) => {
       const next = new Map(prev);
       const modifier = next.get(hand) ?? {};
-      let suits = modifier.suits || [];
-      if (suit === "xx") {
-        suits = [];
-      } else if (suits.includes(suit)) {
-        suits = suits.filter((s) => s !== suit);
+      const suits = modifier.suits || [];
+      const newSuits = setSelectedSuits(hand, suit, suits);
+      if (newSuits.length === 0) {
+        delete modifier.suits;
+        if (Object.keys(modifier).length === 0) {
+          next.delete(hand);
+        } else {
+          next.set(hand, { ...modifier });
+        }
       } else {
-        suits.push(suit);
+        next.set(hand, { ...modifier, suits: newSuits });
       }
-      next.set(hand, { ...modifier, suits });
       return next;
     });
   };
 
-  let selected = false;
-  switch (suit) {
-    case "xx":
-      if (suits.length === 0) {
-        selected = true;
-      }
-      break;
-    default:
-      selected = suits.includes(suit);
-  }
+  const selected = isSuitSelected(hand, suit, suits);
 
   return (
     <ContextMenuItem
@@ -199,11 +204,7 @@ const RangeCell = ({ hand }: { hand: string }) => {
               suit="dc"
               isActive={handT === "offsuit" || handT === "pocketpair"}
             />
-            <SuitSelector
-              hand={hand}
-              suit="dd"
-              isActive={handT === "suited" || handT === "pocketpair"}
-            />
+            <SuitSelector hand={hand} suit="dd" isActive={handT === "suited"} />
           </div>
         </div>
       </ContextMenuContent>
