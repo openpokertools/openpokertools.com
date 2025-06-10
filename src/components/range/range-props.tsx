@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface HandModifiers {
-  color: string;
+  color?: string;
+  suits?: Array<string>;
 }
 
 export interface RangeSelectorProps {

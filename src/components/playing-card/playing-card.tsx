@@ -35,6 +35,7 @@ const PlayingCard = ({
             className,
             "rounded",
             "playingcard",
+            "cursor-pointer",
             playingCardState.rank && playingCardState.suit && "border",
           )}
           style={{

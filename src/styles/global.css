@@ -162,7 +162,6 @@ p {
 }
 
 .playingcard {
-  cursor: pointer;
   background-color: white;
   font-family: serif;
   overflow: hidden;

@@ -1,8 +1,10 @@
 import React from "react";
 
 import { COLORS, RANKS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 import RangeCell from "./range-cell";
+import RangeCellSuits from "./range-cell-suits";
 import { useRangeSelectorContext } from "./range-context";
 
 const RangeTable = () => {
@@ -40,6 +42,7 @@ const RangeTable = () => {
               const handType = isPocketPair ? "pocketpair" : isSuited ? "suited" : "offsuit";
               const percent = ((activeHands?.get(hand) ?? 0) * 100) / 12;
               const color = handModifiers.get(hand)?.color ?? "green";
+              const suits = handModifiers.get(hand)?.suits ?? [];
               const style =
                 activeHands !== undefined && selectedHands.has(hand)
                   ? {
@@ -55,10 +58,15 @@ const RangeTable = () => {
               return (
                 <td
                   key={hand}
-                  className={`range_cell ${handType} ${selectedHands.has(hand) ? "selected" : ""}`}
+                  className={cn(
+                    "range_cell relative",
+                    handType,
+                    selectedHands.has(hand) ? "selected" : "",
+                  )}
                   onMouseDown={(event) => handleMouseDown(event, hand)}
                   style={style}
                 >
+                  <RangeCellSuits suits={suits} />
                   <RangeCell hand={hand} />
                 </td>
               );

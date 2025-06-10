@@ -4076,6 +4076,7 @@ export const SUITS_TO_HTML = {
   c: "♣",
   d: "♦",
   h: "♥",
+  x: "□",
 };
 
 export const ROUNDS = ["preflop", "flop", "turn", "river"];
