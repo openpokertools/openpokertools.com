@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 
-import { UserRange } from "./range-props";
+import type { UserRange } from "./range-props";
 
 interface RangeLoaderContextProps {
   userRanges: Array<UserRange>;

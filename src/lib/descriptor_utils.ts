@@ -101,7 +101,6 @@ const getStraightDraw = (cards: number[]): string => {
   let pattern = "";
   for (let i = 0; i < cards.length - 1; i++) {
     if (cards[i + 1] - cards[i] === 0) {
-      continue;
     } else if (cards[i + 1] - cards[i] > 9) {
       pattern += "9";
     } else {

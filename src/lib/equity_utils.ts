@@ -1,5 +1,5 @@
 import { cardToInt, combinations, evaluate, evaluateEarly, findWinners } from "./evaluation_utils";
-import { Equity } from "./models";
+import type { Equity } from "./models";
 
 const ALLCARDS = [
   69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853, 279045, 295429,

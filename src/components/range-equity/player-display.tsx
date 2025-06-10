@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useMemo } from "react";
+import React, { type Dispatch, type SetStateAction, useMemo } from "react";
 
-import { HandModifiers } from "../range/range-props";
+import type { HandModifiers } from "../range/range-props";
 import RangeSelector from "../range/range-selector";
 import type { Player } from "./range-equity-props";
 

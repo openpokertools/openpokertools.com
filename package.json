@@ -57,7 +57,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0-beta.1",
+    "@biomejs/biome": "^2.0.0-beta.6",
     "@types/loadable__component": "^5.13.9",
     "@types/node": "^22.14.1",
     "@types/react": "^18.3.20",

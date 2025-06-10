@@ -1,25 +1,30 @@
 import React, { useState } from "react";
 
+import { PopoverArrow } from "@radix-ui/react-popover";
+
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
 
 import { usePlayingCardContext } from "./playing-card-context";
+import { usePlayingCardPopoverContext } from "./playing-card-popover-context";
 import type { PlayingCardStateProps } from "./playing-card-props";
 import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
 
 interface PlayingCardPopoverProps {
+  index: number;
   playingCardState: PlayingCardStateProps;
   setPlayingCardState: (values: { rank?: string; suit?: string }) => void;
   children: React.ReactNode;
 }
 const PlayingCardPopover = ({
+  index,
   playingCardState,
   setPlayingCardState,
   children,
 }: PlayingCardPopoverProps) => {
   const { selectedCards, setSelectedCards } = usePlayingCardContext();
-  const [open, setOpen] = useState(false);
+  const { open, setOpenAtIndex } = usePlayingCardPopoverContext();
 
   const handleCardSelect = (rank: string, suit: string) => {
     const newSelectedCards = new Set(selectedCards);
@@ -34,7 +39,8 @@ const PlayingCardPopover = ({
     setSelectedCards(newSelectedCards);
 
     setPlayingCardState({ rank, suit });
-    setOpen(false);
+    setOpenAtIndex(index, false);
+    setOpenAtIndex(index + 1, true);
   };
 
   const handleClearCard = () => {
@@ -46,7 +52,8 @@ const PlayingCardPopover = ({
     }
 
     setPlayingCardState({});
-    setOpen(false);
+    setOpenAtIndex(index, false);
+    setOpenAtIndex(index + 1, true);
   };
 
   const height = 40;
@@ -54,9 +61,10 @@ const PlayingCardPopover = ({
   const fontSize = (height * 11) / 32;
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open[index]} onOpenChange={(value) => setOpenAtIndex(index, value)}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="w-90">
+        <PopoverArrow className="popover-arrow" width={12} height={7} aria-hidden="true" />
         <div className="grid gap-1">
           {SUITS.map((suit) => (
             <div key={suit} className="flex flex-row gap-1">
@@ -67,7 +75,8 @@ const PlayingCardPopover = ({
                 const color = suit === "d" || suit === "h" ? "#df0000" : "#000";
 
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={`${rank}-${suit}`}
                     onClick={() => isAvailable && handleCardSelect(rank, suit)}
                     className={`rounded playingcard border ${
@@ -88,7 +97,7 @@ const PlayingCardPopover = ({
                     <div className="w-full h-1/2">
                       <div className="translate-y-[2.5px]">{SUIT_SVGS[suit]}</div>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
