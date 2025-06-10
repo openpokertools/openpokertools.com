@@ -32,12 +32,7 @@ const AddPlayerButton = ({
   };
 
   return (
-    <Button
-      onClick={addPlayer}
-      style={{
-        backgroundColor: "grey",
-      }}
-    >
+    <Button onClick={addPlayer} className="bg-neutral-400 hover:bg-neutral-500 text-white">
       Add player
     </Button>
   );

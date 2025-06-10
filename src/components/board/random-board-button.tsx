@@ -39,12 +39,7 @@ const RandomBoardButton = () => {
   };
 
   return (
-    <Button
-      onClick={setAllCardsRandomly}
-      style={{
-        backgroundColor: "#007bff",
-      }}
-    >
+    <Button onClick={setAllCardsRandomly} className="bg-blue-500 hover:bg-blue-600 text-white">
       Random board
     </Button>
   );

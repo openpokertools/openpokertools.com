@@ -163,16 +163,11 @@ p {
 }
 
 .playingcard {
-  background-color: white;
   font-family: serif;
   overflow: hidden;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10+ and Edge */
   user-select: none; /* Standard syntax */
-}
-
-.playingcard:hover {
-  background-color: #e2e6ea;
 }
 
 .playingcard.inplay {
@@ -326,13 +321,6 @@ p {
 .popover {
   max-width: 100%;
   background-color: whitesmoke;
-}
-
-button.showbutton.collapsed:before {
-  content: "(show)";
-}
-button.showbutton:before {
-  content: "(hide)";
 }
 
 @media (max-width: 500px) {

@@ -74,11 +74,8 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
 
   return (
     <Button
-      className="h-12 mr-auto my-auto"
+      className="h-12 mr-auto my-auto bg-blue-500 hover:bg-blue-600 text-white"
       onClick={setEquities}
-      style={{
-        backgroundColor: "#007bff",
-      }}
     >
       Calculate
       <br />

@@ -15,7 +15,7 @@ import { useRangeSelectorContext } from "./range-context";
 
 interface ColorSelectorProps {
   hand: string;
-  color: string;
+  color: keyof typeof COLORS;
 }
 const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
   const { setHandModifiers } = useRangeSelectorContext();
@@ -40,14 +40,10 @@ const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
 
   return (
     <ContextMenuItem
-      className="w-5 h-5 p-0 mx-[0.15rem] my-0 inline-block cursor-pointer align-middle"
+      className="w-5 h-5 rounded-full p-0 mx-auto cursor-pointer"
+      style={{ backgroundColor: COLORS[color][1] }}
       onMouseDown={handleColorSelectorClick}
-    >
-      <div
-        className="rounded-full w-4 h-4 mx-auto"
-        style={{ backgroundColor: COLORS[color][1] }}
-      ></div>
-    </ContextMenuItem>
+    />
   );
 };
 
@@ -90,7 +86,7 @@ const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
       className={cn(
         "w-[1.62rem] h-[1.62rem] p-0",
         "inline-block align-middle text-md border",
-        selected ? "bg-green-300" : "",
+        selected ? "bg-green-300 focus:bg-green-400" : "",
         isActive ? "cursor-pointer" : "cursor-not-allowed bg-gray-300 opacity-20",
       )}
       onMouseDown={handleSuitSelectorClick}
@@ -121,16 +117,14 @@ const RangeCell = ({ hand }: { hand: string }) => {
         {hand}
       </ContextMenuTrigger>
       <ContextMenuContent className="min-w-[0px] p-1" onMouseDown={handleContextMenuContentClick}>
-        <div className="flex">
-          <div className="mx-auto">
+        <div className="grid gap-[0.2rem]">
+          <div className="flex flex-row gap-[inherit] my-1">
             <ColorSelector hand={hand} color="purple" />
             <ColorSelector hand={hand} color="blue" />
             <ColorSelector hand={hand} color="green" />
             <ColorSelector hand={hand} color="yellow" />
             <ColorSelector hand={hand} color="red" />
           </div>
-        </div>
-        <div className="grid gap-[0.2rem]">
           <div className="flex flex-row gap-[inherit]">
             <SuitSelector hand={hand} suit="xx" isActive={true} />
             <SuitSelector hand={hand} suit="xs" isActive={handT === "offsuit"} />

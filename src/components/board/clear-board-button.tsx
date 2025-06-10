@@ -27,12 +27,7 @@ const ClearBoardButton = () => {
   };
 
   return (
-    <Button
-      onClick={clearAllCards}
-      style={{
-        backgroundColor: "grey",
-      }}
-    >
+    <Button onClick={clearAllCards} className="bg-neutral-400 hover:bg-neutral-500 text-white">
       Clear board
     </Button>
   );

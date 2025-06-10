@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
 import { getPotOdds } from "@/lib/pot_odds";
 import { handsToCombos } from "@/lib/range_utils";
+import { cn } from "@/lib/utils";
 
 import type { BoardCards } from "../board/board-props";
 import type { Player, PlayerStats } from "./range-equity-props";
@@ -124,9 +125,10 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
   return (
     <Button
       onClick={handleClick}
-      style={{
-        backgroundColor: running ? "#dc3545" : "#007bff",
-      }}
+      className={cn(
+        "text-white",
+        running ? "bg-red-500 hover:bg-red-600" : "bg-blue-500 hover:bg-blue-600",
+      )}
     >
       {running ? "Stop" : "Simulate"}
     </Button>

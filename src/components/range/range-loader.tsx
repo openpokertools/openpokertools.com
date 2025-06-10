@@ -20,6 +20,7 @@ import {
   stringToModifiers,
 } from "@/lib/descriptor";
 
+import PaintbrushButton from "./paintbrush-button";
 import { useRangeSelectorContext } from "./range-context";
 import { useRangeLoaderContext } from "./range-loader-context";
 import type { UserRange } from "./range-props";
@@ -78,17 +79,19 @@ const RangeLoader = () => {
 
   return (
     <div className="flex range-loader mt-2 mx-0">
-      <Button className="w-[24%] bg-green-600 whitespace-nowrap" onClick={handleSaveRange}>
+      <Button
+        className="w-[24%] bg-green-600 hover:bg-green-700 text-white whitespace-nowrap"
+        onClick={handleSaveRange}
+      >
         Save range
       </Button>
-      <Button className="w-[24%] bg-red-600 whitespace-nowrap ml-1" onClick={handleDeleteRange}>
+      <Button
+        className="w-[24%] bg-red-600 hover:bg-red-700 text-white whitespace-nowrap ml-1"
+        onClick={handleDeleteRange}
+      >
         Delete range
       </Button>
-      <Button className="w-10 bg-sky-500 whitespace-nowrap mx-1" onClick={handleDeleteRange}>
-        <span>
-          <Paintbrush />
-        </span>
-      </Button>
+      <PaintbrushButton className="w-10 mx-1" />
       <div className="w-full ml-auto">
         <Select onValueChange={handleLoadRange}>
           <SelectTrigger>
@@ -98,7 +101,11 @@ const RangeLoader = () => {
             <SelectGroup>
               <SelectLabel>Custom Ranges</SelectLabel>
               {userRanges.map((entry, index) => (
-                <SelectItem key={`user:${index}`} value={`user:${index}`}>
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`user:${index}`}
+                  value={`user:${index}`}
+                >
                   {entry.name}
                 </SelectItem>
               ))}
@@ -106,7 +113,11 @@ const RangeLoader = () => {
             <SelectGroup>
               <SelectLabel>6-Max Opening Ranges</SelectLabel>
               {Object.entries(SIX_MAX_OPEN).map(([key, value]) => (
-                <SelectItem key={`sixmax:${key}`} value={`sixmax:${key}`}>
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`sixmax:${key}`}
+                  value={`sixmax:${key}`}
+                >
                   {key}
                   <small className="ml-1 text-gray-400">(6-max)</small>
                 </SelectItem>
@@ -115,7 +126,11 @@ const RangeLoader = () => {
             <SelectGroup>
               <SelectLabel>9-Max Opening Ranges</SelectLabel>
               {Object.entries(NINE_MAX_OPEN).map(([key, value]) => (
-                <SelectItem key={`ninemax:${key}`} value={`ninemax:${key}`}>
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`ninemax:${key}`}
+                  value={`ninemax:${key}`}
+                >
                   {key}
                   <small className="ml-1 text-gray-400">(9-max)</small>
                 </SelectItem>

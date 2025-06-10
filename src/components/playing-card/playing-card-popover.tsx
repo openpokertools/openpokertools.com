@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
 
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 import { usePlayingCardContext } from "./playing-card-context";
 import { usePlayingCardPopoverContext } from "./playing-card-popover-context";
@@ -79,15 +80,16 @@ const PlayingCardPopover = ({
                     type="button"
                     key={`${rank}-${suit}`}
                     onClick={() => isAvailable && handleCardSelect(rank, suit)}
-                    className={`rounded playingcard border ${
-                      isAvailable ? "cursor-pointer" : "cursor-not-allowed"
-                    }`}
+                    className={cn(
+                      "rounded playingcard border",
+                      isAvailable ? "cursor-pointer" : "cursor-not-allowed",
+                      isAvailable ? "bg-white hover:bg-accent" : "bg-neutral-300",
+                    )}
                     style={{
                       display: "inline-block",
                       height: height,
                       width: width,
                       fontSize: fontSize,
-                      background: isAvailable ? "#ffffff" : "#d0d0d0",
                       fill: color,
                     }}
                   >
@@ -105,9 +107,8 @@ const PlayingCardPopover = ({
         </div>
         <Button
           variant="outline"
-          className="mt-2"
+          className="mt-2 w-full bg-white hover:bg-accent"
           onClick={handleClearCard}
-          style={{ width: "100%" }}
         >
           Clear
         </Button>
