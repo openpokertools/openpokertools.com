@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import PaintbrushButtonProvider from "../range/paintbrush-button-context";
 import RangeLoaderProvider from "../range/range-loader-context";
 import DisplayContainer from "../shell/display-container";
 import PlayerDisplay from "./player-display";
@@ -29,11 +30,13 @@ const RangeEquityTool = () => {
       </DisplayContainer>
       <div className="grid grid-cols-1 min-[955px]:grid-cols-2 mx-auto gap-4 max-w-[960px]">
         <RangeLoaderProvider>
-          {Object.values(players).map((player) => (
-            <div key={player.id} className="col-span-1">
-              <PlayerDisplay player={player} updatePlayer={updatePlayer} />
-            </div>
-          ))}
+          <PaintbrushButtonProvider>
+            {Object.values(players).map((player) => (
+              <div key={player.id} className="col-span-1">
+                <PlayerDisplay player={player} updatePlayer={updatePlayer} />
+              </div>
+            ))}
+          </PaintbrushButtonProvider>
         </RangeLoaderProvider>
       </div>
     </>

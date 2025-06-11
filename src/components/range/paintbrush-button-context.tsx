@@ -3,8 +3,11 @@ import React, {
   type Dispatch,
   type SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
+
+import PaintbrushCursor from "./paintbrush-cursor";
 
 interface PaintbrushSelection {
   kind: string;
@@ -29,9 +32,21 @@ export const usePaintbrushButtonContext = () => {
 const PaintbrushButtonProvider = ({ children }: { children: React.ReactNode }) => {
   const [selection, setSelection] = useState<PaintbrushSelection | undefined>(undefined);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelection(undefined);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <PaintbrushButtonContext.Provider value={{ selection, setSelection }}>
       {children}
+      <PaintbrushCursor />
     </PaintbrushButtonContext.Provider>
   );
 };

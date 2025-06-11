@@ -4,8 +4,8 @@ import Board from "@/components/board/board";
 import type { BoardCards } from "@/components/board/board-props";
 import Hole from "@/components/hole-cards/hole-cards";
 import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
-import type { HandModifiers } from "@/components/range/range-props";
 import RangeSelector from "@/components/range/range-selector";
+import type { HandModifiers } from "@/lib/hand_modifiers";
 import { calculateStats } from "@/lib/stats";
 
 import BoardProvider from "../board/board-context";
@@ -67,7 +67,7 @@ const RangeAnalysisTool = () => {
 
   return (
     <>
-      <div className="grid min-[1100px]:grid-cols-12 md:grid-cols-8 grid-cols-4" id="viewer">
+      <div className="grid min-[1100px]:grid-cols-12 md:grid-cols-8 grid-cols-4">
         <div className="col-span-5">
           <RangeLoaderProvider>
             <PaintbrushButtonProvider>

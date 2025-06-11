@@ -6,25 +6,25 @@ export const isSuitSelected = (hand: string, suit: string, selected: string[]): 
   }
 
   if (hand.length === 2) {
-    return isSuitSelectedPair(hand, suit, selected);
+    return isSuitSelectedPair(suit, selected);
   } else if (hand[2] === "s") {
-    return isSuitSelectedSuited(hand, suit, selected);
+    return isSuitSelectedSuited(suit, selected);
   } else {
-    return isSuitSelectedOffsuit(hand, suit, selected);
+    return isSuitSelectedOffsuit(suit, selected);
   }
 };
 
-const isSuitSelectedPair = (hand: string, suit: string, selected: string[]): boolean => {
+const isSuitSelectedPair = (suit: string, selected: string[]): boolean => {
   return (
     selected.includes(suit) || selected.includes(`${suit[0]}x`) || selected.includes(`${suit[1]}x`)
   );
 };
 
-const isSuitSelectedSuited = (hand: string, suit: string, selected: string[]): boolean => {
+const isSuitSelectedSuited = (suit: string, selected: string[]): boolean => {
   return selected.includes(suit);
 };
 
-const isSuitSelectedOffsuit = (hand: string, suit: string, selected: string[]): boolean => {
+const isSuitSelectedOffsuit = (suit: string, selected: string[]): boolean => {
   return (
     selected.includes(suit) || selected.includes(`${suit[0]}x`) || selected.includes(`x${suit[1]}`)
   );
@@ -36,15 +36,15 @@ export const setSelectedSuits = (hand: string, suit: string, prevSelected: strin
   }
 
   if (hand.length === 2) {
-    return setSelectedSuitsPair(hand, suit, prevSelected);
+    return setSelectedSuitsPair(suit, prevSelected);
   } else if (hand[2] === "s") {
-    return setSelectedSuitsSuited(hand, suit, prevSelected);
+    return setSelectedSuitsSuited(suit, prevSelected);
   } else {
-    return setSelectedSuitsOffsuit(hand, suit, prevSelected);
+    return setSelectedSuitsOffsuit(suit, prevSelected);
   }
 };
 
-const setSelectedSuitsPair = (hand: string, suit: string, prevSelected: string[]): string[] => {
+const setSelectedSuitsPair = (suit: string, prevSelected: string[]): string[] => {
   let allSelected: Set<string>;
   if (suit[1] === "x") {
     if (prevSelected.includes(suit)) {
@@ -122,7 +122,7 @@ const compactSelectedSuitsPair = (allSelected: Set<string>): string[] => {
   return compact;
 };
 
-const setSelectedSuitsSuited = (hand: string, suit: string, prevSelected: string[]): string[] => {
+const setSelectedSuitsSuited = (suit: string, prevSelected: string[]): string[] => {
   if (prevSelected.includes(suit)) {
     return prevSelected.filter((s) => s !== suit);
   } else {
@@ -133,7 +133,7 @@ const setSelectedSuitsSuited = (hand: string, suit: string, prevSelected: string
   }
 };
 
-const setSelectedSuitsOffsuit = (hand: string, suit: string, prevSelected: string[]): string[] => {
+const setSelectedSuitsOffsuit = (suit: string, prevSelected: string[]): string[] => {
   let allSelected: Set<string>;
   if (suit[0] === "x" || suit[1] === "x") {
     if (prevSelected.includes(suit)) {

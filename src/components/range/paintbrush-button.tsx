@@ -4,6 +4,7 @@ import { Paintbrush } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { COLORS } from "@/lib/constants";
 import { cn, suitToColor } from "@/lib/utils";
 
@@ -23,11 +24,14 @@ const ColorSelector = ({ color, closePopover }: ColorSelectorProps) => {
   };
 
   return (
-    <Button
-      className="rounded-full w-5 h-5 p-0 mx-auto"
-      style={{ backgroundColor: COLORS[color][1] }}
-      onClick={handleClick}
-    ></Button>
+    <div className="relative w-5 h-5 mx-auto group">
+      <Button
+        className="rounded-full w-full h-full p-0"
+        style={{ backgroundColor: COLORS[color][1] }}
+        onClick={handleClick}
+      />
+      <div className="absolute inset-0 rounded-full bg-transparent group-hover:bg-black/10 pointer-events-none" />
+    </div>
   );
 };
 
@@ -79,7 +83,7 @@ const PaintbrushButton = ({ className }: PaintbrushButtonProps) => {
   const clear = () => {
     setSelection(undefined);
     setOpen(false);
-  }
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -135,7 +139,24 @@ const PaintbrushButton = ({ className }: PaintbrushButtonProps) => {
             <SuitSelector suit="dd" closePopover={closePopover} />
           </div>
           <div className="flex flex-row gap-[inherit] mt-1">
-            <Button variant="outline" className="w-full h-[1.62rem] bg-transparent hover:bg-accent" onClick={clear}>Clear</Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full h-[1.62rem] bg-transparent hover:bg-accent"
+                    onClick={clear}
+                  >
+                    Clear
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    Press <strong>ESC</strong> to clear
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </PopoverContent>

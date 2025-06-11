@@ -27,11 +27,14 @@ const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
   };
 
   return (
-    <ContextMenuItem
-      className="w-5 h-5 rounded-full p-0 mx-auto cursor-pointer"
-      style={{ backgroundColor: COLORS[color][1] }}
-      onMouseDown={handleColorSelectorClick}
-    />
+    <div className="relative w-5 h-5 mx-auto group">
+      <ContextMenuItem
+        className="rounded-full w-full h-full p-0 cursor-pointer"
+        style={{ backgroundColor: COLORS[color][1] }}
+        onMouseDown={handleColorSelectorClick}
+      />
+      <div className="absolute inset-0 rounded-full bg-transparent group-hover:bg-black/10 pointer-events-none" />
+    </div>
   );
 };
 

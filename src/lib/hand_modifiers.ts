@@ -33,6 +33,11 @@ export const toggleHandSuits = (
   newSuit: string,
 ): Map<string, HandModifiers> => {
   const next = new Map(prev);
+
+  if (!isSuitValid(hand, newSuit)) {
+    return next;
+  }
+
   const modifier = next.get(hand) ?? {};
   const suits = modifier.suits || [];
   const newSuits = setSelectedSuits(hand, newSuit, suits);
@@ -47,4 +52,17 @@ export const toggleHandSuits = (
     next.set(hand, { ...modifier, suits: newSuits });
   }
   return next;
+};
+
+const isSuitValid = (hand: string, suit: string) => {
+  if (suit === "xx") {
+    return true;
+  }
+  if (hand.length === 2) {
+    return suit[0] !== suit[1] && suit[0] !== "x";
+  } else if (hand[2] === "s") {
+    return suit[0] === suit[1];
+  } else {
+    return suit[0] !== suit[1];
+  }
 };
