@@ -1,5 +1,6 @@
 import React from "react";
 
+import PaintbrushCursor from "./paintbrush-cursor";
 import RangeProvider from "./range-context";
 import RangeLoader from "./range-loader";
 import RangePercent from "./range-percent";
@@ -11,6 +12,7 @@ import RangeText from "./range-text";
 const RangeSelector = ({ name, ...rangeProps }: RangeSelectorProps) => {
   return (
     <RangeProvider {...rangeProps}>
+      <PaintbrushCursor />
       <div className="player p-3 w-[460px] mx-auto rounded">
         <h4 className="mb-2">
           {name ? name : "Range"}

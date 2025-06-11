@@ -1,14 +1,18 @@
 import React from "react";
 
 import { COLORS, RANKS } from "@/lib/constants";
+import { toggleHandColor, toggleHandSuits } from "@/lib/hand_modifiers";
 import { cn } from "@/lib/utils";
 
+import { usePaintbrushButtonContext } from "./paintbrush-button-context";
 import RangeCell from "./range-cell";
 import RangeCellSuits from "./range-cell-suits";
 import { useRangeSelectorContext } from "./range-context";
 
 const RangeTable = () => {
-  const { selectedHands, setSelectedHands, activeHands, handModifiers } = useRangeSelectorContext();
+  const { selectedHands, setSelectedHands, activeHands, handModifiers, setHandModifiers } =
+    useRangeSelectorContext();
+  const { selection } = usePaintbrushButtonContext();
 
   const toggleHandSelection = (hand: string) => {
     const newSelectedHands = new Set(selectedHands);
@@ -22,7 +26,19 @@ const RangeTable = () => {
 
   const handleMouseDown = (event: React.MouseEvent, hand: string) => {
     if (event.button === 0) {
-      toggleHandSelection(hand);
+      if (selection) {
+        if (selection.kind === "color") {
+          setHandModifiers((prev) => {
+            return toggleHandColor(hand, prev, selection.selection);
+          });
+        } else {
+          setHandModifiers((prev) => {
+            return toggleHandSuits(hand, prev, selection.selection);
+          });
+        }
+      } else {
+        toggleHandSelection(hand);
+      }
     }
   };
 
@@ -46,13 +62,13 @@ const RangeTable = () => {
               const style =
                 activeHands !== undefined && selectedHands.has(hand)
                   ? {
-                      background: `linear-gradient(to right, ${COLORS[color][1]} ${percent}%, ${COLORS[color][0]} ${percent}%)`,
-                    }
+                    background: `linear-gradient(to right, ${COLORS[color][1]} ${percent}%, ${COLORS[color][0]} ${percent}%)`,
+                  }
                   : selectedHands.has(hand)
                     ? {
-                        backgroundColor: COLORS[color][1],
-                        borderColor: COLORS[color][0],
-                      }
+                      backgroundColor: COLORS[color][1],
+                      borderColor: COLORS[color][0],
+                    }
                     : {};
 
               return (

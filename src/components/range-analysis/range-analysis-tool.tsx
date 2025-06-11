@@ -12,6 +12,7 @@ import BoardProvider from "../board/board-context";
 import ClearBoardButton from "../board/clear-board-button";
 import RandomBoardButton from "../board/random-board-button";
 import PlayingCardProvider from "../playing-card/playing-card-context";
+import PaintbrushButtonProvider from "../range/paintbrush-button-context";
 import RangeLoaderProvider from "../range/range-loader-context";
 import { ANALYSIS_HANDS_DEFAULT, type AnalysisHands } from "./analysis-props";
 import CalculateWinButton from "./calculate-win-button";
@@ -69,13 +70,15 @@ const RangeAnalysisTool = () => {
       <div className="grid min-[1100px]:grid-cols-12 md:grid-cols-8 grid-cols-4" id="viewer">
         <div className="col-span-5">
           <RangeLoaderProvider>
-            <RangeSelector
-              selectedHands={selectedHands}
-              setSelectedHands={setSelectedHands}
-              handModifiers={handModifiers}
-              setHandModifiers={setHandModifiers}
-              activeHands={activeHands}
-            />
+            <PaintbrushButtonProvider>
+              <RangeSelector
+                selectedHands={selectedHands}
+                setSelectedHands={setSelectedHands}
+                handModifiers={handModifiers}
+                setHandModifiers={setHandModifiers}
+                activeHands={activeHands}
+              />
+            </PaintbrushButtonProvider>
           </RangeLoaderProvider>
         </div>
         <PlayingCardProvider>

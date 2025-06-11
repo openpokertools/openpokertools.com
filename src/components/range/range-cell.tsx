@@ -7,7 +7,8 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { COLORS } from "@/lib/constants";
-import { isSuitSelected, setSelectedSuits } from "@/lib/suit_utils";
+import { toggleHandColor, toggleHandSuits } from "@/lib/hand_modifiers";
+import { isSuitSelected } from "@/lib/suit_utils";
 import { cn, handType, suitToColor } from "@/lib/utils";
 
 import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
@@ -21,20 +22,7 @@ const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
   const { setHandModifiers } = useRangeSelectorContext();
   const handleColorSelectorClick = () => {
     setHandModifiers((prev) => {
-      const next = new Map(prev);
-      const modifier = next.get(hand) ?? {};
-      if (color === "green") {
-        delete modifier.color;
-        if (Object.keys(modifier).length === 0) {
-          next.delete(hand);
-        } else {
-          next.set(hand, { ...modifier });
-        }
-      } else {
-        next.set(hand, { ...modifier, color });
-      }
-
-      return next;
+      return toggleHandColor(hand, prev, color);
     });
   };
 
@@ -61,21 +49,7 @@ const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
       return;
     }
     setHandModifiers((prev) => {
-      const next = new Map(prev);
-      const modifier = next.get(hand) ?? {};
-      const suits = modifier.suits || [];
-      const newSuits = setSelectedSuits(hand, suit, suits);
-      if (newSuits.length === 0) {
-        delete modifier.suits;
-        if (Object.keys(modifier).length === 0) {
-          next.delete(hand);
-        } else {
-          next.set(hand, { ...modifier });
-        }
-      } else {
-        next.set(hand, { ...modifier, suits: newSuits });
-      }
-      return next;
+      return toggleHandSuits(hand, prev, suit);
     });
   };
 
@@ -116,7 +90,7 @@ const RangeCell = ({ hand }: { hand: string }) => {
       <ContextMenuTrigger className="inline-flex items-center justify-center h-full w-full">
         {hand}
       </ContextMenuTrigger>
-      <ContextMenuContent className="min-w-[0px] p-1" onMouseDown={handleContextMenuContentClick}>
+      <ContextMenuContent className="min-w-[0px] p-2" onMouseDown={handleContextMenuContentClick}>
         <div className="grid gap-[0.2rem]">
           <div className="flex flex-row gap-[inherit] my-1">
             <ColorSelector hand={hand} color="purple" />

@@ -1,9 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 
-export interface HandModifiers {
-  color?: string;
-  suits?: Array<string>;
-}
+import type { HandModifiers } from "@/lib/hand_modifiers";
 
 export interface RangeSelectorProps {
   selectedHands: Set<string>;
