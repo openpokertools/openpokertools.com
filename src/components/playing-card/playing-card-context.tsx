@@ -6,9 +6,11 @@ import React, {
   useState,
 } from "react";
 
+import type { Card } from "@/lib/models";
+
 interface PlayingCardContextProps {
-  selectedCards: Set<string>;
-  setSelectedCards: Dispatch<SetStateAction<Set<string>>>;
+  selectedCards: Set<Card>;
+  setSelectedCards: Dispatch<SetStateAction<Set<Card>>>;
 }
 
 const PlayingCardContext = createContext<PlayingCardContextProps | undefined>(undefined);
@@ -22,7 +24,7 @@ export const usePlayingCardContext = () => {
 };
 
 const PlayingCardProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selectedCards, setSelectedCards] = useState<Set<string>>(new Set());
+  const [selectedCards, setSelectedCards] = useState<Set<Card>>(new Set());
 
   return (
     <PlayingCardContext.Provider value={{ selectedCards, setSelectedCards }}>

@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { approximateHandRangeEquity, calculateHandRangeEquity } from "@/lib/equity_utils";
+import type { Card, Combo } from "@/lib/models";
 
 import type { AnalysisHands } from "./analysis-props";
 import type { EquityReport } from "./report-props";
@@ -39,14 +40,14 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
       return;
     }
 
-    const holeCards = [analysisHands.hole.hole1, analysisHands.hole.hole2];
+    const holeCards = [analysisHands.hole.hole1, analysisHands.hole.hole2] as Combo;
     const preflopEquity = approximateHandRangeEquity(
       holeCards,
       analysisHands.keptToFlop,
       10000,
     ).equity;
 
-    const board = [];
+    const board: Array<Card> = [];
 
     let flopEquity: number | undefined;
     if (analysisHands.keptToTurn.length > 0) {

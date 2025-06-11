@@ -1,16 +1,16 @@
-import type { COLORS } from "./constants";
+import type { Color, Hand, SuitAnnotation } from "./models";
 import { setSelectedSuits } from "./suit_utils";
 
 export interface HandModifiers {
-  color?: keyof typeof COLORS;
+  color?: Color;
   suits?: Array<string>;
 }
 
 export const toggleHandColor = (
-  hand: string,
-  prev: Map<string, HandModifiers>,
-  newColor: keyof typeof COLORS,
-): Map<string, HandModifiers> => {
+  hand: Hand,
+  prev: Map<Hand, HandModifiers>,
+  newColor: Color,
+): Map<Hand, HandModifiers> => {
   const next = new Map(prev);
   const modifier = next.get(hand) ?? {};
   if (newColor === "green") {
@@ -28,10 +28,10 @@ export const toggleHandColor = (
 };
 
 export const toggleHandSuits = (
-  hand: string,
-  prev: Map<string, HandModifiers>,
-  newSuit: string,
-): Map<string, HandModifiers> => {
+  hand: Hand,
+  prev: Map<Hand, HandModifiers>,
+  newSuit: SuitAnnotation,
+): Map<Hand, HandModifiers> => {
   const next = new Map(prev);
 
   if (!isSuitValid(hand, newSuit)) {
@@ -39,7 +39,7 @@ export const toggleHandSuits = (
   }
 
   const modifier = next.get(hand) ?? {};
-  const suits = modifier.suits || [];
+  const suits = (modifier.suits || []) as SuitAnnotation[];
   const newSuits = setSelectedSuits(hand, newSuit, suits);
   if (newSuits.length === 0) {
     delete modifier.suits;
@@ -54,7 +54,7 @@ export const toggleHandSuits = (
   return next;
 };
 
-const isSuitValid = (hand: string, suit: string) => {
+const isSuitValid = (hand: Hand, suit: SuitAnnotation) => {
   if (suit === "xx") {
     return true;
   }

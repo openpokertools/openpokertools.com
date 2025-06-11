@@ -1,6 +1,7 @@
 import React from "react";
 
 import { SUITS_TO_HTML } from "@/lib/constants";
+import type { Suit } from "@/lib/models";
 import { suitToColor } from "@/lib/utils";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
@@ -10,7 +11,9 @@ interface CardStringProps {
 }
 
 const CardString = ({ card }: CardStringProps) => {
-  return <span style={{ color: suitToColor(card[1]) }}>{card[0] + SUITS_TO_HTML[card[1]]}</span>;
+  return (
+    <span style={{ color: suitToColor(card[1]) }}>{card[0] + SUITS_TO_HTML[card[1] as Suit]}</span>
+  );
 };
 
 interface ComboStringProps {

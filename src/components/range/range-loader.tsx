@@ -58,9 +58,9 @@ const RangeLoader = () => {
     let descriptor: string;
     let modifiers = "";
     if (group === "sixmax") {
-      descriptor = SIX_MAX_OPEN[key];
+      descriptor = SIX_MAX_OPEN[key as keyof typeof SIX_MAX_OPEN];
     } else if (group === "ninemax") {
-      descriptor = NINE_MAX_OPEN[key];
+      descriptor = NINE_MAX_OPEN[key as keyof typeof NINE_MAX_OPEN];
     } else {
       const index = Number.parseInt(key);
       descriptor = userRanges[index].value;
@@ -110,7 +110,7 @@ const RangeLoader = () => {
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>6-Max Opening Ranges</SelectLabel>
-              {Object.entries(SIX_MAX_OPEN).map(([key, value]) => (
+              {Object.keys(SIX_MAX_OPEN).map((key) => (
                 <SelectItem
                   className="cursor-pointer"
                   key={`sixmax:${key}`}
@@ -123,7 +123,7 @@ const RangeLoader = () => {
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>9-Max Opening Ranges</SelectLabel>
-              {Object.entries(NINE_MAX_OPEN).map(([key, value]) => (
+              {Object.keys(NINE_MAX_OPEN).map((key) => (
                 <SelectItem
                   className="cursor-pointer"
                   key={`ninemax:${key}`}

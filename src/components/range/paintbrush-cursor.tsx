@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { COLORS } from "@/lib/constants";
+import type { Color } from "@/lib/models";
 import { suitToColor } from "@/lib/utils";
 
 import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
@@ -25,7 +26,7 @@ export default function PaintbrushCursor() {
         >
           <div
             className="w-4 h-4 rounded-full"
-            style={{ backgroundColor: COLORS[selection.selection][1] }}
+            style={{ backgroundColor: COLORS[selection.selection as Color][1] }}
           />
         </div>
       )}

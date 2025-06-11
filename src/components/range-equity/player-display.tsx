@@ -1,6 +1,8 @@
 import React, { type Dispatch, type SetStateAction, useMemo } from "react";
 
-import type { HandModifiers } from "../range/range-props";
+import type { HandModifiers } from "@/lib/hand_modifiers";
+import type { Hand } from "@/lib/models";
+
 import RangeSelector from "../range/range-selector";
 import type { Player } from "./range-equity-props";
 
@@ -10,7 +12,7 @@ interface PlayerDisplayProps {
 }
 
 const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
-  const handleSelectedHandsChange: Dispatch<SetStateAction<Set<string>>> = (newHandsOrUpdater) => {
+  const handleSelectedHandsChange: Dispatch<SetStateAction<Set<Hand>>> = (newHandsOrUpdater) => {
     const newHands =
       typeof newHandsOrUpdater === "function"
         ? newHandsOrUpdater(player.selectedHands)
@@ -19,7 +21,7 @@ const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
     updatePlayer(player.id, { selectedHands: newHands });
   };
 
-  const handleHandModifiersChange: Dispatch<SetStateAction<Map<string, HandModifiers>>> = (
+  const handleHandModifiersChange: Dispatch<SetStateAction<Map<Hand, HandModifiers>>> = (
     newModifiersOrUpdater,
   ) => {
     const newModifiers =

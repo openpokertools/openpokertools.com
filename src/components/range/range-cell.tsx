@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/context-menu";
 import { COLORS } from "@/lib/constants";
 import { toggleHandColor, toggleHandSuits } from "@/lib/hand_modifiers";
+import type { Color, Hand, SuitAnnotation } from "@/lib/models";
 import { isSuitSelected } from "@/lib/suit_utils";
 import { cn, handType, suitToColor } from "@/lib/utils";
 
@@ -15,8 +16,8 @@ import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
 import { useRangeSelectorContext } from "./range-context";
 
 interface ColorSelectorProps {
-  hand: string;
-  color: keyof typeof COLORS;
+  hand: Hand;
+  color: Color;
 }
 const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
   const { setHandModifiers } = useRangeSelectorContext();
@@ -39,14 +40,14 @@ const ColorSelector = ({ hand, color }: ColorSelectorProps) => {
 };
 
 interface SuitSelectorProps {
-  hand: string;
-  suit: string;
+  hand: Hand;
+  suit: SuitAnnotation;
   isActive: boolean;
 }
 const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
   const { handModifiers, setHandModifiers } = useRangeSelectorContext();
   const modifier = handModifiers.get(hand) ?? {};
-  const suits = modifier.suits || [];
+  const suits = (modifier.suits || []) as SuitAnnotation[];
   const handleSuitSelectorClick = () => {
     if (!isActive) {
       return;
@@ -82,7 +83,7 @@ const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
   );
 };
 
-const RangeCell = ({ hand }: { hand: string }) => {
+const RangeCell = ({ hand }: { hand: Hand }) => {
   const handleContextMenuContentClick = (event: React.MouseEvent) => {
     event.stopPropagation();
   };

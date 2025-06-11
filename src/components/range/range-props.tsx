@@ -1,13 +1,14 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import type { HandModifiers } from "@/lib/hand_modifiers";
+import type { Hand } from "@/lib/models";
 
 export interface RangeSelectorProps {
-  selectedHands: Set<string>;
-  setSelectedHands: Dispatch<SetStateAction<Set<string>>>;
-  handModifiers: Map<string, HandModifiers>;
-  setHandModifiers: Dispatch<SetStateAction<Map<string, HandModifiers>>>;
-  activeHands?: Map<string, number>;
+  selectedHands: Set<Hand>;
+  setSelectedHands: Dispatch<SetStateAction<Set<Hand>>>;
+  handModifiers: Map<Hand, HandModifiers>;
+  setHandModifiers: Dispatch<SetStateAction<Map<Hand, HandModifiers>>>;
+  activeHands?: Map<Hand, number>;
   name?: string;
 }
 

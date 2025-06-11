@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import loadable from "@loadable/component";
 
 import { HANDS_ORDERED } from "@/lib/constants";
+import type { Hand } from "@/lib/models";
 
 import { useRangeSelectorContext } from "./range-context";
 
@@ -50,26 +51,29 @@ const RangeSlider = () => {
     setSliderValues({ from: topTotal, to: topTotal + rangeTotal });
   }, [selectedHands]);
 
-  const handleSliderChange = (data: { from: number; to: number }) => {
-    const valStart = data.from;
-    const valEnd = data.to;
-    const newSelectedHands: Set<string> = new Set();
-    let m = 0;
-    for (const h of HANDS_ORDERED) {
-      if (h[0] === h[1]) {
-        m += 6;
-      } else if (h[2] === "s") {
-        m += 4;
-      } else {
-        m += 12;
+  const handleSliderChange = useCallback(
+    (data: { from: number; to: number }) => {
+      const valStart = data.from;
+      const valEnd = data.to;
+      const newSelectedHands: Set<Hand> = new Set();
+      let m = 0;
+      for (const h of HANDS_ORDERED) {
+        if (h[0] === h[1]) {
+          m += 6;
+        } else if (h[2] === "s") {
+          m += 4;
+        } else {
+          m += 12;
+        }
+        if (m > valStart && m <= valEnd) {
+          newSelectedHands.add(h);
+        }
       }
-      if (m > valStart && m <= valEnd) {
-        newSelectedHands.add(h);
-      }
-    }
-    isInternalUpdate.current = true;
-    setSelectedHands(newSelectedHands);
-  };
+      isInternalUpdate.current = true;
+      setSelectedHands(newSelectedHands);
+    },
+    [setSelectedHands],
+  );
 
   return useMemo(
     () => (
@@ -88,7 +92,7 @@ const RangeSlider = () => {
         />
       </div>
     ),
-    [sliderValues],
+    [sliderValues, handleSliderChange],
   );
 };
 

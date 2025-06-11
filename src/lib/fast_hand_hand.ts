@@ -7,6 +7,7 @@ import {
   evaluateRainbow,
   findWinners,
 } from "./evaluation_utils";
+import type { Card, Combo } from "./models";
 
 const SUIT_MASKS = [0x1000, 0x2000, 0x4000, 0x8000];
 
@@ -40,7 +41,7 @@ const getBinedDeck = (exclusions: Set<number>): BinedDeck => {
     const rowSuits = [];
 
     for (let j = 0; j < 4; j++) {
-      const card = cardToInt(RANKS[i] + SUITS[j]);
+      const card = cardToInt((RANKS[i] + SUITS[j]) as Card);
       if (!exclusions.has(card)) {
         row.push(card);
         rowSuits.push(SUIT_MASKS[j]);
@@ -490,8 +491,8 @@ const getDeck = (exclusions: Array<number>): Array<number> => {
 };
 
 export const calculateHandHandEquities = (
-  handStrings: Array<Array<string>>,
-  dealtBoard: Array<string>,
+  handStrings: Array<Combo>,
+  dealtBoard: Array<Card>,
 ): [Array<number>, Array<number>, number] => {
   const hands = [];
   for (const hand of handStrings) {

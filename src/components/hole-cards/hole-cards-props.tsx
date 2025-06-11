@@ -1,5 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 
+import type { Card } from "@/lib/models";
+
 export interface HoleCardsProps {
   holeCards: HoleCards;
   setHoleCards: Dispatch<SetStateAction<HoleCards>>;
@@ -7,6 +9,6 @@ export interface HoleCardsProps {
 }
 
 export interface HoleCards {
-  hole1?: string;
-  hole2?: string;
+  hole1?: Card;
+  hole2?: Card;
 }

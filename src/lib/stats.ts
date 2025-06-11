@@ -3,39 +3,41 @@ import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
 import type { CombosReport } from "@/components/range-analysis/report-props";
 import type { SelectedQualifiers } from "@/components/range-analysis/stats-display-props";
 
-import { HANDS_FLOP, METERS } from "./constants";
+import { METERS } from "./constants";
 import { qualifyCards } from "./descriptor_utils";
+import { FLOP_STATS } from "./flop_stats";
+import type { Card, Combo, Hand, Qualifier, Round } from "./models";
 import { handsToCombos } from "./range_utils";
 
 interface Stats {
-  counts: Map<string, Map<string, number>>;
+  counts: Map<Round, Map<Qualifier, number>>;
   combosReport: CombosReport;
-  flopActiveHands: Map<string, number>;
-  turnActiveHands: Map<string, number>;
-  riverActiveHands: Map<string, number>;
-  keptToFlop: Array<[string, string]>;
-  keptToTurn: Array<[string, string]>;
-  keptToRiver: Array<[string, string]>;
-  keptToShowdown: Array<[string, string]>;
+  flopActiveHands: Map<Hand, number>;
+  turnActiveHands: Map<Hand, number>;
+  riverActiveHands: Map<Hand, number>;
+  keptToFlop: Array<Combo>;
+  keptToTurn: Array<Combo>;
+  keptToRiver: Array<Combo>;
+  keptToShowdown: Array<Combo>;
 }
 
 export const calculateStats = (
-  selectedHands: Set<string>,
+  selectedHands: Set<Hand>,
   selectedQualifiers: SelectedQualifiers,
   holeCards: HoleCards,
   boardCards: BoardCards,
 ): Stats => {
-  const stats: Map<string, Map<string, number>> = new Map();
+  const stats: Map<Round, Map<Qualifier, number>> = new Map();
   stats.set("preflop", calculatePreFlop(selectedHands));
 
-  const keptToFlop: Array<[string, string]> = [];
-  const keptToTurn: Array<[string, string]> = [];
-  const keptToRiver: Array<[string, string]> = [];
-  const keptToShowdown: Array<[string, string]> = [];
-  const board: Array<string> = [];
+  const keptToFlop: Array<Combo> = [];
+  const keptToTurn: Array<Combo> = [];
+  const keptToRiver: Array<Combo> = [];
+  const keptToShowdown: Array<Combo> = [];
+  const board: Array<Card> = [];
 
   const combos = handsToCombos(selectedHands);
-  const deadCards = new Set([holeCards.hole1, holeCards.hole2]);
+  const deadCards = new Set([holeCards.hole1!, holeCards.hole2!]);
   for (const c of combos) {
     if (!(deadCards.has(c[0]) || deadCards.has(c[1]))) {
       keptToFlop.push(c);
@@ -53,8 +55,11 @@ export const calculateStats = (
     deadCards.add(flop1);
     deadCards.add(flop2);
     deadCards.add(flop3);
-    const checkedQs = new Set();
-    for (const [q, isChecked] of Object.entries(selectedQualifiers.flop)) {
+    const checkedQs: Set<Qualifier> = new Set();
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.flop) as [
+      Qualifier,
+      boolean,
+    ][]) {
       if (isChecked) {
         checkedQs.add(q);
       }
@@ -74,8 +79,11 @@ export const calculateStats = (
   if (hasTurn) {
     board.push(turn);
     deadCards.add(turn);
-    const checkedQs = new Set();
-    for (const [q, isChecked] of Object.entries(selectedQualifiers.turn)) {
+    const checkedQs: Set<Qualifier> = new Set();
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.turn) as [
+      Qualifier,
+      boolean,
+    ][]) {
       if (isChecked) {
         checkedQs.add(q);
       }
@@ -95,8 +103,11 @@ export const calculateStats = (
   if (hasRiver) {
     board.push(river);
     deadCards.add(river);
-    const checkedQs = new Set();
-    for (const [q, isChecked] of Object.entries(selectedQualifiers.river)) {
+    const checkedQs: Set<Qualifier> = new Set();
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.river) as [
+      Qualifier,
+      boolean,
+    ][]) {
       if (isChecked) {
         checkedQs.add(q);
       }
@@ -133,32 +144,32 @@ export const calculateStats = (
 };
 
 interface PostFlopResult {
-  stats: Map<string, number>;
+  stats: Map<Qualifier, number>;
   count: number;
 }
 const calculatePostFlop = (
-  combos: Array<Array<string>>,
-  keptCombos: Array<Array<string>>,
-  board: Array<string>,
-  deadCards: Set<string>,
-  checkedQs: Set<string>,
+  combos: Array<Combo>,
+  keptCombos: Array<Combo>,
+  board: Array<Card>,
+  deadCards: Set<Card>,
+  checkedQs: Set<Qualifier>,
 ): PostFlopResult => {
-  const stats: Map<string, number> = new Map();
+  const stats: Map<Qualifier, number> = new Map();
   let count = 0;
   for (const m of METERS) {
     stats.set(m, 0);
   }
-  for (const h of combos) {
-    if (deadCards.has(h[0]) || deadCards.has(h[1])) {
+  for (const c of combos) {
+    if (deadCards.has(c[0]) || deadCards.has(c[1])) {
       continue;
     }
     count += 1;
-    const qs = qualifyCards(h, board);
+    const qs = qualifyCards(c, board);
     for (const q of qs) {
-      stats.set(q, stats.get(q) + 1);
+      stats.set(q, (stats.get(q) ?? 0) + 1);
     }
     if (hasIntersection(qs, checkedQs)) {
-      keptCombos.push(h);
+      keptCombos.push(c);
     }
   }
   for (const [key, value] of stats) {
@@ -176,8 +187,8 @@ const hasIntersection = (listA: Array<string>, setB: Set<string>) => {
   return false;
 };
 
-const calculatePreFlop = (selectedHands: Set<string>): Map<string, number> => {
-  const stats: Map<string, number> = new Map();
+const calculatePreFlop = (selectedHands: Set<Hand>): Map<Qualifier, number> => {
+  const stats: Map<Qualifier, number> = new Map();
   let count = 0;
   for (const m of METERS) {
     stats.set(m, 0);
@@ -192,9 +203,9 @@ const calculatePreFlop = (selectedHands: Set<string>): Map<string, number> => {
       multiplier = 12;
     }
     count += 19600 * multiplier;
-    const made = HANDS_FLOP[h];
-    for (const k in made) {
-      stats.set(k, stats.get(k) + multiplier * made[k]);
+    const made = FLOP_STATS[h];
+    for (const [q, v] of Object.entries(made) as [Qualifier, number][]) {
+      stats.set(q, (stats.get(q) ?? 0) + multiplier * v);
     }
   }
   for (const [key, value] of stats) {
@@ -203,8 +214,8 @@ const calculatePreFlop = (selectedHands: Set<string>): Map<string, number> => {
   return stats;
 };
 
-const calculateActiveHandsPercent = (combos: Array<Array<string>>): Map<string, number> => {
-  const activeHands: Map<string, number> = new Map();
+const calculateActiveHandsPercent = (combos: Array<Combo>): Map<Hand, number> => {
+  const activeHands: Map<Hand, number> = new Map();
   for (const c of combos) {
     const { hand, count } = comboToHandAndCount(c);
     activeHands.set(hand, (activeHands.get(hand) || 0) + count);
@@ -213,15 +224,15 @@ const calculateActiveHandsPercent = (combos: Array<Array<string>>): Map<string, 
 };
 
 interface HandAndCount {
-  hand: string;
+  hand: Hand;
   count: number;
 }
-const comboToHandAndCount = (combo: Array<string>): HandAndCount => {
+const comboToHandAndCount = (combo: Combo): HandAndCount => {
   if (combo[0][0] === combo[1][0]) {
-    return { hand: combo[0][0] + combo[1][0], count: 2 };
+    return { hand: (combo[0][0] + combo[1][0]) as Hand, count: 2 };
   } else if (combo[0][1] === combo[1][1]) {
-    return { hand: `${combo[0][0]}${combo[1][0]}s`, count: 3 };
+    return { hand: `${combo[0][0]}${combo[1][0]}s` as Hand, count: 3 };
   } else {
-    return { hand: `${combo[0][0]}${combo[1][0]}o`, count: 1 };
+    return { hand: `${combo[0][0]}${combo[1][0]}o` as Hand, count: 1 };
   }
 };

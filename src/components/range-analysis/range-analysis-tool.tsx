@@ -6,6 +6,7 @@ import Hole from "@/components/hole-cards/hole-cards";
 import type { HoleCards } from "@/components/hole-cards/hole-cards-props";
 import RangeSelector from "@/components/range/range-selector";
 import type { HandModifiers } from "@/lib/hand_modifiers";
+import type { Combo, Hand, Qualifier, Round } from "@/lib/models";
 import { calculateStats } from "@/lib/stats";
 
 import BoardProvider from "../board/board-context";
@@ -23,23 +24,23 @@ import StatsDisplay from "./stats-display";
 import { SELECTED_QUALIFIERS_DEFAULT, type SelectedQualifiers } from "./stats-display-props";
 
 const RangeAnalysisTool = () => {
-  const [selectedHands, setSelectedHands] = useState<Set<string>>(new Set());
-  const [handModifiers, setHandModifiers] = useState<Map<string, HandModifiers>>(new Map());
+  const [selectedHands, setSelectedHands] = useState<Set<Hand>>(new Set());
+  const [handModifiers, setHandModifiers] = useState<Map<Hand, HandModifiers>>(new Map());
   const [selectedQualifiers, setSelectedQualifiers] = useState<SelectedQualifiers>(
     SELECTED_QUALIFIERS_DEFAULT,
   );
-  const [selectedTab, setSelectedTab] = useState<string>("preflop");
+  const [selectedTab, setSelectedTab] = useState<Round>("preflop");
 
   const [boardCards, setBoardCards] = useState<BoardCards>({});
   const [holeCards, setHoleCards] = useState<HoleCards>({});
   const [combosReport, setCombosReport] = useState<CombosReport>(COMBOS_REPORT_DEFAULT);
   const [equityReport, setEquityReport] = useState<EquityReport>({});
-  const [stats, setStats] = useState<Map<string, Map<string, number>>>(new Map());
-  const [activeHands, setActiveHands] = useState<Map<string, number> | undefined>(new Map());
+  const [stats, setStats] = useState<Map<Round, Map<Qualifier, number>>>(new Map());
+  const [activeHands, setActiveHands] = useState<Map<Hand, number> | undefined>(new Map());
   const [analysisHands, setAnalysisHands] = useState<AnalysisHands>(ANALYSIS_HANDS_DEFAULT);
-  const [keptToTurn, setKeptToTurn] = useState<Array<[string, string]>>([]);
-  const [keptToRiver, setKeptToRiver] = useState<Array<[string, string]>>([]);
-  const [keptToShowdown, setKeptToShowdown] = useState<Array<[string, string]>>([]);
+  const [keptToTurn, setKeptToTurn] = useState<Array<Combo>>([]);
+  const [keptToRiver, setKeptToRiver] = useState<Array<Combo>>([]);
+  const [keptToShowdown, setKeptToShowdown] = useState<Array<Combo>>([]);
 
   useEffect(() => {
     const newStats = calculateStats(selectedHands, selectedQualifiers, holeCards, boardCards);
@@ -109,7 +110,6 @@ const RangeAnalysisTool = () => {
             stats={stats}
             selectedQualifiers={selectedQualifiers}
             setSelectedQualifiers={setSelectedQualifiers}
-            selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
           />
         </div>

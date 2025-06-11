@@ -5,6 +5,7 @@ import { PopoverArrow } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RANKS, SUITS } from "@/lib/constants";
+import type { Card, Rank, Suit } from "@/lib/models";
 import { cn } from "@/lib/utils";
 
 import { usePlayingCardContext } from "./playing-card-context";
@@ -15,7 +16,7 @@ import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
 interface PlayingCardPopoverProps {
   index: number;
   playingCardState: PlayingCardStateProps;
-  setPlayingCardState: (values: { rank?: string; suit?: string }) => void;
+  setPlayingCardState: (values: { rank?: Rank; suit?: Suit }) => void;
   children: React.ReactNode;
 }
 const PlayingCardPopover = ({
@@ -27,15 +28,15 @@ const PlayingCardPopover = ({
   const { selectedCards, setSelectedCards } = usePlayingCardContext();
   const { open, setOpenAtIndex } = usePlayingCardPopoverContext();
 
-  const handleCardSelect = (rank: string, suit: string) => {
+  const handleCardSelect = (rank: Rank, suit: Suit) => {
     const newSelectedCards = new Set(selectedCards);
 
     if (playingCardState.rank && playingCardState.suit) {
-      const oldCard = playingCardState.rank + playingCardState.suit;
+      const oldCard = (playingCardState.rank + playingCardState.suit) as Card;
       newSelectedCards.delete(oldCard);
     }
 
-    const newCard = rank + suit;
+    const newCard = (rank + suit) as Card;
     newSelectedCards.add(newCard);
     setSelectedCards(newSelectedCards);
 
@@ -47,7 +48,7 @@ const PlayingCardPopover = ({
   const handleClearCard = () => {
     if (playingCardState.rank && playingCardState.suit) {
       const newSelectedCards = new Set(selectedCards);
-      const oldCard = playingCardState.rank + playingCardState.suit;
+      const oldCard = (playingCardState.rank + playingCardState.suit) as Card;
       newSelectedCards.delete(oldCard);
       setSelectedCards(newSelectedCards);
     }
@@ -71,7 +72,7 @@ const PlayingCardPopover = ({
             <div key={suit} className="flex flex-row gap-1">
               {RANKS.map((rank) => {
                 const isSelected = playingCardState.rank === rank && playingCardState.suit === suit;
-                const isCardTaken = selectedCards.has(rank + suit);
+                const isCardTaken = selectedCards.has((rank + suit) as Card);
                 const isAvailable = !isSelected && !isCardTaken;
                 const color = suit === "d" || suit === "h" ? "#df0000" : "#000";
 

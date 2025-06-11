@@ -1,4 +1,5 @@
 import { FLUSH_LOOKUP, UNSUITED_LOOKUP } from "./lookup";
+import type { Card } from "./models";
 
 const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41];
 
@@ -25,7 +26,7 @@ const CHAR_SUIT_TO_INT_SUIT: Record<string, number> = {
   c: 8,
 };
 
-export const cardToInt = (card: string): number => {
+export const cardToInt = (card: Card): number => {
   const rankChar = card[0];
   const suitChar = card[1];
   const rankInt = CHAR_RANK_TO_INT_RANK[rankChar];
@@ -274,11 +275,11 @@ export const evaluateFlush = (cards: Array<number>, board: Array<number>): numbe
 
 const fiveRainbow = (cards: Array<number>): number => {
   const prime = primeProductFromHand(cards);
-  return UNSUITED_LOOKUP.get(prime);
+  return UNSUITED_LOOKUP.get(prime)!;
 };
 
 const fiveFlush = (cards: Array<number>): number => {
   const handOR = (cards[0] | cards[1] | cards[2] | cards[3] | cards[4]) >> 16;
   const prime = primeProductFromRankbits(handOR);
-  return FLUSH_LOOKUP.get(prime);
+  return FLUSH_LOOKUP.get(prime)!;
 };

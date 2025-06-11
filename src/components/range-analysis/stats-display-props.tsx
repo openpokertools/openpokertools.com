@@ -1,31 +1,8 @@
-interface Qualifiers {
-  straightflush: boolean;
-  quads: boolean;
-  fullhouse: boolean;
-  flush: boolean;
-  straight: boolean;
-  trips: boolean;
-  set: boolean;
-  twopair: boolean;
-  pair: boolean;
-  overpair: boolean;
-  toppair: boolean;
-  secondpair: boolean;
-  weakpair: boolean;
-  highcard: boolean;
-  acehigh: boolean;
-  flushdraw: boolean;
-  flushdraw_pair: boolean;
-  flushdraw_oesd: boolean;
-  flushdraw_gutshot: boolean;
-  backdoorflushdraw: boolean;
-  oesd: boolean;
-  oesd_pair: boolean;
-  gutshot: boolean;
-  gutshot_pair: boolean;
-  gutshot_overcards: boolean;
-  overcards: boolean;
-}
+import type { Qualifier } from "@/lib/models";
+
+type Qualifiers = {
+  [key in Qualifier]: boolean;
+};
 
 export interface SelectedQualifiers {
   flop: Qualifiers;
