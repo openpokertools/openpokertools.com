@@ -60,7 +60,7 @@ const isPocketPair = (hand: number[]): boolean => {
   return getRankInt(hand[0]) === getRankInt(hand[1]);
 };
 
-const isOvercards = (qualifier: string, hand: number[], board: number[]): boolean => {
+const isOvercards = (hand: number[], board: number[]): boolean => {
   const minHand = Math.min(...hand.map(getRankInt));
   const maxBoard = Math.max(...board.map(getRankInt));
   return minHand > maxBoard;
@@ -182,11 +182,11 @@ const getDrawQualifiers = (qualifier: string, hand: number[], board: number[]): 
     qualifiers.push("gutshot");
     if (qualifier === "pair") {
       qualifiers.push("gutshot_pair");
-    } else if (isOvercards(qualifier, hand, board)) {
+    } else if (isOvercards(hand, board)) {
       qualifiers.push("gutshot_overcards");
     }
   }
-  if (isOvercards(qualifier, hand, board)) {
+  if (isOvercards(hand, board)) {
     qualifiers.push("overcards");
   }
   return qualifiers;

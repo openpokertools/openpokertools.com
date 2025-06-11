@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import RangeProvider from "./range-context";
 import RangeLoader from "./range-loader";
 import RangePercent from "./range-percent";

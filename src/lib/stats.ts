@@ -42,19 +42,20 @@ export const calculateStats = (
     }
   }
 
-  const flop = boardCards.flop1 && boardCards.flop2 && boardCards.flop3;
-  const turn = flop && boardCards.turn;
-  const river = turn && boardCards.river;
+  const { flop1, flop2, flop3, turn, river } = boardCards;
+  const hasFlop = flop1 && flop2 && flop3;
+  const hasTurn = hasFlop && turn;
+  const hasRiver = hasTurn && river;
 
-  let flopCount;
-  if (flop) {
-    board.push(boardCards.flop1, boardCards.flop2, boardCards.flop3);
-    deadCards.add(boardCards.flop1);
-    deadCards.add(boardCards.flop2);
-    deadCards.add(boardCards.flop3);
+  let flopCount = 1;
+  if (hasFlop) {
+    board.push(flop1, flop2, flop3);
+    deadCards.add(flop1);
+    deadCards.add(flop2);
+    deadCards.add(flop3);
     const checkedQs = new Set();
-    for (const q in selectedQualifiers["flop"]) {
-      if (selectedQualifiers["flop"][q]) {
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.flop)) {
+      if (isChecked) {
         checkedQs.add(q);
       }
     }
@@ -69,13 +70,13 @@ export const calculateStats = (
     stats.set("flop", flopStats);
   }
 
-  let turnCount;
-  if (turn) {
-    board.push(boardCards.turn);
-    deadCards.add(boardCards.turn);
+  let turnCount = 1;
+  if (hasTurn) {
+    board.push(turn);
+    deadCards.add(turn);
     const checkedQs = new Set();
-    for (const q in selectedQualifiers["turn"]) {
-      if (selectedQualifiers["turn"][q]) {
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.turn)) {
+      if (isChecked) {
         checkedQs.add(q);
       }
     }
@@ -90,13 +91,13 @@ export const calculateStats = (
     stats.set("turn", turnStats);
   }
 
-  let riverCount;
-  if (river) {
-    board.push(boardCards.river);
-    deadCards.add(boardCards.river);
+  let riverCount = 1;
+  if (hasRiver) {
+    board.push(river);
+    deadCards.add(river);
     const checkedQs = new Set();
-    for (const q in selectedQualifiers["river"]) {
-      if (selectedQualifiers["river"][q]) {
+    for (const [q, isChecked] of Object.entries(selectedQualifiers.river)) {
+      if (isChecked) {
         checkedQs.add(q);
       }
     }
@@ -182,7 +183,7 @@ const calculatePreFlop = (selectedHands: Set<string>): Map<string, number> => {
     stats.set(m, 0);
   }
   for (const h of selectedHands) {
-    let multiplier;
+    let multiplier: number;
     if (h[0] === h[1]) {
       multiplier = 6;
     } else if (h[2] === "s") {
@@ -219,8 +220,8 @@ const comboToHandAndCount = (combo: Array<string>): HandAndCount => {
   if (combo[0][0] === combo[1][0]) {
     return { hand: combo[0][0] + combo[1][0], count: 2 };
   } else if (combo[0][1] === combo[1][1]) {
-    return { hand: combo[0][0] + combo[1][0] + "s", count: 3 };
+    return { hand: `${combo[0][0]}${combo[1][0]}s`, count: 3 };
   } else {
-    return { hand: combo[0][0] + combo[1][0] + "o", count: 1 };
+    return { hand: `${combo[0][0]}${combo[1][0]}o`, count: 1 };
   }
 };

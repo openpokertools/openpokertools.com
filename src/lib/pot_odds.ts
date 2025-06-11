@@ -12,11 +12,11 @@ export const getPotOdds = (win: number, tie: number): string => {
     if (x <= 0) {
       return "∞";
     }
-    return specialRound(numerator / x).toString() + ":1";
+    return `${specialRound(numerator / x)}:1`;
   } else {
     if (numerator <= 0) {
       return "0";
     }
-    return "1:" + specialRound(x / numerator).toString();
+    return `1:${specialRound(x / numerator)}`;
   }
 };

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
+import React, { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";

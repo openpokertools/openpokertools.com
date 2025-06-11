@@ -5,14 +5,12 @@ import { Button } from "@/components/ui/button";
 import { createPlayer, type Player, type PlayerStats } from "./range-equity-props";
 
 interface AddPlayerButtonProps {
-  players: Record<number, Player>;
   setPlayers: Dispatch<SetStateAction<Record<number, Player>>>;
   playerStats: Array<PlayerStats>;
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
 }
 
 const AddPlayerButton = ({
-  players,
   setPlayers,
   playerStats,
   setPlayerStats,

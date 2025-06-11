@@ -53,8 +53,12 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
         </TableHeader>
         <TableBody>
           {Object.values(players).map((player, index) => {
-            const handleHoleCardsChange = (update: (prev: HoleCards) => HoleCards) => {
-              updatePlayer(player.id, { holeCards: update(player.holeCards) });
+            const handleHoleCardsChange = (update: SetStateAction<HoleCards>) => {
+              if (typeof update === "function") {
+                updatePlayer(player.id, { holeCards: update(player.holeCards) });
+              } else {
+                updatePlayer(player.id, { holeCards: update });
+              }
             };
 
             const handleDeletePlayer = () => {
@@ -116,7 +120,6 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
           <div className="ml-auto flex gap-x-1">
             <ClearBoardButton />
             <AddPlayerButton
-              players={players}
               setPlayers={setPlayers}
               playerStats={playerStats}
               setPlayerStats={setPlayerStats}

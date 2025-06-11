@@ -1,4 +1,5 @@
 import { RANKS } from "./constants";
+import type { HandModifiers } from "./hand_modifiers";
 
 export const handsToDescriptor = (hands: Set<string>): string => {
   let fullDescriptor = "";
@@ -212,6 +213,6 @@ export const modifiersToString = (handModifiers: Map<string, object>) => {
   return JSON.stringify(Object.fromEntries(handModifiers.entries()));
 };
 
-export const stringToModifiers = (modifierString: string) => {
+export const stringToModifiers = (modifierString: string): Map<string, HandModifiers> => {
   return new Map(Object.entries(JSON.parse(modifierString)));
 };

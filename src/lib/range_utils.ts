@@ -1,8 +1,8 @@
 import { SUITS } from "./constants";
 import { cardToInt } from "./evaluation_utils";
 
-export const handsToCombos = (hands: Set<string>): Set<Array<string>> => {
-  const combos: Set<Array<string>> = new Set();
+export const handsToCombos = (hands: Set<string>): Set<[string, string]> => {
+  const combos: Set<[string, string]> = new Set();
   for (const h of hands) {
     const expansion = expandHand(h);
     for (const c of expansion) {
@@ -12,8 +12,8 @@ export const handsToCombos = (hands: Set<string>): Set<Array<string>> => {
   return combos;
 };
 
-const expandHand = (hand: string): Array<Array<string>> => {
-  const combos: Array<Array<string>> = [];
+const expandHand = (hand: string): Array<[string, string]> => {
+  const combos: Array<[string, string]> = [];
   if (hand.length === 2) {
     for (let i = 0; i <= 2; i++) {
       for (let j = i + 1; j <= 3; j++) {

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { Paintbrush } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Select,

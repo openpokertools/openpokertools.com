@@ -46,7 +46,7 @@ export const getSuitInt = (cardInt: number): number => {
 };
 
 export const combinations = <T>(elements: T[], k: number): T[][] => {
-  if (k > elements.length || k == 0) {
+  if (k > elements.length || k === 0) {
     return [];
   }
 

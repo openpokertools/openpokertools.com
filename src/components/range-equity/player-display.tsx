@@ -42,7 +42,7 @@ const PlayerDisplay = ({ player, updatePlayer }: PlayerDisplayProps) => {
         />
       </div>
     ),
-    [player.selectedHands, player.handModifiers],
+    [player.selectedHands, player.handModifiers, player.id],
   );
 };
 
