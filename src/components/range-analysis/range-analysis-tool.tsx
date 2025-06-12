@@ -43,7 +43,13 @@ const RangeAnalysisTool = () => {
   const [keptToShowdown, setKeptToShowdown] = useState<Array<Combo>>([]);
 
   useEffect(() => {
-    const newStats = calculateStats(selectedHands, selectedQualifiers, holeCards, boardCards);
+    const newStats = calculateStats(
+      selectedHands,
+      handModifiers,
+      selectedQualifiers,
+      holeCards,
+      boardCards,
+    );
     setStats(newStats.counts);
     setCombosReport(newStats.combosReport);
     if (selectedTab !== "preflop") {
@@ -64,7 +70,7 @@ const RangeAnalysisTool = () => {
     setKeptToTurn(newStats.keptToTurn);
     setKeptToRiver(newStats.keptToRiver);
     setKeptToShowdown(newStats.keptToShowdown);
-  }, [selectedHands, boardCards, holeCards, selectedQualifiers, selectedTab]);
+  }, [selectedHands, handModifiers, boardCards, holeCards, selectedQualifiers, selectedTab]);
 
   return (
     <>

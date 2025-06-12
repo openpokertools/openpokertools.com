@@ -6,6 +6,7 @@ import type { SelectedQualifiers } from "@/components/range-analysis/stats-displ
 import { METERS } from "./constants";
 import { qualifyCards } from "./descriptor_utils";
 import { FLOP_STATS } from "./flop_stats";
+import type { HandModifiers } from "./hand_modifiers";
 import type { Card, Combo, Hand, Qualifier, Round } from "./models";
 import { handsToCombos } from "./range_utils";
 
@@ -23,6 +24,7 @@ interface Stats {
 
 export const calculateStats = (
   selectedHands: Set<Hand>,
+  handModifiers: Map<Hand, HandModifiers>,
   selectedQualifiers: SelectedQualifiers,
   holeCards: HoleCards,
   boardCards: BoardCards,
@@ -36,8 +38,8 @@ export const calculateStats = (
   const keptToShowdown: Array<Combo> = [];
   const board: Array<Card> = [];
 
-  const combos = handsToCombos(selectedHands);
-  const deadCards = new Set([holeCards.hole1!, holeCards.hole2!]);
+  const combos = handsToCombos(selectedHands, handModifiers);
+  const deadCards = new Set([holeCards.hole1, holeCards.hole2]);
   for (const c of combos) {
     if (!(deadCards.has(c[0]) || deadCards.has(c[1]))) {
       keptToFlop.push(c);

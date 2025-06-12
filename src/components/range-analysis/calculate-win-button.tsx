@@ -62,7 +62,7 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
     }
 
     let riverEquity: number | undefined;
-    if (analysisHands.keptToShowdown.length) {
+    if (analysisHands.keptToShowdown.length > 0) {
       board.push(analysisHands.board.river);
       riverEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToShowdown, board).equity;
     }

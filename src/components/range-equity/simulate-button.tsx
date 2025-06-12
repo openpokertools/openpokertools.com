@@ -36,7 +36,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
       if (player.holeCards.hole1 && player.holeCards.hole2) {
         return [[player.holeCards.hole1, player.holeCards.hole2]];
       }
-      return Array.from(handsToCombos(player.selectedHands));
+      return Array.from(handsToCombos(player.selectedHands, player.handModifiers));
     });
   };
 
