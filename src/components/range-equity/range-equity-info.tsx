@@ -37,11 +37,18 @@ const RangeEquityInfo = () => {
         The grid allows the addition and removal of individual hands from the defined range. Add and
         remove hands by clicking on them.
       </p>
-      <h6>Annotation</h6>
+      <h6>Color annotation</h6>
       <p className="ml-1">
         It is possible to annotate the hands in the grid with colors. This can be used for study
         purposes to differentiate between groups of hands. To create an annotation simply right
-        click on the desired cell and select a color.
+        click on the desired cell and select a color, or click on the paintbrush below the range and
+        select a color. To undo the selection press <strong>ESC</strong>.
+      </p>
+      <h6>Suit selection</h6>
+      <p className="ml-1">
+        It is also possible to reduce the selection of hands to specific suit combos. To do this,
+        again right click on the desired cell and select a suit combo, or click on the paintbrush
+        below the range and select a color. To undo the selection press <strong>ESC</strong>.
       </p>
       <h5>Simulation</h5>
       <p className="ml-1">
