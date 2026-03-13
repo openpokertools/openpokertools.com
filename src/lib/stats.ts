@@ -12,6 +12,7 @@ import { handsToCombos } from "./range_utils";
 
 interface Stats {
   counts: Map<Round, Map<Qualifier, number>>;
+  totalCombos: Map<Round, number>;
   combosReport: CombosReport;
   flopActiveHands: Map<Hand, number>;
   turnActiveHands: Map<Hand, number>;
@@ -30,6 +31,7 @@ export const calculateStats = (
   boardCards: BoardCards,
 ): Stats => {
   const stats: Map<Round, Map<Qualifier, number>> = new Map();
+  const totalCombos: Map<Round, number> = new Map();
   stats.set("preflop", calculatePreFlop(selectedHands));
 
   const keptToFlop: Array<Combo> = [];
@@ -45,6 +47,7 @@ export const calculateStats = (
       keptToFlop.push(c);
     }
   }
+  totalCombos.set("preflop", keptToFlop.length);
 
   const { flop1, flop2, flop3, turn, river } = boardCards;
   const hasFlop = flop1 && flop2 && flop3;
@@ -74,6 +77,7 @@ export const calculateStats = (
       checkedQs,
     );
     flopCount = count;
+    totalCombos.set("flop", count);
     stats.set("flop", flopStats);
   }
 
@@ -98,6 +102,7 @@ export const calculateStats = (
       checkedQs,
     );
     turnCount = count;
+    totalCombos.set("turn", count);
     stats.set("turn", turnStats);
   }
 
@@ -122,11 +127,13 @@ export const calculateStats = (
       checkedQs,
     );
     riverCount = count;
+    totalCombos.set("river", count);
     stats.set("river", riverStats);
   }
 
   return {
     counts: stats,
+    totalCombos,
     combosReport: {
       flop_combos: keptToTurn.length,
       flop_combos_percent: (keptToTurn.length / (flopCount || 1)) * 100,

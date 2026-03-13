@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,20 +15,25 @@ import {
 } from "@/lib/constants";
 import type { PostFlopRound, Qualifier, Round } from "@/lib/models";
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import type { SelectedQualifiers } from "./stats-display-props";
 
 export interface StatsProps {
   stats: Map<Round, Map<Qualifier, number>>;
+  totalCombos: Map<Round, number>;
   selectedQualifiers: SelectedQualifiers;
   setSelectedQualifiers: (updatedQualifiers: SelectedQualifiers) => void;
   setSelectedTab: (tab: Round) => void;
 }
 const StatsDisplay = ({
   stats,
+  totalCombos,
   selectedQualifiers,
   setSelectedQualifiers,
   setSelectedTab,
 }: StatsProps) => {
+  const [showCombos, setShowCombos] = useState(false);
   const updateSelectedQualifiers = (round: PostFlopRound, qualifier: Qualifier, value: boolean) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
@@ -113,8 +118,10 @@ const StatsDisplay = ({
                   return (
                     <React.Fragment key={`${round}-content-fragment-${q}`}>
                       {q === "straightflush" && (
-                        <TableRow key={`${round}-content-madehands`}>
+                        <TableRow key={`${round}-content-madehands`} className="hover:bg-transparent">
                           <TableCell className="p-0" colSpan={4}>
+                            <div className="flex items-center justify-between">
+                            <div>
                             <i className="mr-1">Made Hands</i>
                             {round !== "preflop" && (
                               <span className="text-gray-600 text-xs font-light">
@@ -137,11 +144,43 @@ const StatsDisplay = ({
                                 )
                               </span>
                             )}
+                            </div>
+                            {round !== "preflop" && <TooltipProvider>
+                            <div className="flex gap-1">
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    size="sm"
+                                    variant={!showCombos ? "secondary" : "ghost"}
+                                    className="h-5 px-1.5 text-xs"
+                                    onClick={() => setShowCombos(false)}
+                                  >
+                                    %
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Show percentages</TooltipContent>
+                              </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    size="sm"
+                                    variant={showCombos ? "secondary" : "ghost"}
+                                    className="h-5 px-1.5 text-xs"
+                                    onClick={() => setShowCombos(true)}
+                                  >
+                                    #
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Show combo counts</TooltipContent>
+                              </Tooltip>
+                            </div>
+                            </TooltipProvider>}
+                            </div>
                           </TableCell>
                         </TableRow>
                       )}
                       {q === "flushdraw" && (
-                        <TableRow key={`${round}-content-draws`}>
+                        <TableRow key={`${round}-content-draws`} className="hover:bg-transparent">
                           <TableCell className="p-0" colSpan={4}>
                             <i className="mr-1">Draws</i>
                             {round !== "preflop" && (
@@ -192,7 +231,9 @@ const StatsDisplay = ({
                           {QUALIFIER_DISPLAY[q]}
                         </TableCell>
                         <TableCell className="stats_hand_percent">
-                          {((roundStats.get(q) || 0) * 100).toFixed(1)}%
+                          {showCombos && round !== "preflop"
+                            ? Math.round((roundStats.get(q) || 0) * (totalCombos.get(round) ?? 0))
+                            : `${((roundStats.get(q) || 0) * 100).toFixed(1)}%`}
                         </TableCell>
                         <TableCell className="stats_hand_meter">
                           <Progress value={(roundStats.get(q) || 0) * 100} />
@@ -221,7 +262,11 @@ const StatsDisplay = ({
                               <span className="ml-1">{QUALIFIER_DISPLAY[sq]}</span>
                             </TableCell>
                             <TableCell className="stats_hand_percent">
-                              {((roundStats.get(sq) || 0) * 100).toFixed(1)}%
+                              {showCombos && round !== "preflop"
+                                ? Math.round(
+                                    (roundStats.get(sq) || 0) * (totalCombos.get(round) ?? 0),
+                                  )
+                                : `${((roundStats.get(sq) || 0) * 100).toFixed(1)}%`}
                             </TableCell>
                             <TableCell className="stats_hand_meter">
                               <Progress value={(roundStats.get(sq) || 0) * 100} />

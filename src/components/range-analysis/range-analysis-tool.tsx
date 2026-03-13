@@ -36,6 +36,7 @@ const RangeAnalysisTool = () => {
   const [combosReport, setCombosReport] = useState<CombosReport>(COMBOS_REPORT_DEFAULT);
   const [equityReport, setEquityReport] = useState<EquityReport>({});
   const [stats, setStats] = useState<Map<Round, Map<Qualifier, number>>>(new Map());
+  const [totalCombos, setTotalCombos] = useState<Map<Round, number>>(new Map());
   const [activeHands, setActiveHands] = useState<Map<Hand, number> | undefined>(new Map());
   const [analysisHands, setAnalysisHands] = useState<AnalysisHands>(ANALYSIS_HANDS_DEFAULT);
   const [keptToTurn, setKeptToTurn] = useState<Array<Combo>>([]);
@@ -51,6 +52,7 @@ const RangeAnalysisTool = () => {
       boardCards,
     );
     setStats(newStats.counts);
+    setTotalCombos(newStats.totalCombos);
     setCombosReport(newStats.combosReport);
     if (selectedTab !== "preflop") {
       setActiveHands(newStats[`${selectedTab}ActiveHands`]);
@@ -114,6 +116,7 @@ const RangeAnalysisTool = () => {
           <h4 className="mb-2">Statistics</h4>
           <StatsDisplay
             stats={stats}
+            totalCombos={totalCombos}
             selectedQualifiers={selectedQualifiers}
             setSelectedQualifiers={setSelectedQualifiers}
             setSelectedTab={setSelectedTab}
