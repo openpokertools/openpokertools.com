@@ -1,12 +1,14 @@
+import type { HandModifiers } from "@/lib/hand_modifiers";
+import type { Hand } from "@/lib/models";
+
 import type { HoleCards } from "../hole-cards/hole-cards-props";
-import type { HandModifiers } from "../range/range-props";
 
 export interface Player {
   id: number;
   active: boolean;
   holeCards: HoleCards;
-  selectedHands: Set<string>;
-  handModifiers: Map<string, HandModifiers>;
+  selectedHands: Set<Hand>;
+  handModifiers: Map<Hand, HandModifiers>;
 }
 
 export const createPlayer = (id: number): Player => ({

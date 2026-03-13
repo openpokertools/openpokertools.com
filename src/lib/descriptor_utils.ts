@@ -1,4 +1,5 @@
 import { cardToInt, evaluate, getRankInt, getSuitInt } from "./evaluation_utils";
+import type { Card, Combo, Qualifier } from "./models";
 
 const MAX_STRAIGHT_FLUSH = 10;
 const MAX_FOUR_OF_A_KIND = 166;
@@ -22,7 +23,7 @@ const MAX_TO_RANK_CLASS: { [key: number]: number } = {
   7462: 9,
 };
 
-const RANK_CLASS_TO_STRING: { [key: number]: string } = {
+const RANK_CLASS_TO_STRING: { [key: number]: Qualifier } = {
   1: "straightflush",
   2: "quads",
   3: "fullhouse",
@@ -34,7 +35,7 @@ const RANK_CLASS_TO_STRING: { [key: number]: string } = {
   9: "highcard",
 };
 
-const scoreToString = (score: number): string | undefined => {
+const scoreToString = (score: number): Qualifier | undefined => {
   if (score >= 0 && score <= MAX_STRAIGHT_FLUSH) {
     return RANK_CLASS_TO_STRING[MAX_TO_RANK_CLASS[MAX_STRAIGHT_FLUSH]];
   } else if (score <= MAX_FOUR_OF_A_KIND) {
@@ -60,7 +61,7 @@ const isPocketPair = (hand: number[]): boolean => {
   return getRankInt(hand[0]) === getRankInt(hand[1]);
 };
 
-const isOvercards = (qualifier: string, hand: number[], board: number[]): boolean => {
+const isOvercards = (hand: number[], board: number[]): boolean => {
   const minHand = Math.min(...hand.map(getRankInt));
   const maxBoard = Math.max(...board.map(getRankInt));
   return minHand > maxBoard;
@@ -126,7 +127,11 @@ const getStraightDraw = (cards: number[]): string => {
   }
 };
 
-const getMadeHandSubqualifier = (qualifier: string, hand: number[], board: number[]): string => {
+const getMadeHandSubqualifier = (
+  qualifier: Qualifier,
+  hand: number[],
+  board: number[],
+): Qualifier | undefined => {
   if (qualifier === "trips") {
     if (isPocketPair(hand)) {
       return "set";
@@ -152,11 +157,10 @@ const getMadeHandSubqualifier = (qualifier: string, hand: number[], board: numbe
       return "acehigh";
     }
   }
-  return "none";
 };
 
-const getDrawQualifiers = (qualifier: string, hand: number[], board: number[]): string[] => {
-  const qualifiers: string[] = [];
+const getDrawQualifiers = (qualifier: Qualifier, hand: number[], board: number[]): Qualifier[] => {
+  const qualifiers: Qualifier[] = [];
   const flushCount = getFlushCount(hand.concat(...board));
   const straightDraw = getStraightDraw(hand.concat(...board));
   if (flushCount === 4) {
@@ -182,31 +186,31 @@ const getDrawQualifiers = (qualifier: string, hand: number[], board: number[]): 
     qualifiers.push("gutshot");
     if (qualifier === "pair") {
       qualifiers.push("gutshot_pair");
-    } else if (isOvercards(qualifier, hand, board)) {
+    } else if (isOvercards(hand, board)) {
       qualifiers.push("gutshot_overcards");
     }
   }
-  if (isOvercards(qualifier, hand, board)) {
+  if (isOvercards(hand, board)) {
     qualifiers.push("overcards");
   }
   return qualifiers;
 };
 
-export const qualifyCards = (hand: string[], board: string[]): string[] => {
-  const qualifiers: string[] = [];
-  const handInts = hand.map(cardToInt);
+export const qualifyCards = (combo: Combo, board: Card[]): Qualifier[] => {
+  const qualifiers: Qualifier[] = [];
+  const comboInts = combo.map(cardToInt);
   const boardInts = board.map(cardToInt);
-  const score = evaluate(handInts, boardInts);
+  const score = evaluate(comboInts, boardInts);
   const qualifier = scoreToString(score);
   if (qualifier) {
     qualifiers.push(qualifier);
 
-    const subq = getMadeHandSubqualifier(qualifier, handInts, boardInts);
-    if (subq !== "none") {
+    const subq = getMadeHandSubqualifier(qualifier, comboInts, boardInts);
+    if (subq) {
       qualifiers.push(subq);
     }
 
-    const drawSubq = getDrawQualifiers(qualifier, handInts, boardInts);
+    const drawSubq = getDrawQualifiers(qualifier, comboInts, boardInts);
     qualifiers.push(...drawSubq);
   }
 

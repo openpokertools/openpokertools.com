@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { calculateHandHandEquities } from "@/lib/fast_hand_hand";
+import type { Card, Combo } from "@/lib/models";
 import { getPotOdds } from "@/lib/pot_odds";
 
 import Board from "../board/board";
@@ -41,8 +42,11 @@ const OddsCalculator = () => {
   }
 
   useEffect(() => {
-    const activeHoles: Array<[string, string]> = holeCards
-      .filter((holeCard) => holeCard.hole1 && holeCard.hole2)
+    const activeHoles: Array<Combo> = holeCards
+      .filter(
+        (holeCard): holeCard is { hole1: Card; hole2: Card } =>
+          !!holeCard.hole1 && !!holeCard.hole2,
+      )
       .map((holeCard) => [holeCard.hole1, holeCard.hole2]);
 
     if (activeHoles.length < 2) {
@@ -51,21 +55,22 @@ const OddsCalculator = () => {
       }
     }
 
-    const board: Array<string> = [];
-    const flop = boardCards.flop1 && boardCards.flop2 && boardCards.flop3;
-    const turn = flop && boardCards.turn;
-    const river = turn && boardCards.river;
+    const board: Array<Card> = [];
+    const { flop1, flop2, flop3, turn, river } = boardCards;
+    const hasFlop = flop1 && flop2 && flop3;
+    const hasTurn = hasFlop && turn;
+    const hasRiver = hasTurn && river;
 
-    if (flop) {
-      board.push(boardCards.flop1, boardCards.flop2, boardCards.flop3);
+    if (hasFlop) {
+      board.push(flop1, flop2, flop3);
     }
 
-    if (turn) {
-      board.push(boardCards.turn);
+    if (hasTurn) {
+      board.push(turn);
     }
 
-    if (river) {
-      board.push(boardCards.river);
+    if (hasRiver) {
+      board.push(river);
     }
 
     const scores = calculateHandHandEquities(activeHoles, board);

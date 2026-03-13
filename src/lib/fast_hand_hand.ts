@@ -7,6 +7,7 @@ import {
   evaluateRainbow,
   findWinners,
 } from "./evaluation_utils";
+import type { Card, Combo } from "./models";
 
 const SUIT_MASKS = [0x1000, 0x2000, 0x4000, 0x8000];
 
@@ -40,7 +41,7 @@ const getBinedDeck = (exclusions: Set<number>): BinedDeck => {
     const rowSuits = [];
 
     for (let j = 0; j < 4; j++) {
-      const card = cardToInt(RANKS[i] + SUITS[j]);
+      const card = cardToInt((RANKS[i] + SUITS[j]) as Card);
       if (!exclusions.has(card)) {
         row.push(card);
         rowSuits.push(SUIT_MASKS[j]);
@@ -85,7 +86,7 @@ const mostCommon = (map: Map<number, number>): [number, number] => {
 const findCount2 = (map: Map<number, number>): Array<number> => {
   const out = [];
   for (const [k, v] of map) {
-    if (v == 2) {
+    if (v === 2) {
       out.push(k);
     }
   }
@@ -100,11 +101,11 @@ interface FlushColorings {
 }
 
 const flushColorings = (cardCount: Map<number, number>, deck: BinedDeck): Array<FlushColorings> => {
-  if (cardCount.size == 3) {
+  if (cardCount.size === 3) {
     return flushColorings3(cardCount, deck);
-  } else if (cardCount.size == 4) {
+  } else if (cardCount.size === 4) {
     return flushColorings4(cardCount, deck);
-  } else if (cardCount.size == 5) {
+  } else if (cardCount.size === 5) {
     return flushColorings5(cardCount, deck);
   }
   return [];
@@ -116,8 +117,8 @@ const flushColorings3 = (
 ): Array<FlushColorings> => {
   const colorings = [];
   const a = mostCommon(cardCount);
-  let numVariations;
-  if (a[1] == 2) {
+  let numVariations: number;
+  if (a[1] === 2) {
     const [k1, k2] = findCount2(cardCount);
     numVariations = (deck.cards[k1].length - 1) * (deck.cards[k2].length - 1);
   } else {
@@ -134,7 +135,7 @@ const flushColorings3 = (
         break;
       }
     }
-    if (board.length == 3) {
+    if (board.length === 3) {
       colorings.push({
         board: board,
         numVariations: numVariations,
@@ -152,7 +153,7 @@ const flushColorings4 = (
 ): Array<FlushColorings> => {
   const colorings = [];
   const a = mostCommon(cardCount);
-  let numVariations;
+  let numVariations: number;
   const cardCountKeys = Array.from(cardCount.keys());
 
   const combs = combinations(cardCountKeys, 3);
@@ -172,17 +173,17 @@ const flushColorings4 = (
         }
       }
 
-      if (board.length == 3) {
+      if (board.length === 3) {
         const excludedPossible = deck.cardSuits[excluded[0]].includes(mask);
 
         if (excludedPossible) {
-          if (excluded[0] == a[0]) {
+          if (excluded[0] === a[0]) {
             numVariations = binomial(deck.cards[a[0]].length - 1, 2);
           } else {
             numVariations = (deck.cards[a[0]].length - 1) * (deck.cards[excluded[0]].length - 1);
           }
         } else {
-          if (excluded[0] == a[0]) {
+          if (excluded[0] === a[0]) {
             numVariations = binomial(deck.cards[a[0]].length, 2);
           } else {
             numVariations = (deck.cards[a[0]].length - 1) * deck.cards[excluded[0]].length;
@@ -210,7 +211,7 @@ const flushColorings4 = (
         break;
       }
     }
-    if (board.length == 4) {
+    if (board.length === 4) {
       colorings.push({
         board: board,
         numVariations: numVariations,
@@ -227,7 +228,7 @@ const flushColorings5 = (
   deck: BinedDeck,
 ): Array<FlushColorings> => {
   const colorings = [];
-  let numVariations;
+  let numVariations: number;
   const cardCountKeys = Array.from(cardCount.keys());
 
   let combs = combinations(cardCountKeys, 3);
@@ -247,7 +248,7 @@ const flushColorings5 = (
         }
       }
 
-      if (board.length == 3) {
+      if (board.length === 3) {
         const aPossible = deck.cardSuits[excluded[0]].includes(mask);
         const bPossible = deck.cardSuits[excluded[1]].includes(mask);
 
@@ -289,7 +290,7 @@ const flushColorings5 = (
         }
       }
 
-      if (board.length == 4) {
+      if (board.length === 4) {
         const excludedPossible = deck.cardSuits[excluded[0]].includes(mask);
         if (excludedPossible) {
           numVariations = deck.cards[excluded[0]].length - 1;
@@ -317,7 +318,7 @@ const flushColorings5 = (
         break;
       }
     }
-    if (board.length == 5) {
+    if (board.length === 5) {
       colorings.push({
         board: board,
         numVariations: 1,
@@ -330,7 +331,7 @@ const flushColorings5 = (
 };
 
 const suitMatch = (card: number, suit: number): boolean => {
-  return (card & 0xf000) == suit;
+  return (card & 0xf000) === suit;
 };
 
 const evalHandFlushFast = (
@@ -340,13 +341,13 @@ const evalHandFlushFast = (
   color: number,
   numFlush: number,
 ): number => {
-  if (numFlush == 3) {
+  if (numFlush === 3) {
     if (suitMatch(hand[0], color) && suitMatch(hand[1], color)) {
       return Math.min(rainbowScore, evaluateFlush(hand, board));
     } else {
       return rainbowScore;
     }
-  } else if (numFlush == 4) {
+  } else if (numFlush === 4) {
     const h0Match = suitMatch(hand[0], color);
     const h1Match = suitMatch(hand[1], color);
     if (h0Match && h1Match) {
@@ -358,7 +359,7 @@ const evalHandFlushFast = (
     } else {
       return rainbowScore;
     }
-  } else if (numFlush == 5) {
+  } else if (numFlush === 5) {
     const h0Match = suitMatch(hand[0], color);
     const h1Match = suitMatch(hand[1], color);
     if (h0Match && h1Match) {
@@ -415,7 +416,7 @@ const fastHandHand = (hands: Array<Array<number>>): [Array<number>, Array<number
       for (let i = 0; i < colorings.length; i++) {
         const coloring = colorings[i];
         const numVariations = coloring.numVariations;
-        if (numVariations == 0) {
+        if (numVariations === 0) {
           continue;
         }
         const flushScore = [];
@@ -490,8 +491,8 @@ const getDeck = (exclusions: Array<number>): Array<number> => {
 };
 
 export const calculateHandHandEquities = (
-  handStrings: Array<Array<string>>,
-  dealtBoard: Array<string>,
+  handStrings: Array<Combo>,
+  dealtBoard: Array<Card>,
 ): [Array<number>, Array<number>, number] => {
   const hands = [];
   for (const hand of handStrings) {
@@ -507,7 +508,7 @@ export const calculateHandHandEquities = (
   const wins = new Array(hands.length).fill(0);
   const ties = new Array(hands.length).fill(0);
 
-  if (board.length == 5) {
+  if (board.length === 5) {
     const results = [];
     for (const h of hands) {
       results.push(evaluate(board, h));

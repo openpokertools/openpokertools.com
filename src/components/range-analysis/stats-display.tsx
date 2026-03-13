@@ -13,24 +13,23 @@ import {
   ROUNDS_DISPLAY,
   SUBQUALIFIERS,
 } from "@/lib/constants";
+import type { PostFlopRound, Qualifier, Round } from "@/lib/models";
 
 import type { SelectedQualifiers } from "./stats-display-props";
 
 export interface StatsProps {
-  stats: Map<string, Map<string, number>>;
+  stats: Map<Round, Map<Qualifier, number>>;
   selectedQualifiers: SelectedQualifiers;
   setSelectedQualifiers: (updatedQualifiers: SelectedQualifiers) => void;
-  selectedTab: string;
-  setSelectedTab: (tab: string) => void;
+  setSelectedTab: (tab: Round) => void;
 }
 const StatsDisplay = ({
   stats,
   selectedQualifiers,
   setSelectedQualifiers,
-  selectedTab,
   setSelectedTab,
 }: StatsProps) => {
-  const updateSelectedQualifiers = (round: string, qualifier: string, value: boolean) => {
+  const updateSelectedQualifiers = (round: PostFlopRound, qualifier: Qualifier, value: boolean) => {
     const updatedQualifiers = {
       ...selectedQualifiers,
       [round]: {
@@ -41,7 +40,11 @@ const StatsDisplay = ({
     setSelectedQualifiers(updatedQualifiers);
   };
 
-  const updateMultipleQualifiers = (round: string, qualifiers: Array<string>, value: boolean) => {
+  const updateMultipleQualifiers = (
+    round: PostFlopRound,
+    qualifiers: Array<Qualifier>,
+    value: boolean,
+  ) => {
     const roundQualifiers = selectedQualifiers[round];
     for (const q of qualifiers) {
       roundQualifiers[q] = value;
@@ -53,11 +56,11 @@ const StatsDisplay = ({
     setSelectedQualifiers(updatedQualifiers);
   };
 
-  const updateSelectedTab = (value: string) => {
+  const updateSelectedTab = (value: Round) => {
     setSelectedTab(value);
   };
 
-  const setAllMade = (round: string, value: boolean) => {
+  const setAllMade = (round: PostFlopRound, value: boolean) => {
     const roundQualifiers = selectedQualifiers[round];
     for (const q of METERS) {
       if (q === "flushdraw") {
@@ -72,7 +75,7 @@ const StatsDisplay = ({
     setSelectedQualifiers(updatedQualifiers);
   };
 
-  const setAllDraws = (round: string, value: boolean) => {
+  const setAllDraws = (round: PostFlopRound, value: boolean) => {
     const roundQualifiers = selectedQualifiers[round];
     let inDraws = false;
     for (const q of METERS) {

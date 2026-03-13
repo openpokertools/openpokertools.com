@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
+import React, { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { calculateRangeRangeEquities } from "@/lib/equity_utils";
+import type { Combo } from "@/lib/models";
 import { getPotOdds } from "@/lib/pot_odds";
 import { handsToCombos } from "@/lib/range_utils";
+import { cn } from "@/lib/utils";
 
 import type { BoardCards } from "../board/board-props";
 import type { Player, PlayerStats } from "./range-equity-props";
@@ -19,7 +20,7 @@ interface SimulateButtonProps {
 const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonProps) => {
   const { toast } = useToast();
   const [running, setRunning] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>(null);
   const statsRef = useRef<Array<{ win: number; tie: number; count: number }>>([]);
 
   const getBoard = () => {
@@ -30,12 +31,12 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
     return board;
   };
 
-  const getPlayerCombos = (activePlayers: Player[]) => {
+  const getPlayerCombos = (activePlayers: Array<Player>): Array<Array<Combo>> => {
     return activePlayers.map((player) => {
       if (player.holeCards.hole1 && player.holeCards.hole2) {
         return [[player.holeCards.hole1, player.holeCards.hole2]];
       }
-      return Array.from(handsToCombos(player.selectedHands));
+      return Array.from(handsToCombos(player.selectedHands, player.handModifiers));
     });
   };
 
@@ -124,9 +125,10 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
   return (
     <Button
       onClick={handleClick}
-      style={{
-        backgroundColor: running ? "#dc3545" : "#007bff",
-      }}
+      className={cn(
+        "text-white",
+        running ? "bg-red-500 hover:bg-red-600" : "bg-blue-500 hover:bg-blue-600",
+      )}
     >
       {running ? "Stop" : "Simulate"}
     </Button>

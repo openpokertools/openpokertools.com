@@ -18,6 +18,7 @@ import {
   stringToModifiers,
 } from "@/lib/descriptor";
 
+import PaintbrushButton from "./paintbrush-button";
 import { useRangeSelectorContext } from "./range-context";
 import { useRangeLoaderContext } from "./range-loader-context";
 import type { UserRange } from "./range-props";
@@ -57,9 +58,9 @@ const RangeLoader = () => {
     let descriptor: string;
     let modifiers = "";
     if (group === "sixmax") {
-      descriptor = SIX_MAX_OPEN[key];
+      descriptor = SIX_MAX_OPEN[key as keyof typeof SIX_MAX_OPEN];
     } else if (group === "ninemax") {
-      descriptor = NINE_MAX_OPEN[key];
+      descriptor = NINE_MAX_OPEN[key as keyof typeof NINE_MAX_OPEN];
     } else {
       const index = Number.parseInt(key);
       descriptor = userRanges[index].value;
@@ -75,31 +76,21 @@ const RangeLoader = () => {
   };
 
   return (
-    <div className="grid grid-cols-12 range-loader mt-2 mx-0">
-      <div className="col-span-7 p-0">
-        <Button
-          style={{
-            width: "45%",
-            whiteSpace: "nowrap",
-            backgroundColor: "#209020",
-          }}
-          onClick={handleSaveRange}
-        >
-          Save range
-        </Button>
-        <Button
-          className="ml-1"
-          style={{
-            width: "45%",
-            whiteSpace: "nowrap",
-            backgroundColor: "#d01515",
-          }}
-          onClick={handleDeleteRange}
-        >
-          Delete range
-        </Button>
-      </div>
-      <div className="col-span-5 p-0">
+    <div className="flex range-loader mt-2 mx-0">
+      <Button
+        className="w-[24%] bg-green-600 hover:bg-green-700 text-white whitespace-nowrap"
+        onClick={handleSaveRange}
+      >
+        Save range
+      </Button>
+      <Button
+        className="w-[24%] bg-red-600 hover:bg-red-700 text-white whitespace-nowrap ml-1"
+        onClick={handleDeleteRange}
+      >
+        Delete range
+      </Button>
+      <PaintbrushButton className="w-10 mx-1" />
+      <div className="w-full ml-auto">
         <Select onValueChange={handleLoadRange}>
           <SelectTrigger>
             <SelectValue placeholder="<Empty>" />
@@ -108,15 +99,23 @@ const RangeLoader = () => {
             <SelectGroup>
               <SelectLabel>Custom Ranges</SelectLabel>
               {userRanges.map((entry, index) => (
-                <SelectItem key={`user:${index}`} value={`user:${index}`}>
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`user:${index}`}
+                  value={`user:${index}`}
+                >
                   {entry.name}
                 </SelectItem>
               ))}
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>6-Max Opening Ranges</SelectLabel>
-              {Object.entries(SIX_MAX_OPEN).map(([key, value]) => (
-                <SelectItem key={`sixmax:${key}`} value={`sixmax:${key}`}>
+              {Object.keys(SIX_MAX_OPEN).map((key) => (
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`sixmax:${key}`}
+                  value={`sixmax:${key}`}
+                >
                   {key}
                   <small className="ml-1 text-gray-400">(6-max)</small>
                 </SelectItem>
@@ -124,8 +123,12 @@ const RangeLoader = () => {
             </SelectGroup>
             <SelectGroup>
               <SelectLabel>9-Max Opening Ranges</SelectLabel>
-              {Object.entries(NINE_MAX_OPEN).map(([key, value]) => (
-                <SelectItem key={`ninemax:${key}`} value={`ninemax:${key}`}>
+              {Object.keys(NINE_MAX_OPEN).map((key) => (
+                <SelectItem
+                  className="cursor-pointer"
+                  key={`ninemax:${key}`}
+                  value={`ninemax:${key}`}
+                >
                   {key}
                   <small className="ml-1 text-gray-400">(9-max)</small>
                 </SelectItem>

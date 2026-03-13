@@ -36,8 +36,7 @@ const PlayingCard = ({
         <div
           className={cn(
             className,
-            "rounded",
-            "playingcard",
+            "rounded playingcard cursor-pointer bg-white hover:bg-accent",
             playingCardState.rank && playingCardState.suit && "border",
           )}
           style={{

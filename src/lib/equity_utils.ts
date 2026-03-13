@@ -1,5 +1,5 @@
 import { cardToInt, combinations, evaluate, evaluateEarly, findWinners } from "./evaluation_utils";
-import type { Equity } from "./models";
+import type { Card, Combo, Equity } from "./models";
 
 const ALLCARDS = [
   69634, 73730, 81922, 98306, 135427, 139523, 147715, 164099, 266757, 270853, 279045, 295429,
@@ -32,10 +32,7 @@ const randomChoiceN = <T>(choices: Array<T>, n: number): Array<T> => {
   return elements;
 };
 
-const chooseCombo = (
-  combos: Array<Array<string>>,
-  selectedCards: Set<number>,
-): Array<number> | null => {
+const chooseCombo = (combos: Array<Combo>, selectedCards: Set<number>): Array<number> | null => {
   for (let i = combos.length - 1; i >= 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     const x = combos[j];
@@ -52,9 +49,9 @@ const chooseCombo = (
 };
 
 export const calculateHandRangeEquity = (
-  hand: Array<string>,
-  villainCombos: Array<Array<string>>,
-  dealtBoard: Array<string>,
+  hand: Combo,
+  villainCombos: Array<Combo>,
+  dealtBoard: Array<Card>,
 ): Equity => {
   let wins = 0;
   let ties = 0;
@@ -116,8 +113,8 @@ export const calculateHandRangeEquity = (
 };
 
 export const approximateHandRangeEquity = (
-  hand: Array<string>,
-  villainCombos: Array<Array<string>>,
+  hand: Combo,
+  villainCombos: Array<Combo>,
   n: number,
 ): Equity => {
   let wins = 0;
@@ -152,8 +149,8 @@ export const approximateHandRangeEquity = (
 };
 
 export const calculateRangeRangeEquities = (
-  playerCombos: Array<Array<Array<string>>>,
-  dealtBoard: Array<string>,
+  playerCombos: Array<Array<Combo>>,
+  dealtBoard: Array<Card>,
 ): [Array<number>, Array<number>, number] => {
   const n = 5000;
   const wins: Array<number> = new Array(playerCombos.length).fill(0);

@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import loadable from "@loadable/component";
 
 import { HANDS_ORDERED } from "@/lib/constants";
+import type { Hand } from "@/lib/models";
 
 import { useRangeSelectorContext } from "./range-context";
 
@@ -53,7 +54,7 @@ const RangeSlider = () => {
   const handleSliderChange = (data: { from: number; to: number }) => {
     const valStart = data.from;
     const valEnd = data.to;
-    const newSelectedHands: Set<string> = new Set();
+    const newSelectedHands: Set<Hand> = new Set();
     let m = 0;
     for (const h of HANDS_ORDERED) {
       if (h[0] === h[1]) {

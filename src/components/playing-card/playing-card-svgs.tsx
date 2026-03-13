@@ -17,12 +17,14 @@ import { ReactComponent as CLUB_SVG } from "../../images/suits/club.svg";
 import { ReactComponent as DIAMOND_SVG } from "../../images/suits/diamond.svg";
 import { ReactComponent as HEART_SVG } from "../../images/suits/heart.svg";
 import { ReactComponent as SPADE_SVG } from "../../images/suits/spade.svg";
+import { ReactComponent as SQUARE_SVG } from "../../images/suits/square.svg";
 
 export const SUIT_SVGS: { [key: string]: JSX.Element } = {
   d: <DIAMOND_SVG width={"1.2em"} style={{ display: "block", margin: "auto" }} />,
   h: <HEART_SVG width={"1.2em"} style={{ display: "block", margin: "auto" }} />,
   c: <CLUB_SVG width={"1.2em"} style={{ display: "block", margin: "auto" }} />,
   s: <SPADE_SVG width={"1.2em"} style={{ display: "block", margin: "auto" }} />,
+  x: <SQUARE_SVG width={"1.2em"} style={{ display: "block", margin: "auto" }} />,
 };
 
 export const RANK_SVGS: { [key: string]: JSX.Element } = {

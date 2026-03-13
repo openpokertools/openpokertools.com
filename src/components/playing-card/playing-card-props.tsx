@@ -1,4 +1,6 @@
+import type { Rank, Suit } from "@/lib/models";
+
 export interface PlayingCardStateProps {
-  rank?: string;
-  suit?: string;
+  rank?: Rank;
+  suit?: Suit;
 }
