@@ -8,16 +8,16 @@ const RangeAnalysisInfo = () => {
       </h4>
       <p className="ml-1">
         This tool allows the user to explore the dynamics of different ranges and board textures.
-        Users can create custom ranges and explore the viability and exploitability of these ranges
-        based on various strategies. Filter your opponent's combos through the flop, turn, and
-        river, and figure out the most vulnerable spot to strike.
+        Create a range — whether your own or an opponent's — and explore how it interacts with
+        different boards. Filter combos through the flop, turn, and river to identify the most
+        vulnerable spot to strike.
       </p>
       <p className="ml-1">
         The following sections describe the various features of the tools and how to use them.
       </p>
       <h5>Range</h5>
       <p className="ml-1">
-        The range panel allows the creation of an opening range. The range can then be examined
+        The range panel allows the creation of a range. The range can then be examined
         using the tools on this page. The range can be created in three ways.
       </p>
       <h6>Text input</h6>
@@ -33,8 +33,8 @@ const RangeAnalysisInfo = () => {
       <p className="ml-1">
         The slider defines a range based on a specific proportion of all possible hands. The hands
         are added in an order which favors hands with good preflop equity, however this does not
-        necessarily correspond the hands which you or your opponents are opening, and it is
-        recommend you make adjustments based on your experience.
+        necessarily correspond to the hands which you or your opponents are opening, and it is
+        recommended you make adjustments based on your experience.
       </p>
       <h6>Grid</h6>
       <p className="ml-1">
@@ -50,15 +50,16 @@ const RangeAnalysisInfo = () => {
       </p>
       <h6>Suit selection</h6>
       <p className="ml-1">
-        It is also possible to reduce the selection of hands to specific suit combos. To do this,
-        again right click on the desired cell and select a suit combo, or click on the paintbrush
-        below the range and select a color. To undo the selection press <strong>ESC</strong>.
+        It is also possible to specify which suit combinations of a hand to include in the range.
+        For example, you can include AhKs but exclude other AK combos. To do this, right click on
+        the desired cell and select a suit combo, or click on the paintbrush below the range and
+        select a suit combo. To undo the selection press <strong>ESC</strong>.
       </p>
       <h5>Board</h5>
       <p className="ml-1">
-        The board allows you to define a specific runout to examine. Click on the cards and select
+        The board allows you to define a specific board to examine. Click on the cards and select
         the cards you want from the popup. Alternatively, use the random board button to generate
-        and random runout.
+        a random board.
       </p>
       <h5>Statistics</h5>
       <p className="ml-1">
@@ -68,7 +69,7 @@ const RangeAnalysisInfo = () => {
       <h6>Pre-flop</h6>
       <p className="ml-1">
         The pre-flop tab displays how often the defined range is expected to hit the flop in
-        different ways (e.g. hitting a pair, or a flush draw).
+        different ways (e.g. hitting a pair, or a flush draw), averaged across all possible flops.
       </p>
       <h6>Flop, Turn, River</h6>
       <p className="ml-1">
