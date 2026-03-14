@@ -13,6 +13,12 @@ const RangeAnalysisInfo = () => {
         vulnerable spot to strike.
       </p>
       <p className="ml-1">
+        The typical workflow is: (1) define a range using the range panel, (2) set a board to
+        examine, then (3) use the statistics panel to see how the range interacts with the board.
+        From there, use the checkboxes on the flop, turn, and river tabs to model which hands
+        continue at each street, narrowing the range progressively.
+      </p>
+      <p className="ml-1">
         The following sections describe the various features of the tools and how to use them.
       </p>
       <h5>Range</h5>
