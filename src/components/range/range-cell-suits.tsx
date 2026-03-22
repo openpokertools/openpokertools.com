@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useFourColorDeck } from "@/components/playing-card/four-color-deck-context";
 import { SUITS_TO_HTML } from "@/lib/constants";
 import type { SuitAnnotation, SuitX } from "@/lib/models";
 import { suitToColor } from "@/lib/utils";
@@ -12,6 +13,7 @@ const compareSuits = (a: SuitAnnotation, b: SuitAnnotation) => {
 };
 
 const RangeCellSuits = ({ suits }: { suits: Array<SuitAnnotation> }) => {
+  const { fourColor } = useFourColorDeck();
   suits.sort(compareSuits);
   return (
     <>
@@ -23,10 +25,10 @@ const RangeCellSuits = ({ suits }: { suits: Array<SuitAnnotation> }) => {
             style={{ top: `${top}rem` }}
             className="absolute pointer-events-none text-sm"
           >
-            <span style={{ color: suitToColor(suit[0], true) }}>
+            <span style={{ color: suitToColor(suit[0], fourColor) }}>
               {SUITS_TO_HTML[suit[0] as SuitX]}
             </span>
-            <span style={{ color: suitToColor(suit[1], true) }}>
+            <span style={{ color: suitToColor(suit[1], fourColor) }}>
               {SUITS_TO_HTML[suit[1] as SuitX]}
             </span>
           </div>

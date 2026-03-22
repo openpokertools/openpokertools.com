@@ -12,6 +12,7 @@ import type { Color, Hand, SuitAnnotation } from "@/lib/models";
 import { isSuitSelected } from "@/lib/suit_utils";
 import { cn, handType, suitToColor } from "@/lib/utils";
 
+import { useFourColorDeck } from "../playing-card/four-color-deck-context";
 import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
 import { useRangeSelectorContext } from "./range-context";
 
@@ -46,6 +47,7 @@ interface SuitSelectorProps {
 }
 const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
   const { handModifiers, setHandModifiers } = useRangeSelectorContext();
+  const { fourColor } = useFourColorDeck();
   const modifier = handModifiers.get(hand) ?? {};
   const suits = (modifier.suits || []) as SuitAnnotation[];
   const handleSuitSelectorClick = () => {
@@ -71,10 +73,10 @@ const SuitSelector = ({ hand, suit, isActive }: SuitSelectorProps) => {
     >
       <div className="grid text-[0.75rem] h-full">
         <div className="flex flex-row my-auto">
-          <span className="-ml-[0.05rem]" style={{ fill: suitToColor(suit[0], true) }}>
+          <span className="-ml-[0.05rem]" style={{ fill: suitToColor(suit[0], fourColor) }}>
             {SUIT_SVGS[suit[0]]}
           </span>
-          <span className="-ml-[0.25rem]" style={{ fill: suitToColor(suit[1], true) }}>
+          <span className="-ml-[0.25rem]" style={{ fill: suitToColor(suit[1], fourColor) }}>
             {SUIT_SVGS[suit[1]]}
           </span>
         </div>

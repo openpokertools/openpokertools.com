@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useFourColorDeck } from "@/components/playing-card/four-color-deck-context";
 import { SUITS_TO_HTML } from "@/lib/constants";
 import type { Suit } from "@/lib/models";
 import { suitToColor } from "@/lib/utils";
@@ -11,8 +12,9 @@ interface CardStringProps {
 }
 
 const CardString = ({ card }: CardStringProps) => {
+  const { fourColor } = useFourColorDeck();
   return (
-    <span style={{ color: suitToColor(card[1]) }}>{card[0] + SUITS_TO_HTML[card[1] as Suit]}</span>
+    <span style={{ color: suitToColor(card[1], fourColor) }}>{card[0] + SUITS_TO_HTML[card[1] as Suit]}</span>
   );
 };
 

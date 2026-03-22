@@ -4,11 +4,13 @@ import { COLORS } from "@/lib/constants";
 import type { Color } from "@/lib/models";
 import { suitToColor } from "@/lib/utils";
 
+import { useFourColorDeck } from "../playing-card/four-color-deck-context";
 import { SUIT_SVGS } from "../playing-card/playing-card-svgs";
 import { usePaintbrushButtonContext } from "./paintbrush-button-context";
 
 export default function PaintbrushCursor() {
   const { selection } = usePaintbrushButtonContext();
+  const { fourColor } = useFourColorDeck();
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -37,13 +39,13 @@ export default function PaintbrushCursor() {
         >
           <span
             className="-ml-[0.05rem]"
-            style={{ fill: suitToColor(selection.selection[0], true) }}
+            style={{ fill: suitToColor(selection.selection[0], fourColor) }}
           >
             {SUIT_SVGS[selection.selection[0]]}
           </span>
           <span
             className="-ml-[0.25rem]"
-            style={{ fill: suitToColor(selection.selection[1], true) }}
+            style={{ fill: suitToColor(selection.selection[1], fourColor) }}
           >
             {SUIT_SVGS[selection.selection[1]]}
           </span>

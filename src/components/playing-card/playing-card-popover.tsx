@@ -8,6 +8,7 @@ import { RANKS, SUITS } from "@/lib/constants";
 import type { Card, Rank, Suit } from "@/lib/models";
 import { cn } from "@/lib/utils";
 
+import { useFourColorDeck } from "./four-color-deck-context";
 import { usePlayingCardContext } from "./playing-card-context";
 import { usePlayingCardPopoverContext } from "./playing-card-popover-context";
 import type { PlayingCardStateProps } from "./playing-card-props";
@@ -27,6 +28,7 @@ const PlayingCardPopover = ({
 }: PlayingCardPopoverProps) => {
   const { selectedCards, setSelectedCards } = usePlayingCardContext();
   const { open, setOpenAtIndex } = usePlayingCardPopoverContext();
+  const { fourColor, setFourColor } = useFourColorDeck();
 
   const handleCardSelect = (rank: Rank, suit: Suit) => {
     const newSelectedCards = new Set(selectedCards);
@@ -74,7 +76,9 @@ const PlayingCardPopover = ({
                 const isSelected = playingCardState.rank === rank && playingCardState.suit === suit;
                 const isCardTaken = selectedCards.has((rank + suit) as Card);
                 const isAvailable = !isSelected && !isCardTaken;
-                const color = suit === "d" || suit === "h" ? "#df0000" : "#000";
+                const color = fourColor
+                  ? suit === "h" ? "#df0000" : suit === "d" ? "blue" : suit === "c" ? "green" : "#000"
+                  : suit === "d" || suit === "h" ? "#df0000" : "#000";
 
                 return (
                   <button
@@ -106,13 +110,25 @@ const PlayingCardPopover = ({
             </div>
           ))}
         </div>
-        <Button
-          variant="outline"
-          className="mt-2 w-full bg-white hover:bg-accent"
-          onClick={handleClearCard}
-        >
-          Clear
-        </Button>
+        <div className="flex gap-2 mt-2">
+          <Button
+            variant="outline"
+            className="flex-1 bg-white hover:bg-accent"
+            onClick={handleClearCard}
+          >
+            Clear
+          </Button>
+          <Button
+            variant="outline"
+            className="bg-white hover:bg-accent px-2 text-base leading-none"
+            onClick={() => setFourColor(!fourColor)}
+          >
+            <span style={{ color: "#000" }}>♠</span>
+            <span style={{ color: "#df0000" }}>♥</span>
+            <span style={{ color: fourColor ? "green" : "#000" }}>♣</span>
+            <span style={{ color: fourColor ? "blue" : "#df0000" }}>♦</span>
+          </Button>
+        </div>
       </PopoverContent>
     </Popover>
   );

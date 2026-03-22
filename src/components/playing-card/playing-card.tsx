@@ -3,6 +3,7 @@ import React, { type Dispatch, type SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 
 import { ReactComponent as CARD_BACK_SVG } from "../../images/card_back.svg";
+import { useFourColorDeck } from "./four-color-deck-context";
 import PlayingCardPopover from "./playing-card-popover";
 import type { PlayingCardStateProps } from "./playing-card-props";
 import { RANK_SVGS, SUIT_SVGS } from "./playing-card-svgs";
@@ -24,7 +25,11 @@ const PlayingCard = ({
   const width = (height * 2) / 3;
   const fontSize = (height * 11) / 32;
 
-  const color = playingCardState.suit === "d" || playingCardState.suit === "h" ? "#df0000" : "#000";
+  const { fourColor } = useFourColorDeck();
+  const suit = playingCardState.suit;
+  const color = fourColor
+    ? suit === "h" ? "#df0000" : suit === "d" ? "blue" : suit === "c" ? "green" : "#000"
+    : suit === "d" || suit === "h" ? "#df0000" : "#000";
 
   return (
     <div className={className}>
