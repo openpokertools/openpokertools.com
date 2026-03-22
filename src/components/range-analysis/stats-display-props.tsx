@@ -1,14 +1,6 @@
-import type { Qualifier } from "@/lib/models";
+import type { SelectedQualifiers } from "@/lib/models";
 
-type Qualifiers = {
-  [key in Qualifier]: boolean;
-};
-
-export interface SelectedQualifiers {
-  flop: Qualifiers;
-  turn: Qualifiers;
-  river: Qualifiers;
-}
+export type { SelectedQualifiers } from "@/lib/models";
 
 export const SELECTED_QUALIFIERS_DEFAULT: SelectedQualifiers = {
   flop: {

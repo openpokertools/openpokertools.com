@@ -1,13 +1,6 @@
-export interface CombosReport {
-  flop_combos: number;
-  flop_combos_percent: number;
-  turn_combos: number;
-  turn_combos_percent: number;
-  river_combos: number;
-  river_combos_percent: number;
-}
+export type { CombosReport } from "@/lib/models";
 
-export const COMBOS_REPORT_DEFAULT: CombosReport = {
+export const COMBOS_REPORT_DEFAULT = {
   flop_combos: 0,
   flop_combos_percent: 0,
   turn_combos: 0,
