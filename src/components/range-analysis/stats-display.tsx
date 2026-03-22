@@ -12,8 +12,10 @@ import {
   QUALIFIERS,
   ROUNDS,
   ROUNDS_DISPLAY,
-  SUBQUALIFIERS,
+  SUBQUALIFIERS as SUBQUALIFIERS_RAW,
 } from "@/lib/constants";
+
+const SUBQUALIFIERS = SUBQUALIFIERS_RAW as Partial<Record<Qualifier, Qualifier[]>>;
 import type { PostFlopRound, Qualifier, Round } from "@/lib/models";
 
 import type { SelectedQualifiers } from "./stats-display-props";
@@ -99,7 +101,7 @@ const StatsDisplay = ({
   };
 
   return (
-    <Tabs defaultValue="preflop" className="w-full" onValueChange={updateSelectedTab}>
+    <Tabs defaultValue="preflop" className="w-full" onValueChange={(value) => updateSelectedTab(value as Round)}>
       <TabsList className="grid w-full grid-cols-4">
         {ROUNDS.map((round) => (
           <TabsTrigger key={`${round}-tab`} value={round}>
@@ -218,14 +220,15 @@ const StatsDisplay = ({
                               className="translate-y-[1.5px]"
                               checked={selectedQualifiers[round][q]}
                               onCheckedChange={(isChecked) => {
-                                if (isChecked) {
+                                const checked = isChecked === true;
+                                if (checked) {
                                   updateMultipleQualifiers(
                                     round,
-                                    [q].concat(SUBQUALIFIERS[q] || []),
-                                    isChecked,
+                                    ([q] as Qualifier[]).concat(SUBQUALIFIERS[q] || []),
+                                    checked,
                                   );
                                 } else {
-                                  updateSelectedQualifiers(round, q, isChecked);
+                                  updateSelectedQualifiers(round, q, checked);
                                 }
                               }}
                             />
@@ -254,10 +257,11 @@ const StatsDisplay = ({
                                   className="translate-y-[2.4px]"
                                   checked={selectedQualifiers[round][sq]}
                                   onCheckedChange={(isChecked) => {
-                                    if (!isChecked) {
-                                      updateMultipleQualifiers(round, [q, sq], isChecked);
+                                    const checked = isChecked === true;
+                                    if (!checked) {
+                                      updateMultipleQualifiers(round, [q, sq], checked);
                                     } else {
-                                      updateSelectedQualifiers(round, sq, isChecked);
+                                      updateSelectedQualifiers(round, sq, checked);
                                     }
                                   }}
                                 />

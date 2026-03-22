@@ -51,19 +51,19 @@ const CalculateWinButton = ({ analysisHands, setEquityReport }: CalculateWinButt
 
     let flopEquity: number | undefined;
     if (analysisHands.keptToTurn.length > 0) {
-      board.push(analysisHands.board.flop1, analysisHands.board.flop2, analysisHands.board.flop3);
+      board.push(analysisHands.board.flop1!, analysisHands.board.flop2!, analysisHands.board.flop3!);
       flopEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToTurn, board).equity;
     }
 
     let turnEquity: number | undefined;
     if (analysisHands.keptToRiver.length > 0) {
-      board.push(analysisHands.board.turn);
+      board.push(analysisHands.board.turn!);
       turnEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToRiver, board).equity;
     }
 
     let riverEquity: number | undefined;
     if (analysisHands.keptToShowdown.length > 0) {
-      board.push(analysisHands.board.river);
+      board.push(analysisHands.board.river!);
       riverEquity = calculateHandRangeEquity(holeCards, analysisHands.keptToShowdown, board).equity;
     }
 

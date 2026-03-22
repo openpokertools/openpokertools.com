@@ -46,7 +46,7 @@ export const calculateStats = (
   const board: Array<Card> = [];
 
   const combos = handsToCombos(selectedHands, handModifiers);
-  const deadCards = new Set([holeCards.hole1, holeCards.hole2]);
+  const deadCards = new Set([holeCards.hole1, holeCards.hole2].filter((c): c is Card => c !== undefined));
   for (const c of combos) {
     if (!(deadCards.has(c[0]) || deadCards.has(c[1]))) {
       keptToFlop.push(c);
