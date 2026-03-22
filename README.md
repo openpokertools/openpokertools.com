@@ -7,7 +7,7 @@
 
 The goal of this project is to provide a set of free and open source poker tools, which can be easily accessed on the web without needing to install any software on your device.
 
-To use the tools simply go to [https://openpokertools.com/](https://openpokertools.com/).
+To use the tools go to [https://openpokertools.com/](https://openpokertools.com/).
 
 ## Develop locally
 
