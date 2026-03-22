@@ -6,7 +6,6 @@
       "name": "openpokertools.com",
       "dependencies": {
         "autoprefixer": "^10.4.27",
-        "baseline-browser-mapping": "^2.10.10",
         "caniuse-lite": "^1.0.30001780",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

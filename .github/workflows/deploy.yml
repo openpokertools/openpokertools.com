@@ -25,14 +25,13 @@ jobs:
       - name: Install dependencies
         run: bun i
 
-      - name: Update browserslist
-        run: bunx --bun update-browserslist-db
-
       - name: Test
         run: bun test
 
       - name: Build
         run: bun gatsby build
+        env:
+          BROWSERSLIST_IGNORE_OLD_DATA: true
 
       - name: Create page artifact
         uses: actions/upload-pages-artifact@v4
