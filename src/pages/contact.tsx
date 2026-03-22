@@ -1,9 +1,7 @@
 import React, { type ReactElement, useState } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { HeadFC, PageProps } from "gatsby";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import AppShell from "@/components/shell/app-shell";
 import { Button } from "@/components/ui/button";
@@ -18,17 +16,13 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 
-const FormSchema = z.object({
-  type: z.enum(["pair", "straight", "flush", "threeOfAKind"], {
-    required_error: "You need to select a notification type.",
-  }),
-});
+type FormValues = {
+  type: "pair" | "straight" | "flush" | "threeOfAKind";
+};
 
 const ContactPage: React.FC<PageProps> = () => {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  const form = useForm<FormValues>();
 
   const [message, setMessage] = useState<ReactElement | null>(null);
   const alpha = [
@@ -66,7 +60,7 @@ const ContactPage: React.FC<PageProps> = () => {
     11, 15, 19, 21, 15, 11, 8, 19, 22, 12, 11, 11, 13, 10, 17, 5, 9, 27, 18, 13, 25, 16, 11, 9,
   ];
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = (data: FormValues) => {
     if (data.type === "flush") {
       let decodedMessage = "";
       for (let i = 0; i < code.length; i++) {
@@ -97,6 +91,7 @@ const ContactPage: React.FC<PageProps> = () => {
               <FormField
                 control={form.control}
                 name="type"
+                rules={{ required: "You need to select an option." }}
                 render={({ field }) => (
                   <FormItem className="space-y-3">
                     <FormLabel>Which of the following is the best hand?</FormLabel>
