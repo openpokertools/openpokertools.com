@@ -118,63 +118,68 @@ const StatsDisplay = ({
                   return (
                     <React.Fragment key={`${round}-content-fragment-${q}`}>
                       {q === "straightflush" && (
-                        <TableRow key={`${round}-content-madehands`} className="hover:bg-transparent">
+                        <TableRow
+                          key={`${round}-content-madehands`}
+                          className="hover:bg-transparent"
+                        >
                           <TableCell className="p-0" colSpan={4}>
                             <div className="flex items-center justify-between">
-                            <div>
-                            <i className="mr-1">Made Hands</i>
-                            {round !== "preflop" && (
-                              <span className="text-gray-600 text-xs font-light">
-                                (
-                                <Button
-                                  onClick={() => setAllMade(round, true)}
-                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
-                                  variant="link"
-                                >
-                                  select
-                                </Button>
-                                /
-                                <Button
-                                  onClick={() => setAllMade(round, false)}
-                                  className="text-gray-600 text-xs font-light h-fit m-0 p-0"
-                                  variant="link"
-                                >
-                                  unselect
-                                </Button>
-                                )
-                              </span>
-                            )}
-                            </div>
-                            {round !== "preflop" && <TooltipProvider>
-                            <div className="flex gap-1">
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Button
-                                    size="sm"
-                                    variant={!showCombos ? "secondary" : "ghost"}
-                                    className="h-5 px-1.5 text-xs"
-                                    onClick={() => setShowCombos(false)}
-                                  >
-                                    %
-                                  </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>Show percentages</TooltipContent>
-                              </Tooltip>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Button
-                                    size="sm"
-                                    variant={showCombos ? "secondary" : "ghost"}
-                                    className="h-5 px-1.5 text-xs"
-                                    onClick={() => setShowCombos(true)}
-                                  >
-                                    #
-                                  </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>Show combo counts</TooltipContent>
-                              </Tooltip>
-                            </div>
-                            </TooltipProvider>}
+                              <div>
+                                <i className="mr-1">Made Hands</i>
+                                {round !== "preflop" && (
+                                  <span className="text-gray-600 text-xs font-light">
+                                    (
+                                    <Button
+                                      onClick={() => setAllMade(round, true)}
+                                      className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                      variant="link"
+                                    >
+                                      select
+                                    </Button>
+                                    /
+                                    <Button
+                                      onClick={() => setAllMade(round, false)}
+                                      className="text-gray-600 text-xs font-light h-fit m-0 p-0"
+                                      variant="link"
+                                    >
+                                      unselect
+                                    </Button>
+                                    )
+                                  </span>
+                                )}
+                              </div>
+                              {round !== "preflop" && (
+                                <TooltipProvider>
+                                  <div className="flex gap-1">
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Button
+                                          size="sm"
+                                          variant={!showCombos ? "secondary" : "ghost"}
+                                          className="h-5 px-1.5 text-xs"
+                                          onClick={() => setShowCombos(false)}
+                                        >
+                                          %
+                                        </Button>
+                                      </TooltipTrigger>
+                                      <TooltipContent>Show percentages</TooltipContent>
+                                    </Tooltip>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Button
+                                          size="sm"
+                                          variant={showCombos ? "secondary" : "ghost"}
+                                          className="h-5 px-1.5 text-xs"
+                                          onClick={() => setShowCombos(true)}
+                                        >
+                                          #
+                                        </Button>
+                                      </TooltipTrigger>
+                                      <TooltipContent>Show combo counts</TooltipContent>
+                                    </Tooltip>
+                                  </div>
+                                </TooltipProvider>
+                              )}
                             </div>
                           </TableCell>
                         </TableRow>

@@ -13,13 +13,13 @@ const RangeEquityInfo = () => {
       </p>
       <p className="ml-1">
         The typical workflow is: (1) define a range for each player using the range panels, (2)
-        optionally fix specific hole cards or board cards, then (3) click <i>simulate</i> to run
-        the equity calculation. Results update continuously until you click <i>stop</i>.
+        optionally fix specific hole cards or board cards, then (3) click <i>simulate</i> to run the
+        equity calculation. Results update continuously until you click <i>stop</i>.
       </p>
       <h5>Range</h5>
       <p className="ml-1">
-        The range panel allows the creation of a range. The range can then be examined
-        using the tools on this page. The range can be created in three ways.
+        The range panel allows the creation of a range. The range can then be examined using the
+        tools on this page. The range can be created in three ways.
       </p>
       <h6>Text input</h6>
       <p className="ml-1">

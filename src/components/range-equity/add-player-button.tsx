@@ -10,11 +10,7 @@ interface AddPlayerButtonProps {
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
 }
 
-const AddPlayerButton = ({
-  setPlayers,
-  playerStats,
-  setPlayerStats,
-}: AddPlayerButtonProps) => {
+const AddPlayerButton = ({ setPlayers, playerStats, setPlayerStats }: AddPlayerButtonProps) => {
   const index = useRef(2);
 
   const addPlayer = () => {

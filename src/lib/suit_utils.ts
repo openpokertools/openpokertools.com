@@ -1,7 +1,11 @@
 import { SUITS } from "./constants";
 import type { Hand, SuitAnnotation } from "./models";
 
-export const isSuitSelected = (hand: Hand, suit: SuitAnnotation, selected: SuitAnnotation[]): boolean => {
+export const isSuitSelected = (
+  hand: Hand,
+  suit: SuitAnnotation,
+  selected: SuitAnnotation[],
+): boolean => {
   if (suit === "xx") {
     return selected.length === 0;
   }
@@ -17,7 +21,9 @@ export const isSuitSelected = (hand: Hand, suit: SuitAnnotation, selected: SuitA
 
 const isSuitSelectedPair = (suit: SuitAnnotation, selected: SuitAnnotation[]): boolean => {
   return (
-    selected.includes(suit) || selected.includes(`${suit[0]}x` as SuitAnnotation) || selected.includes(`${suit[1]}x` as SuitAnnotation)
+    selected.includes(suit) ||
+    selected.includes(`${suit[0]}x` as SuitAnnotation) ||
+    selected.includes(`${suit[1]}x` as SuitAnnotation)
   );
 };
 
@@ -27,11 +33,17 @@ const isSuitSelectedSuited = (suit: SuitAnnotation, selected: SuitAnnotation[]):
 
 const isSuitSelectedOffsuit = (suit: SuitAnnotation, selected: SuitAnnotation[]): boolean => {
   return (
-    selected.includes(suit) || selected.includes(`${suit[0]}x` as SuitAnnotation) || selected.includes(`x${suit[1]}` as SuitAnnotation)
+    selected.includes(suit) ||
+    selected.includes(`${suit[0]}x` as SuitAnnotation) ||
+    selected.includes(`x${suit[1]}` as SuitAnnotation)
   );
 };
 
-export const setSelectedSuits = (hand: Hand, suit: SuitAnnotation, prevSelected: SuitAnnotation[]): SuitAnnotation[] => {
+export const setSelectedSuits = (
+  hand: Hand,
+  suit: SuitAnnotation,
+  prevSelected: SuitAnnotation[],
+): SuitAnnotation[] => {
   if (suit === "xx") {
     return [];
   }
@@ -45,7 +57,10 @@ export const setSelectedSuits = (hand: Hand, suit: SuitAnnotation, prevSelected:
   }
 };
 
-const setSelectedSuitsPair = (suit: SuitAnnotation, prevSelected: SuitAnnotation[]): SuitAnnotation[] => {
+const setSelectedSuitsPair = (
+  suit: SuitAnnotation,
+  prevSelected: SuitAnnotation[],
+): SuitAnnotation[] => {
   let allSelected: Set<SuitAnnotation>;
   if (suit[1] === "x") {
     if (prevSelected.includes(suit)) {
@@ -59,10 +74,10 @@ const setSelectedSuitsPair = (suit: SuitAnnotation, prevSelected: SuitAnnotation
     allSelected = expandSelectedSuitsPair(prevSelected);
     if (allSelected.has(suit)) {
       allSelected.delete(suit);
-      allSelected.delete(suit[1] + suit[0] as SuitAnnotation);
+      allSelected.delete((suit[1] + suit[0]) as SuitAnnotation);
     } else {
       allSelected.add(suit);
-      allSelected.add(suit[1] + suit[0] as SuitAnnotation);
+      allSelected.add((suit[1] + suit[0]) as SuitAnnotation);
     }
   }
 
@@ -76,7 +91,7 @@ const expandSelectedSuitsPair = (selected: SuitAnnotation[]): Set<SuitAnnotation
       expandX(suitCombo[0], allSelected);
     } else {
       allSelected.add(suitCombo);
-      allSelected.add(suitCombo[1] + suitCombo[0] as SuitAnnotation);
+      allSelected.add((suitCombo[1] + suitCombo[0]) as SuitAnnotation);
     }
   }
   return allSelected;
@@ -87,8 +102,8 @@ const expandX = (suit0: string, allSelected: Set<SuitAnnotation>) => {
     if (suit === suit0) {
       continue;
     }
-    allSelected.add(suit0 + suit as SuitAnnotation);
-    allSelected.add(suit + suit0 as SuitAnnotation);
+    allSelected.add((suit0 + suit) as SuitAnnotation);
+    allSelected.add((suit + suit0) as SuitAnnotation);
   }
 };
 
@@ -123,7 +138,10 @@ const compactSelectedSuitsPair = (allSelected: Set<SuitAnnotation>): SuitAnnotat
   return compact;
 };
 
-const setSelectedSuitsSuited = (suit: SuitAnnotation, prevSelected: SuitAnnotation[]): SuitAnnotation[] => {
+const setSelectedSuitsSuited = (
+  suit: SuitAnnotation,
+  prevSelected: SuitAnnotation[],
+): SuitAnnotation[] => {
   if (prevSelected.includes(suit)) {
     return prevSelected.filter((s) => s !== suit);
   } else {
@@ -134,7 +152,10 @@ const setSelectedSuitsSuited = (suit: SuitAnnotation, prevSelected: SuitAnnotati
   }
 };
 
-const setSelectedSuitsOffsuit = (suit: SuitAnnotation, prevSelected: SuitAnnotation[]): SuitAnnotation[] => {
+const setSelectedSuitsOffsuit = (
+  suit: SuitAnnotation,
+  prevSelected: SuitAnnotation[],
+): SuitAnnotation[] => {
   let allSelected: Set<SuitAnnotation>;
   if (suit[0] === "x" || suit[1] === "x") {
     if (prevSelected.includes(suit)) {
@@ -165,14 +186,14 @@ const expandSelectedSuitsOffsuit = (selected: SuitAnnotation[]): Set<SuitAnnotat
         if (suit === suitCombo[1]) {
           continue;
         }
-        allSelected.add(suit + suitCombo[1] as SuitAnnotation);
+        allSelected.add((suit + suitCombo[1]) as SuitAnnotation);
       }
     } else if (suitCombo[1] === "x") {
       for (const suit of SUITS) {
         if (suit === suitCombo[0]) {
           continue;
         }
-        allSelected.add(suitCombo[0] + suit as SuitAnnotation);
+        allSelected.add((suitCombo[0] + suit) as SuitAnnotation);
       }
     } else {
       allSelected.add(suitCombo);
@@ -200,14 +221,18 @@ const compactSelectedSuitsOffsuit = (allSelected: Set<SuitAnnotation>): SuitAnno
 
   let all = true;
   for (const suit0 of SUITS) {
-    if (SUITS.every((suit1) => suit0 === suit1 || allSelected.has(suit0 + suit1 as SuitAnnotation))) {
+    if (
+      SUITS.every((suit1) => suit0 === suit1 || allSelected.has((suit0 + suit1) as SuitAnnotation))
+    ) {
       compact.push(`${suit0}x`);
       SUITS.forEach((suit1) => pairSuitCombos.delete(suit0 + suit1));
     } else {
       all = false;
     }
 
-    if (SUITS.every((suit1) => suit0 === suit1 || allSelected.has(suit1 + suit0 as SuitAnnotation))) {
+    if (
+      SUITS.every((suit1) => suit0 === suit1 || allSelected.has((suit1 + suit0) as SuitAnnotation))
+    ) {
       compact.push(`x${suit0}`);
       SUITS.forEach((suit1) => pairSuitCombos.delete(suit1 + suit0));
     } else {

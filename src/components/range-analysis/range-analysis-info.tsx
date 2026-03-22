@@ -23,8 +23,8 @@ const RangeAnalysisInfo = () => {
       </p>
       <h5>Range</h5>
       <p className="ml-1">
-        The range panel allows the creation of a range. The range can then be examined
-        using the tools on this page. The range can be created in three ways.
+        The range panel allows the creation of a range. The range can then be examined using the
+        tools on this page. The range can be created in three ways.
       </p>
       <h6>Text input</h6>
       <p className="ml-1">
@@ -64,8 +64,8 @@ const RangeAnalysisInfo = () => {
       <h5>Board</h5>
       <p className="ml-1">
         The board allows you to define a specific board to examine. Click on the cards and select
-        the cards you want from the popup. Alternatively, use the random board button to generate
-        a random board.
+        the cards you want from the popup. Alternatively, use the random board button to generate a
+        random board.
       </p>
       <h5>Statistics</h5>
       <p className="ml-1">
