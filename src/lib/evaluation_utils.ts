@@ -22,8 +22,8 @@ const CHAR_RANK_TO_INT_RANK: Record<string, number> = {
 const CHAR_SUIT_TO_INT_SUIT: Record<string, number> = {
   s: 1,
   h: 2,
-  d: 4,
-  c: 8,
+  c: 4,
+  d: 8,
 };
 
 export const cardToInt = (card: Card): number => {
