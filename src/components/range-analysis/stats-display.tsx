@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   METERS,
   QUALIFIER_DISPLAY,
@@ -14,8 +15,6 @@ import {
   SUBQUALIFIERS,
 } from "@/lib/constants";
 import type { PostFlopRound, Qualifier, Round } from "@/lib/models";
-
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import type { SelectedQualifiers } from "./stats-display-props";
 
