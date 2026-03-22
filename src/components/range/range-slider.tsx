@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import * as SliderPrimitive from "@radix-ui/react-slider";
+import { Slider as SliderPrimitive } from "radix-ui";
 
 import { HANDS_ORDERED } from "@/lib/constants";
 import type { Hand } from "@/lib/models";
