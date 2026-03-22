@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: bun i
 
+      - name: Test
+        run: bun test
+
       - name: Build
         run: bun gatsby build
 
