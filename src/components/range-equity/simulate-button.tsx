@@ -75,7 +75,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
         id: player.id,
         win: winPct,
         tie: tiePct,
-        potOdds: getPotOdds(winPct, winPct),
+        potOdds: getPotOdds(winPct, tiePct),
       };
     });
 
