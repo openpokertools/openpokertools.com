@@ -1,20 +1,18 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import loadable from "@loadable/component";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { HANDS_ORDERED } from "@/lib/constants";
 import type { Hand } from "@/lib/models";
 
 import { useRangeSelectorContext } from "./range-context";
 
-const IonRangeSlider = loadable(() => import("react-ion-slider"), {
-  ssr: false,
-});
-
 const RangeSlider = () => {
   const { selectedHands, setSelectedHands } = useRangeSelectorContext();
-  const [sliderValues, setSliderValues] = useState({ from: 0, to: 0 });
+  const [values, setValues] = useState([0, 0]);
   const isInternalUpdate = useRef(false);
+  const trackRef = useRef<HTMLSpanElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (isInternalUpdate.current) {
@@ -48,12 +46,10 @@ const RangeSlider = () => {
       topTotal = 0;
     }
 
-    setSliderValues({ from: topTotal, to: topTotal + rangeTotal });
+    setValues([topTotal, topTotal + rangeTotal]);
   }, [selectedHands]);
 
-  const handleSliderChange = (data: { from: number; to: number }) => {
-    const valStart = data.from;
-    const valEnd = data.to;
+  const applyValues = (from: number, to: number) => {
     const newSelectedHands: Set<Hand> = new Set();
     let m = 0;
     for (const h of HANDS_ORDERED) {
@@ -64,7 +60,7 @@ const RangeSlider = () => {
       } else {
         m += 12;
       }
-      if (m > valStart && m <= valEnd) {
+      if (m > from && m <= to) {
         newSelectedHands.add(h);
       }
     }
@@ -72,24 +68,77 @@ const RangeSlider = () => {
     setSelectedHands(newSelectedHands);
   };
 
-  return useMemo(
-    () => (
-      <div className="my-1">
-        <IonRangeSlider
-          type="double"
-          min={0}
-          max={1326}
-          from={sliderValues.from}
-          to={sliderValues.to}
-          skin="round"
-          hide_min_max
-          hide_from_to
-          drag_interval
-          onChange={handleSliderChange}
-        />
-      </div>
-    ),
-    [sliderValues],
+  const handleValueChange = (newValues: number[]) => {
+    setValues(newValues);
+    applyValues(newValues[0], newValues[1]);
+  };
+
+  const handleIntervalPointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsDragging(true);
+
+    const startX = e.clientX;
+    const startFrom = values[0];
+    const startTo = values[1];
+    const span = startTo - startFrom;
+
+    const onMove = (moveEvent: PointerEvent) => {
+      if (!trackRef.current) return;
+      const rect = trackRef.current.getBoundingClientRect();
+      const scale = 1326 / rect.width;
+      const delta = Math.round((moveEvent.clientX - startX) * scale);
+      const newFrom = Math.max(0, Math.min(1326 - span, startFrom + delta));
+      const newTo = newFrom + span;
+      setValues([newFrom, newTo]);
+      applyValues(newFrom, newTo);
+    };
+
+    const onUp = () => {
+      setIsDragging(false);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
+
+  const fromPct = (values[0] / 1326) * 100;
+  const toPct = (values[1] / 1326) * 100;
+
+  return (
+    <div className="my-2">
+      <SliderPrimitive.Root
+        className="relative flex items-center select-none touch-none w-full h-5"
+        min={0}
+        max={1326}
+        step={1}
+        value={values}
+        onValueChange={handleValueChange}
+      >
+        <SliderPrimitive.Track
+          ref={trackRef}
+          className="relative bg-neutral-200 rounded-full grow h-1.5 z-[0]"
+        >
+          <SliderPrimitive.Range className="absolute bg-sky-500 rounded-full h-full" />
+          <div
+            style={{
+              position: "absolute",
+              left: `${fromPct}%`,
+              width: `${toPct - fromPct}%`,
+              top: 0,
+              bottom: 0,
+              cursor: isDragging ? "grabbing" : "grab",
+              zIndex: 1,
+            }}
+            onPointerDown={handleIntervalPointerDown}
+          />
+        </SliderPrimitive.Track>
+        <SliderPrimitive.Thumb className="block w-[1.15rem] h-[1.15rem] bg-white border-2 border-sky-500 rounded-full hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-500 z-[2] cursor-pointer" />
+        <SliderPrimitive.Thumb className="block w-[1.15rem] h-[1.15rem] bg-white border-2 border-sky-500 rounded-full hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-500 z-[2] cursor-pointer" />
+      </SliderPrimitive.Root>
+    </div>
   );
 };
 
