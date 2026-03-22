@@ -125,8 +125,8 @@ const PlayingCardPopover = ({
           >
             <span style={{ color: "#000" }}>♠</span>
             <span style={{ color: "#df0000" }}>♥</span>
-            <span style={{ color: fourColor ? "green" : "#000" }}>♣</span>
-            <span style={{ color: fourColor ? "blue" : "#df0000" }}>♦</span>
+            <span style={{ color: fourColor ? "#000" : "green" }}>♣</span>
+            <span style={{ color: fourColor ? "#df0000" : "blue" }}>♦</span>
           </Button>
         </div>
       </PopoverContent>
