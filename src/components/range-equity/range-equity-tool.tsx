@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import GtoWizardCta from "../misc/gto-wizard-cta";
 import PaintbrushButtonProvider from "../range/paintbrush-button-context";
 import RangeLoaderProvider from "../range/range-loader-context";
 import DisplayContainer from "../shell/display-container";
@@ -12,6 +13,7 @@ const RangeEquityTool = () => {
     0: createPlayer(0),
     1: createPlayer(1),
   });
+  const [hasSimulated, setHasSimulated] = useState(false);
 
   const updatePlayer = (id: number, newData: Partial<Player>) => {
     setPlayers((prevPlayers) => ({
@@ -26,8 +28,14 @@ const RangeEquityTool = () => {
   return (
     <>
       <DisplayContainer maxWidth="960px">
-        <RangeEquityDisplay players={players} setPlayers={setPlayers} updatePlayer={updatePlayer} />
+        <RangeEquityDisplay
+          players={players}
+          setPlayers={setPlayers}
+          updatePlayer={updatePlayer}
+          onSimulate={() => setHasSimulated(true)}
+        />
       </DisplayContainer>
+      {hasSimulated && <GtoWizardCta context="equity" />}
       <div className="grid grid-cols-1 min-[955px]:grid-cols-2 mx-auto gap-4 max-w-[960px]">
         <RangeLoaderProvider>
           <PaintbrushButtonProvider>

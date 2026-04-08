@@ -28,9 +28,10 @@ interface RangeEquityDisplayProps {
   players: Record<number, Player>;
   setPlayers: Dispatch<SetStateAction<Record<number, Player>>>;
   updatePlayer: (id: number, newData: Partial<Player>) => void;
+  onSimulate?: () => void;
 }
 
-const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDisplayProps) => {
+const RangeEquityDisplay = ({ players, setPlayers, updatePlayer, onSimulate }: RangeEquityDisplayProps) => {
   const [playerStats, setPlayerStats] = useState<Array<PlayerStats>>([{ id: 0 }, { id: 1 }]);
   const [boardCards, setBoardCards] = useState<BoardCards>({});
 
@@ -128,6 +129,7 @@ const RangeEquityDisplay = ({ players, setPlayers, updatePlayer }: RangeEquityDi
               players={players}
               setPlayerStats={setPlayerStats}
               boardCards={boardCards}
+              onSimulate={onSimulate}
             />
           </div>
         </div>

@@ -15,9 +15,10 @@ interface SimulateButtonProps {
   players: Record<number, Player>;
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
   boardCards: BoardCards;
+  onSimulate?: () => void;
 }
 
-const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonProps) => {
+const SimulateButton = ({ players, setPlayerStats, boardCards, onSimulate }: SimulateButtonProps) => {
   const { toast } = useToast();
   const [running, setRunning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(null);
@@ -88,6 +89,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards }: SimulateButtonP
     const wrappedSimulateOnce = () => {
       try {
         simulateOnce();
+        onSimulate?.();
       } catch (error) {
         toast({
           variant: "destructive",

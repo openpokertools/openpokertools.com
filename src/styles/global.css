@@ -384,6 +384,26 @@ p {
   cursor: pointer !important;
 }
 
+@keyframes slide-down {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  to {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  display: grid;
+  animation: slide-down 0.7s ease-out forwards;
+}
+
+.animate-slide-down > * {
+  overflow: hidden;
+}
+
 .popover-arrow {
   fill: hsl(var(--popover));
   border: none;

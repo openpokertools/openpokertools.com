@@ -9,6 +9,7 @@ import type { HandModifiers } from "@/lib/hand_modifiers";
 import type { Combo, Hand, Qualifier, Round } from "@/lib/models";
 import { calculateStats } from "@/lib/stats";
 
+import GtoWizardCta from "../misc/gto-wizard-cta";
 import BoardProvider from "../board/board-context";
 import ClearBoardButton from "../board/clear-board-button";
 import RandomBoardButton from "../board/random-board-button";
@@ -30,6 +31,7 @@ const RangeAnalysisTool = () => {
     SELECTED_QUALIFIERS_DEFAULT,
   );
   const [selectedTab, setSelectedTab] = useState<Round>("preflop");
+  const [hasClickedFlop, setHasClickedFlop] = useState(false);
 
   const [boardCards, setBoardCards] = useState<BoardCards>({});
   const [holeCards, setHoleCards] = useState<HoleCards>({});
@@ -42,6 +44,10 @@ const RangeAnalysisTool = () => {
   const [keptToTurn, setKeptToTurn] = useState<Array<Combo>>([]);
   const [keptToRiver, setKeptToRiver] = useState<Array<Combo>>([]);
   const [keptToShowdown, setKeptToShowdown] = useState<Array<Combo>>([]);
+
+  useEffect(() => {
+    if (selectedTab === "flop") setHasClickedFlop(true);
+  }, [selectedTab]);
 
   useEffect(() => {
     const newStats = calculateStats(
@@ -123,6 +129,7 @@ const RangeAnalysisTool = () => {
           />
         </div>
       </div>
+      {hasClickedFlop && <GtoWizardCta context="range_analysis" />}
       <CombosDisplay
         keptToTurn={keptToTurn}
         keptToRiver={keptToRiver}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="412"
+   height="312"
+   viewBox="0 0 412 312"
+   sodipodi:docname="GTOWizard_logo_Pictogram.ai"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2">
+      <path
+         d="M 0,234 H 309 V 0 H 0 Z"
+         transform="translate(-93.012805,-0.96200252)"
+         id="path2" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <g
+     id="layer-MC0"
+     inkscape:groupmode="layer"
+     inkscape:label="Vrstva 1">
+    <path
+       id="path1"
+       d="m 0,0 31.174,56.905 25.101,13.41 -19.313,-3.668 21.261,48.94 -12.722,34.326 39.083,-30.2 7.622,-27.622 -14.327,3.209 15.645,-11.117 1.146,-6.304 19.14,-52.206 -35.071,9.685 37.478,-19.484 6.819,-16.447 h 0.172 l 92.779,233.465 c -17.306,-3.61 -36.905,-6.475 -58.51,-8.71 l -36.16,-102.75 -35.186,98.509 c -8.023,-0.229 -16.103,-0.401 -24.47,-0.401 -8.366,0 -16.275,0.172 -24.298,0.229 L 2.006,121.317 -34.212,224.239 c -21.432,2.178 -40.974,5.043 -58.28,8.653 L -0.63,1.604 Z"
+       style="fill:#aafbb2;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       transform="matrix(1.3333333,0,0,-1.3333333,124.01707,310.71733)"
+       clip-path="url(#clipPath2)" />
+  </g>
+</svg>
