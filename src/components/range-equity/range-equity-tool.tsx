@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import GtoWizardCta from "../misc/gto-wizard-cta";
+import GtoWizardCta, { VARIANTS } from "../misc/gto-wizard-cta";
 import PaintbrushButtonProvider from "../range/paintbrush-button-context";
 import RangeLoaderProvider from "../range/range-loader-context";
 import DisplayContainer from "../shell/display-container";
@@ -13,7 +13,12 @@ const RangeEquityTool = () => {
     0: createPlayer(0),
     1: createPlayer(1),
   });
-  const [hasSimulated, setHasSimulated] = useState(false);
+  const [showCta, setShowCta] = useState(false);
+  const [heroEquity, setHeroEquity] = useState<number | null>(null);
+  const ctaTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const [variant] = useState(() => VARIANTS[Math.floor(Math.random() * VARIANTS.length)]);
+
+  useEffect(() => () => { if (ctaTimerRef.current) clearTimeout(ctaTimerRef.current); }, []);
 
   const updatePlayer = (id: number, newData: Partial<Player>) => {
     setPlayers((prevPlayers) => ({
@@ -32,10 +37,15 @@ const RangeEquityTool = () => {
           players={players}
           setPlayers={setPlayers}
           updatePlayer={updatePlayer}
-          onSimulate={() => setHasSimulated(true)}
+          onSimulate={(heroWin) => {
+            if (ctaTimerRef.current === null && !showCta) {
+              setHeroEquity(heroWin);
+              ctaTimerRef.current = setTimeout(() => setShowCta(true), variant.delay);
+            }
+          }}
         />
       </DisplayContainer>
-      {hasSimulated && <GtoWizardCta context="equity" />}
+      {showCta && <GtoWizardCta context="equity" variantId={variant.id} heroEquity={heroEquity} />}
       <div className="grid grid-cols-1 min-[955px]:grid-cols-2 mx-auto gap-4 max-w-[960px]">
         <RangeLoaderProvider>
           <PaintbrushButtonProvider>

@@ -28,7 +28,7 @@ interface RangeEquityDisplayProps {
   players: Record<number, Player>;
   setPlayers: Dispatch<SetStateAction<Record<number, Player>>>;
   updatePlayer: (id: number, newData: Partial<Player>) => void;
-  onSimulate?: () => void;
+  onSimulate?: (heroWin: number) => void;
 }
 
 const RangeEquityDisplay = ({ players, setPlayers, updatePlayer, onSimulate }: RangeEquityDisplayProps) => {

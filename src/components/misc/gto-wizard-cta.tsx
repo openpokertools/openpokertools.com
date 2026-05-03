@@ -2,40 +2,39 @@ import React, { useEffect, useState } from "react";
 
 import { X } from "lucide-react";
 
-import { ReactComponent as GtoWizardLogo } from "../../images/gtowizard_logo.svg";
-
 declare const window: Window & { gtag?: (...args: unknown[]) => void };
 
-const VARIANTS = [
+const TEXT_VARIANTS = [
   {
     id: "insight",
-    headline: "Now see how a solver actually plays these ranges",
+    headline: (_equity: number | null) => "Now see how a solver actually plays these ranges",
     body: "Equity is just the start. GTO Wizard shows you the exact solver strategy for any spot — how often to bet, raise, or fold with every hand in your range.",
     button: "Try GTO Wizard — 10% off your first purchase",
-    showLogo: false,
   },
   {
-    id: "discount",
-    headline: "10% off GTO Wizard — for visitors of this site",
-    body: "The #1 training app for poker players. Study any spot, practice tough hands in the trainer, and fix your leaks with one-click hand analysis.",
-    button: "Claim your 10% discount",
-    showLogo: false,
-  },
-  {
-    id: "insight_logo",
-    headline: "Now see how a solver actually plays these ranges",
-    body: "Equity is just the start. GTO Wizard shows you the exact solver strategy for any spot — how often to bet, raise, or fold with every hand in your range.",
+    id: "now_what",
+    headline: (equity: number | null) =>
+      equity != null
+        ? `Your range has ${Math.round(equity * 100)}% equity. Now what?`
+        : "You know your equity. Now what?",
+    body: "GTO Wizard shows you what to do with it — the exact bet sizing, frequency, and strategy a solver uses in this spot.",
     button: "Try GTO Wizard — 10% off your first purchase",
-    showLogo: true,
   },
   {
-    id: "discount_logo",
-    headline: "10% off GTO Wizard — for visitors of this site",
-    body: "The #1 training app for poker players. Study any spot, practice tough hands in the trainer, and fix your leaks with one-click hand analysis.",
-    button: "Claim your 10% discount",
-    showLogo: true,
+    id: "gap",
+    headline: (equity: number | null) =>
+      equity != null
+        ? `${Math.round(equity * 100)}% equity — but that doesn't tell you how to play.`
+        : "Equity tells you who's ahead. Not how to play.",
+    body: "GTO Wizard shows you the solver strategy for every hand in your range — how often to bet, raise, or fold in any spot.",
+    button: "Try GTO Wizard — 10% off your first purchase",
   },
 ];
+
+export const VARIANTS = TEXT_VARIANTS.flatMap((v) => [
+  { ...v, id: v.id, delay: 0 },
+  { ...v, id: `${v.id}_delayed`, delay: 3000 },
+]);
 
 const trackEvent = (action: string, variantId: string, context: string) => {
   window.gtag?.("event", action, { event_category: "gtowizard_cta", variant: variantId, context });
@@ -43,10 +42,12 @@ const trackEvent = (action: string, variantId: string, context: string) => {
 
 interface GtoWizardCtaProps {
   context: string;
+  variantId: string;
+  heroEquity?: number | null;
 }
 
-const GtoWizardCta = ({ context }: GtoWizardCtaProps) => {
-  const [variant] = useState(() => VARIANTS[Math.floor(Math.random() * VARIANTS.length)]);
+const GtoWizardCta = ({ context, variantId, heroEquity = null }: GtoWizardCtaProps) => {
+  const variant = VARIANTS.find((v) => v.id === variantId) ?? VARIANTS[0];
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
@@ -89,12 +90,7 @@ const GtoWizardCta = ({ context }: GtoWizardCtaProps) => {
           >
             <X size={16} />
           </button>
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.4rem" }}
-          >
-            {variant.showLogo && <GtoWizardLogo />}
-            <p style={{ color: "#AAFBB2", fontWeight: 600, margin: 0 }}>{variant.headline}</p>
-          </div>
+          <p style={{ color: "#AAFBB2", fontWeight: 600, marginBottom: "0.4rem" }}>{variant.headline(heroEquity)}</p>
           <p style={{ color: "#fcfcfc", marginBottom: "0.75rem" }}>{variant.body}</p>
           <a
             href="https://gtowizard.com/p/openpokertools"

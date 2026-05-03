@@ -15,7 +15,7 @@ interface SimulateButtonProps {
   players: Record<number, Player>;
   setPlayerStats: Dispatch<SetStateAction<Array<PlayerStats>>>;
   boardCards: BoardCards;
-  onSimulate?: () => void;
+  onSimulate?: (heroWin: number) => void;
 }
 
 const SimulateButton = ({ players, setPlayerStats, boardCards, onSimulate }: SimulateButtonProps) => {
@@ -81,6 +81,7 @@ const SimulateButton = ({ players, setPlayerStats, boardCards, onSimulate }: Sim
     });
 
     setPlayerStats(updatedStats);
+    return updatedStats[0]?.win ?? 0;
   };
 
   const startSimulation = () => {
@@ -88,8 +89,8 @@ const SimulateButton = ({ players, setPlayerStats, boardCards, onSimulate }: Sim
     statsRef.current = [];
     const wrappedSimulateOnce = () => {
       try {
-        simulateOnce();
-        onSimulate?.();
+        const heroWin = simulateOnce();
+        onSimulate?.(heroWin);
       } catch (error) {
         toast({
           variant: "destructive",
